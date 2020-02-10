@@ -17,9 +17,23 @@ namespace org.example.mynetwork
 
 asset Vehichle identified by chassisNumber {
   o String chassisNumber
+  --> Customer owner
   o String plateNumber
   o String manufactureLocation
   o String manufacturer
-  o String ownerName
+  o String[] ownerList
   o String ownerId
 }
+
+participant Customer identified by customerId {
+  o String customerId
+  o String customerName
+}
+
+participant Manufacturer identified by manufacturerId {
+  o String manufacturerId
+  o String manufacturerName
+}
+
+
+
