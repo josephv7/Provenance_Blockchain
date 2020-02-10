@@ -14,6 +14,7 @@ app.use(cors());
 app.get('/', function(req, res){
 
     console.log("Basic GET API");
+    res.send("Basic GET API");
 
 
 });
