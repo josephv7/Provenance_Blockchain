@@ -11,6 +11,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
+// Vehichle 1000 Series
+// Customer 2000 Series
+// Manufacturer 3000 Series
+
 app.get('/', function(req, res){
 
     console.log("Basic GET API");
@@ -19,33 +23,49 @@ app.get('/', function(req, res){
 
 });
 
-app.get('/createUser', function (req,res) {
+app.get('/createCustomer', function (req,res) {
 
     var count;
-    count = 2;
 
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
-    Request.post({
-        "headers": { "content-type": "application/json" },
-        "url": "http://localhost:3000/api/Customer",
-        "body": JSON.stringify({
-            "customerName" : req.query.customerName,
-            "participantId" : count.toString(),
-            "participantType" : "user"
 
-        })
-    }, (error, response, body) => {
-        if(error) {
-            return console.dir(error);
-        }
-        console.dir(JSON.parse(body));
-        res.end(JSON.stringify({ status: "ok" }));
+
+    axios.get('http://localhost:3000/api/Customer').then(function (response){
+        console.log(response.data);
+        jsonResponse = response.data;
+
+
+    }).then(function (response){
+        findCustomerCount();
+    }).catch(function (error) {
+        console.log(error);
     });
 
+    function findCustomerCount(){
 
+        count =  2001 + jsonResponse.length;
+
+        Request.post({
+            "headers": { "content-type": "application/json" },
+            "url": "http://localhost:3000/api/Customer",
+            "body": JSON.stringify({
+                "customerName" : req.query.customerName,
+                "participantId" : count.toString(),
+                "participantType" : "user"
+
+            })
+        }, (error, response, body) => {
+            if(error) {
+                return console.dir(error);
+            }
+            console.dir(JSON.parse(body));
+            res.end(JSON.stringify({ status: "ok" }));
+        });
+
+    }
 
 });
 
