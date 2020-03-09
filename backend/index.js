@@ -21,10 +21,30 @@ app.get('/', function(req, res){
 
 app.get('/createUser', function (req,res) {
 
+    var count;
+    count = 2;
 
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+    Request.post({
+        "headers": { "content-type": "application/json" },
+        "url": "http://localhost:3000/api/Customer",
+        "body": JSON.stringify({
+            "customerName" : req.query.customerName,
+            "participantId" : count.toString(),
+            "participantType" : "user"
+
+        })
+    }, (error, response, body) => {
+        if(error) {
+            return console.dir(error);
+        }
+        console.dir(JSON.parse(body));
+        res.end(JSON.stringify({ status: "ok" }));
+    });
+
 
 
 });
