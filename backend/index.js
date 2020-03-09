@@ -50,6 +50,36 @@ app.get('/createUser', function (req,res) {
 });
 
 
+app.get('/listCustomers', function (req,res) {
+
+
+    axios.get('http://localhost:3000/api/Customer').then(function (response){
+        console.log(response.data);
+        jsonResponse = response.data;
+
+    }).then(function (response){
+        showData();
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+
+    function showData(){
+        // for(var i = 0; i < jsonResponse.length; i++) {
+        //     delete jsonResponse[i]['password'];
+        //     delete jsonResponse[i]['privateKey'];
+        //     delete jsonResponse[i]['publicKey'];
+        // }
+
+        console.log(jsonResponse);
+        res.send(jsonResponse);
+    }
+
+
+
+});
+
+
 
 let server = app.listen(4000, function() {
     console.log('Server is listening on port 4000')
