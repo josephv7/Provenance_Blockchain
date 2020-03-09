@@ -19,6 +19,16 @@ app.get('/', function(req, res){
 
 });
 
+app.get('/createUser', function (req,res) {
+
+
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+
+});
+
 
 
 let server = app.listen(4000, function() {
