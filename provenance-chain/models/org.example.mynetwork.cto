@@ -26,18 +26,28 @@ asset Vehichle identified by chassisNumber {
 }
 
 abstract participant User {
-
+  o String participantId
+  o String participantType
 }
 
 
-participant Customer identified by customerId extends User {
-  o String customerId
+participant Customer identified by participantId extends User {
   o String customerName
 }
 
-participant Manufacturer identified by manufacturerId extends User {
-  o String manufacturerId
+participant Manufacturer identified by participantId extends User {
   o String manufacturerName
+}
+
+transaction AssetTransfer {
+  --> Vehichle asset
+  o String newOwnerId
+}
+
+event AssetTransferEvent {
+  --> Vehichle asset
+  o String oldOwnerId
+  o String newOwnerId
 }
 
 
