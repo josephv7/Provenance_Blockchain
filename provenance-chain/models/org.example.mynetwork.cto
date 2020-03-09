@@ -39,12 +39,12 @@ participant Manufacturer identified by participantId extends User {
   o String manufacturerName
 }
 
-transaction assetTransfer {
+transaction AssetTransfer {
   --> Vehichle asset
   o String newOwnerId
 }
 
-event eventName {
+event AssetTransferEvent {
   --> Vehichle asset
   o String oldOwnerId
   o String newOwnerId

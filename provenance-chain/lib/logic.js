@@ -1,6 +1,6 @@
 /**
  * Transaction processor function.
- * @param {org.example.mynetwork.TransferAsset} tx The sample transaction instance.
+ * @param {org.example.mynetwork.AssetTransfer} tx The sample transaction instance.
  * @transaction
  */
 
