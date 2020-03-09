@@ -44,5 +44,11 @@ transaction assetTransfer {
   o String newOwnerId
 }
 
+event eventName {
+  --> Vehichle asset
+  o String oldOwnerId
+  o String newOwnerId
+}
+
 
 
