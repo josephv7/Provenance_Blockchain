@@ -65,17 +65,31 @@ app.get('/listCustomers', function (req,res) {
 
 
     function showData(){
-        // for(var i = 0; i < jsonResponse.length; i++) {
-        //     delete jsonResponse[i]['password'];
-        //     delete jsonResponse[i]['privateKey'];
-        //     delete jsonResponse[i]['publicKey'];
-        // }
-
         console.log(jsonResponse);
         res.send(jsonResponse);
     }
 
+});
 
+
+app.get('/listManufacturers', function (req,res) {
+
+
+    axios.get('http://localhost:3000/api/Manufacturer').then(function (response){
+        console.log(response.data);
+        jsonResponse = response.data;
+
+    }).then(function (response){
+        showData();
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+
+    function showData(){
+        console.log(jsonResponse);
+        res.send(jsonResponse);
+    }
 
 });
 
