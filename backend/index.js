@@ -25,6 +25,8 @@ app.get('/', function(req, res){
 
 app.get('/createCustomer', function (req,res) {
 
+    console.log(req.query.customerName);
+
     var count;
 
     res.header("Access-Control-Allow-Origin", "*");
@@ -73,6 +75,7 @@ app.get('/createCustomer', function (req,res) {
 
 app.get('/createManufacturer', function (req,res) {
 
+    console.log(req.query.manufacturerName);
 
     var count;
 
