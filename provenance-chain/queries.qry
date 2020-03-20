@@ -3,3 +3,9 @@ query ListVehichleTransactions {
   statement: 
       SELECT org.example.mynetwork.AssetTransfer WHERE (asset == _$id)
 }
+
+query ListUserVehichles {
+  description: "List all vehicles owned by a user"
+  statement:
+      SELECT org.example.mynetwork.Vehicle WHERE (owner == _$id)
+}
