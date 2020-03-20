@@ -159,6 +159,29 @@ app.get('/createVehichle', function (req,res) {
 });
 
 
+app.get('/listVehichles', function (req,res) {
+
+
+    axios.get('http://localhost:3000/api/Vehichle').then(function (response){
+        console.log(response.data);
+        jsonResponse = response.data;
+
+    }).then(function (response){
+        showData();
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+
+    function showData(){
+        console.log(jsonResponse);
+        res.send(jsonResponse);
+    }
+
+});
+
+
+
 
 
 
