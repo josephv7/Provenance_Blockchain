@@ -299,6 +299,73 @@ app.get('/getVehicleTransactions', function (req,res) {
 });
 
 
+app.get('/listUserVehicles', function (req,res) {
+
+    var userType = req.query.userType;
+    console.log(userType);
+
+    var userId = req.query.userId;
+    console.log(userId);
+
+    var requestUrl;
+
+    if(req.query.userType == "customer"){
+
+        var customerAsset = "resource%3Aorg.example.mynetwork.Customer%23" + userId;
+        console.log('customer');
+        requestUrl = "http://localhost:3000/api/queries/ListUserVehichles?id=" + customerAsset;
+    }else {
+
+        var manufacturerAsset = "resource%3Aorg.example.mynetwork.Manufacturer%23" + userId;
+        console.log('manufcaturer');
+        requestUrl = "http://localhost:3000/api/queries/ListUserVehichles?id=" + manufacturerAsset;
+
+    }
+
+
+
+    axios.get(requestUrl).then(function (response){
+        console.log(response.data);
+        jsonResponse = response.data;
+
+    }).then(function (response){
+        showData();
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+    function showData(){
+        console.log(jsonResponse);
+        res.send(jsonResponse);
+    }
+
+});
+
+app.get('/vehichleInfo', function (req,res) {
+
+    var chassisNumber = req.query.chassisNumber;
+
+    var requestUrl = "http://localhost:3000/api/Vehicle/" + chassisNumber;
+
+    axios.get(requestUrl).then(function (response){
+        console.log(response.data);
+        jsonResponse = response.data;
+
+    }).then(function (response){
+        showData();
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+    function showData(){
+        console.log(jsonResponse);
+        res.send(jsonResponse);
+    }
+
+
+});
+
+
 
 let server = app.listen(4000, function() {
     console.log('Server is listening on port 4000')
