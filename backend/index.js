@@ -272,6 +272,32 @@ app.get('/ownerChange', function (req,res) {
 
 });
 
+app.get('/getVehicleTransactions', function (req,res) {
+
+    console.log(req.query.chassisNumber);
+
+    var vehichleAsset = "resource%3Aorg.example.mynetwork.Vehicle%23" + req.query.chassisNumber;
+    var queryUrl = "http://localhost:3000/api/queries/ListVehichleTransactions?id=" + vehichleAsset;
+
+    axios.get(queryUrl).then(function (response){
+        console.log(response.data);
+        jsonResponse = response.data;
+
+    }).then(function (response){
+        showData();
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+
+    function showData(){
+        console.log(jsonResponse);
+        res.send(jsonResponse);
+    }
+
+
+});
+
 
 
 let server = app.listen(4000, function() {
