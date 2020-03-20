@@ -341,6 +341,30 @@ app.get('/listUserVehicles', function (req,res) {
 
 });
 
+app.get('/vehichleInfo', function (req,res) {
+
+    var chassisNumber = req.query.chassisNumber;
+
+    var requestUrl = "http://localhost:3000/api/Vehicle/" + chassisNumber;
+
+    axios.get(requestUrl).then(function (response){
+        console.log(response.data);
+        jsonResponse = response.data;
+
+    }).then(function (response){
+        showData();
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+    function showData(){
+        console.log(jsonResponse);
+        res.send(jsonResponse);
+    }
+
+
+});
+
 
 
 let server = app.listen(4000, function() {
