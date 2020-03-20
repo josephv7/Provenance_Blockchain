@@ -122,6 +122,43 @@ app.get('/createManufacturer', function (req,res) {
 });
 
 
+app.get('/createVehichle', function (req,res) {
+
+
+    console.log(req.query.chassisNumber);
+    console.log(req.query.ownerId);
+    console.log(req.query.manufacturerLocation);
+    console.log(req.query.manufacturer);
+    console.log(req.query.plateNumber);
+
+
+
+    Request.post({
+        "headers": { "content-type": "application/json" },
+        "url": "http://localhost:3000/api/Vehichle",
+        "body": JSON.stringify({
+            "chassisNumber": req.query.chassisNumber,
+            "owner": "org.example.mynetwork.Manufacturer#3001",
+            "plateNumber": req.query.plateNumber,
+            "manufactureLocation": req.query.manufacturerLocation,
+            "manufacturer": req.query.manufacturer,
+            "ownerList": [],
+            "ownerId": req.query.ownerId
+
+        })
+    }, (error, response, body) => {
+        if(error) {
+            return console.dir(error);
+        }
+        console.dir(JSON.parse(body));
+        res.end(JSON.stringify({ status: "ok" }));
+    });
+
+
+
+});
+
+
 
 
 
