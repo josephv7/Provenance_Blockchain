@@ -1,0 +1,5 @@
+query ListVehichleTransactions {
+  description: "List all transactions related to a vehichle"
+  statement: 
+      SELECT org.example.mynetwork.AssetTransfer WHERE (asset == _$id)
+}
