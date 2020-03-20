@@ -15,13 +15,13 @@
 
 namespace org.example.mynetwork
 
-asset Vehichle identified by chassisNumber {
+asset Vehicle identified by chassisNumber {
   o String chassisNumber
   --> User owner
-  o String plateNumber
+  o String plateNumber default=""
   o String manufactureLocation
   o String manufacturer
-  o String[] ownerList
+  o String[] ownerList default=""
   o String ownerId
 }
 
@@ -40,12 +40,12 @@ participant Manufacturer identified by participantId extends User {
 }
 
 transaction AssetTransfer {
-  --> Vehichle asset
+  --> Vehicle asset
   o String newOwnerId
 }
 
 event AssetTransferEvent {
-  --> Vehichle asset
+  --> Vehicle asset
   o String oldOwnerId
   o String newOwnerId
 }
