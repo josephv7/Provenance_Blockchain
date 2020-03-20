@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-// Vehichle 1000 Series
+// Vehicle 1000 Series
 // Customer 2000 Series
 // Manufacturer 3000 Series
 
@@ -122,7 +122,7 @@ app.get('/createManufacturer', function (req,res) {
 });
 
 
-app.get('/createVehichle', function (req,res) {
+app.get('/createVehicle', function (req,res) {
 
 
     console.log(req.query.chassisNumber);
@@ -135,7 +135,7 @@ app.get('/createVehichle', function (req,res) {
 
     Request.post({
         "headers": { "content-type": "application/json" },
-        "url": "http://localhost:3000/api/Vehichle",
+        "url": "http://localhost:3000/api/Vehicle",
         "body": JSON.stringify({
             "chassisNumber": req.query.chassisNumber,
             "owner": "org.example.mynetwork.Manufacturer#3001",
@@ -159,10 +159,10 @@ app.get('/createVehichle', function (req,res) {
 });
 
 
-app.get('/listVehichles', function (req,res) {
+app.get('/listVehicles', function (req,res) {
 
 
-    axios.get('http://localhost:3000/api/Vehichle').then(function (response){
+    axios.get('http://localhost:3000/api/Vehicle').then(function (response){
         console.log(response.data);
         jsonResponse = response.data;
 
@@ -228,9 +228,9 @@ app.get('/listManufacturers', function (req,res) {
 
 });
 
-app.get('/listVehichles', function (req,res) {
+app.get('/listVehicles', function (req,res) {
 
-    axios.get('http://localhost:3000/api/Vehichle').then(function (response){
+    axios.get('http://localhost:3000/api/Vehicle').then(function (response){
         console.log(response.data);
         jsonResponse = response.data;
 
@@ -245,6 +245,30 @@ app.get('/listVehichles', function (req,res) {
         console.log(jsonResponse);
         res.send(jsonResponse);
     }
+
+});
+
+app.get('/ownerChange', function (req,res) {
+
+    console.log(req.query.chassisNumber);
+
+
+    var asset = 'org.example.mynetwork.Vehicle#' + req.query.chassisNumber;
+
+    Request.post({
+        "headers": { "content-type": "application/json" },
+        "url": "http://localhost:3000/api/AssetTransfer",
+        "body": JSON.stringify({
+            "asset": asset,
+            "newOwnerId": "2",
+        })
+    }, (error, response, body) => {
+        if(error) {
+            return console.dir(error);
+        }
+        console.dir(JSON.parse(body));
+        res.end(JSON.stringify([{ status: "ok" }]));
+    });
 
 });
 
