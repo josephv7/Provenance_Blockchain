@@ -27,7 +27,7 @@
     event.oldOwnerId = oldOwnerId;
     event.newOwnerId = tx.newOwnerId;
     event.oldOwnerList = oldOwnerList;
-    event.newOwnerId = newList
+    event.newOwnerList = newList
     emit(event);
 
 
