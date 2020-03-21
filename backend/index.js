@@ -293,6 +293,8 @@ app.get('/listManufacturers', function (req,res) {
 app.get('/ownerChange', function (req,res) {
 
     console.log(req.query.chassisNumber);
+    var newOwnerId = req.query.newOwnerId;
+    console.log(newOwnerId);
 
 
     var asset = 'org.example.mynetwork.Vehicle#' + req.query.chassisNumber;
@@ -302,7 +304,8 @@ app.get('/ownerChange', function (req,res) {
         "url": "http://localhost:3000/api/AssetTransfer",
         "body": JSON.stringify({
             "asset": asset,
-            "newOwnerId": "2",
+            "newOwnerId": newOwnerId,
+            "newOwnerList" : [newOwnerId]
         })
     }, (error, response, body) => {
         if(error) {
