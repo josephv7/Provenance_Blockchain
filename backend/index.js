@@ -80,6 +80,7 @@ app.get('/createCustomer', function (req,res) {
 app.get('/createManufacturer', function (req,res) {
 
     console.log(req.query.manufacturerName);
+    console.log(req.query.password);
 
     var count;
 
@@ -109,7 +110,8 @@ app.get('/createManufacturer', function (req,res) {
             "body": JSON.stringify({
                 "manufacturerName" : req.query.manufacturerName,
                 "participantId" : count.toString(),
-                "participantType" : "manufacturer"
+                "participantType" : "manufacturer",
+                "password" : SHA256(req.query.password).toString()
 
             })
         }, (error, response, body) => {
