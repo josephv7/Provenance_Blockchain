@@ -28,15 +28,22 @@ asset Vehicle identified by chassisNumber {
 abstract participant User {
   o String participantId
   o String participantType
+  o String password
 }
 
 
-participant Customer identified by participantId extends User {
+participant Customer identified by participantId {
   o String customerName
+  o String participantId
+  o String participantType
+  o String password
 }
 
-participant Manufacturer identified by participantId extends User {
+participant Manufacturer identified by participantId{
   o String manufacturerName
+  o String participantId
+  o String participantType
+  o String password
 }
 
 transaction AssetTransfer {
