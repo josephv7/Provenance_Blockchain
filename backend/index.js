@@ -232,25 +232,7 @@ app.get('/listManufacturers', function (req,res) {
 
 });
 
-app.get('/listVehicles', function (req,res) {
 
-    axios.get('http://localhost:3000/api/Vehicle').then(function (response){
-        console.log(response.data);
-        jsonResponse = response.data;
-
-    }).then(function (response){
-        showData();
-    }).catch(function (error) {
-        console.log(error);
-    });
-
-
-    function showData(){
-        console.log(jsonResponse);
-        res.send(jsonResponse);
-    }
-
-});
 
 app.get('/ownerChange', function (req,res) {
 
