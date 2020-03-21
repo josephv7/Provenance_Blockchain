@@ -189,17 +189,19 @@ app.get('/createVehicle', function (req,res) {
     console.log(req.query.plateNumber);
 
 
+    var owner = "org.example.mynetwork.Customer#" + req.query.ownerId;
+
 
     Request.post({
         "headers": { "content-type": "application/json" },
         "url": "http://localhost:3000/api/Vehicle",
         "body": JSON.stringify({
             "chassisNumber": req.query.chassisNumber,
-            "owner": "org.example.mynetwork.Manufacturer#3001",
+            "owner": owner,
             "plateNumber": req.query.plateNumber,
             "manufactureLocation": req.query.manufacturerLocation,
             "manufacturer": req.query.manufacturer,
-            "ownerList": [],
+            "ownerList": [req.query.ownerId],
             "ownerId": req.query.ownerId
 
         })
