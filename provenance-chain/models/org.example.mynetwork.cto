@@ -49,12 +49,15 @@ participant Manufacturer identified by participantId{
 transaction AssetTransfer {
   --> Vehicle asset
   o String newOwnerId
+  o String[] newOwnerList
 }
 
 event AssetTransferEvent {
   --> Vehicle asset
   o String oldOwnerId
   o String newOwnerId
+  o String[] oldOwnerList
+  o String[] newOwnerList
 }
 
 
