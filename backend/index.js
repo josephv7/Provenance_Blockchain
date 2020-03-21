@@ -4,7 +4,9 @@ const url = require('url');
 const querystring = require('querystring');
 const Request = require("request");
 const axios = require('axios');
-const cors = require('cors')
+const cors = require('cors');
+const SHA256 = require("crypto-js/sha256");
+
 
 let app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,6 +28,7 @@ app.get('/', function(req, res){
 app.get('/createCustomer', function (req,res) {
 
     console.log(req.query.customerName);
+    console.log(req.query.password);
 
     var count;
 
@@ -56,7 +59,8 @@ app.get('/createCustomer', function (req,res) {
             "body": JSON.stringify({
                 "customerName" : req.query.customerName,
                 "participantId" : count.toString(),
-                "participantType" : "user"
+                "participantType" : "user",
+                "password" : SHA256(req.query.password).toString()
 
             })
         }, (error, response, body) => {
@@ -76,6 +80,7 @@ app.get('/createCustomer', function (req,res) {
 app.get('/createManufacturer', function (req,res) {
 
     console.log(req.query.manufacturerName);
+    console.log(req.query.password);
 
     var count;
 
@@ -97,7 +102,7 @@ app.get('/createManufacturer', function (req,res) {
 
     function findManufacturerCount() {
 
-        count = 2001 + jsonResponse.length;
+        count = 3001 + jsonResponse.length;
 
         Request.post({
             "headers": { "content-type": "application/json" },
@@ -105,7 +110,8 @@ app.get('/createManufacturer', function (req,res) {
             "body": JSON.stringify({
                 "manufacturerName" : req.query.manufacturerName,
                 "participantId" : count.toString(),
-                "participantType" : "manufacturer"
+                "participantType" : "manufacturer",
+                "password" : SHA256(req.query.password).toString()
 
             })
         }, (error, response, body) => {
@@ -120,6 +126,57 @@ app.get('/createManufacturer', function (req,res) {
 
 
 });
+
+
+
+app.post('/api/userLogin', function (req,res) {
+
+    var userId = req.body.userId;
+    var password = req.body.password;
+    var userType = req.body.userType;
+    var url;
+
+    if(userType == "customer"){
+        url = url = 'http://localhost:3000/api/Customer/' + userId.toString();
+    }else if(userType == "manufacturer"){
+        url = url = 'http://localhost:3000/api/Manufacturer/' + userId.toString();
+    }
+
+
+    axios.get(url).then(function (response){
+        // console.log(response.data);
+        jsonResponse = response.data;
+
+
+    }).then(function (response){
+        var response2 = jsonResponse;
+        checkPassword(response2)
+    }).catch(function (error) {
+        console.log(error);
+        // send invalid id message here
+        res.end(JSON.stringify({ status: "error" }));
+    });
+
+
+    function checkPassword(response){
+        //   console.log(response);
+        console.log(response.password);
+        console.log('inside check');
+
+        if(SHA256(password) == response.password){
+            res.end(JSON.stringify([{ status: "ok" }]));
+            console.log('here');
+        }else{
+            res.end(JSON.stringify([{ status: "incorrect" }]));
+        }
+
+
+    }
+
+
+
+});
+
 
 
 app.get('/createVehicle', function (req,res) {
@@ -157,6 +214,7 @@ app.get('/createVehicle', function (req,res) {
 
 
 });
+
 
 
 app.get('/listVehicles', function (req,res) {
@@ -228,25 +286,7 @@ app.get('/listManufacturers', function (req,res) {
 
 });
 
-app.get('/listVehicles', function (req,res) {
 
-    axios.get('http://localhost:3000/api/Vehicle').then(function (response){
-        console.log(response.data);
-        jsonResponse = response.data;
-
-    }).then(function (response){
-        showData();
-    }).catch(function (error) {
-        console.log(error);
-    });
-
-
-    function showData(){
-        console.log(jsonResponse);
-        res.send(jsonResponse);
-    }
-
-});
 
 app.get('/ownerChange', function (req,res) {
 
