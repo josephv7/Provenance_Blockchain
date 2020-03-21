@@ -4,7 +4,9 @@ const url = require('url');
 const querystring = require('querystring');
 const Request = require("request");
 const axios = require('axios');
-const cors = require('cors')
+const cors = require('cors');
+const SHA256 = require("crypto-js/sha256");
+
 
 let app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,6 +28,7 @@ app.get('/', function(req, res){
 app.get('/createCustomer', function (req,res) {
 
     console.log(req.query.customerName);
+    console.log(req.query.password);
 
     var count;
 
@@ -56,7 +59,8 @@ app.get('/createCustomer', function (req,res) {
             "body": JSON.stringify({
                 "customerName" : req.query.customerName,
                 "participantId" : count.toString(),
-                "participantType" : "user"
+                "participantType" : "user",
+                "password" : SHA256(req.query.password).toString()
 
             })
         }, (error, response, body) => {
@@ -97,7 +101,7 @@ app.get('/createManufacturer', function (req,res) {
 
     function findManufacturerCount() {
 
-        count = 2001 + jsonResponse.length;
+        count = 3001 + jsonResponse.length;
 
         Request.post({
             "headers": { "content-type": "application/json" },
