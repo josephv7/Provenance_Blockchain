@@ -17,7 +17,7 @@ namespace org.example.mynetwork
 
 asset Vehicle identified by chassisNumber {
   o String chassisNumber
-  --> User owner
+  --> Customer owner
   o String plateNumber default=""
   o String manufactureLocation
   o String manufacturer
