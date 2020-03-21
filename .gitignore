@@ -66,8 +66,8 @@ typings/
 .next
 
 # Output of Hyperledger 'composer' tools
-*.bna
-*.card
+# *.bna
+# *.card
 
 ### Node ###
 # Logs
