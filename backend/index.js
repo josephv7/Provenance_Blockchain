@@ -8,6 +8,12 @@ const cors = require('cors');
 const SHA256 = require("crypto-js/sha256");
 
 
+const config = require("./config");
+const accountSid = config.accountSid;
+const authToken = config.authToken;
+const client = require('twilio')(accountSid, authToken);
+
+
 let app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -67,6 +73,15 @@ app.get('/createCustomer', function (req,res) {
             if(error) {
                 return console.dir(error);
             }
+
+            client.messages.create({
+                body: 'Hey ' + req.query.customerName + '! Your password is ' + req.query.password,
+                from: 'whatsapp:+14155238886',
+                to: 'whatsapp:+919496710560'
+            })
+                .then(message => console.log(message.sid))
+                .done();
+
             console.dir(JSON.parse(body));
             res.end(JSON.stringify({ status: "ok" }));
         });
@@ -189,17 +204,19 @@ app.get('/createVehicle', function (req,res) {
     console.log(req.query.plateNumber);
 
 
+    var owner = "org.example.mynetwork.Customer#" + req.query.ownerId;
+
 
     Request.post({
         "headers": { "content-type": "application/json" },
         "url": "http://localhost:3000/api/Vehicle",
         "body": JSON.stringify({
             "chassisNumber": req.query.chassisNumber,
-            "owner": "org.example.mynetwork.Manufacturer#3001",
+            "owner": owner,
             "plateNumber": req.query.plateNumber,
             "manufactureLocation": req.query.manufacturerLocation,
             "manufacturer": req.query.manufacturer,
-            "ownerList": [],
+            "ownerList": [req.query.ownerId],
             "ownerId": req.query.ownerId
 
         })
@@ -291,6 +308,8 @@ app.get('/listManufacturers', function (req,res) {
 app.get('/ownerChange', function (req,res) {
 
     console.log(req.query.chassisNumber);
+    var newOwnerId = req.query.newOwnerId;
+    console.log(newOwnerId);
 
 
     var asset = 'org.example.mynetwork.Vehicle#' + req.query.chassisNumber;
@@ -300,7 +319,8 @@ app.get('/ownerChange', function (req,res) {
         "url": "http://localhost:3000/api/AssetTransfer",
         "body": JSON.stringify({
             "asset": asset,
-            "newOwnerId": "2",
+            "newOwnerId": newOwnerId,
+            "newOwnerList" : [newOwnerId]
         })
     }, (error, response, body) => {
         if(error) {
