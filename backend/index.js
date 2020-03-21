@@ -8,6 +8,12 @@ const cors = require('cors');
 const SHA256 = require("crypto-js/sha256");
 
 
+const config = require("./config");
+const accountSid = config.accountSid;
+const authToken = config.authToken;
+const client = require('twilio')(accountSid, authToken);
+
+
 let app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -67,6 +73,15 @@ app.get('/createCustomer', function (req,res) {
             if(error) {
                 return console.dir(error);
             }
+
+            client.messages.create({
+                body: 'Hey ' + req.query.customerName + '! Your password is ' + req.query.password,
+                from: 'whatsapp:+14155238886',
+                to: 'whatsapp:+919496710560'
+            })
+                .then(message => console.log(message.sid))
+                .done();
+
             console.dir(JSON.parse(body));
             res.end(JSON.stringify({ status: "ok" }));
         });
