@@ -308,7 +308,6 @@ app.get('/ownerChange', function (req,res) {
 
 
     var asset = 'org.example.mynetwork.Vehicle#' + req.query.chassisNumber;
-    var vehichleAsset = 'resource:org.example.mynetwork.Customer#' + req.query.newOwnerId;
 
     Request.post({
         "headers": { "content-type": "application/json" },
@@ -316,8 +315,7 @@ app.get('/ownerChange', function (req,res) {
         "body": JSON.stringify({
             "asset": asset,
             "newOwnerId": newOwnerId,
-            "newOwnerList" : [newOwnerId],
-            "newOwner" : vehichleAsset
+            "newOwnerList" : [newOwnerId]
         })
     }, (error, response, body) => {
         if(error) {
