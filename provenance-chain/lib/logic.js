@@ -9,7 +9,7 @@
      tx.asset.ownerId = tx.newOwnerId;
 
      const oldOwner = tx.asset.owner;
-     tx.asset.newOwner = tx.newOwner;
+     tx.asset.owner = tx.newOwner;
 
 
      const oldOwnerList = tx.asset.ownerList;
