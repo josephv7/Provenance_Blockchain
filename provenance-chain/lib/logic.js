@@ -8,6 +8,10 @@
      const oldOwnerId = tx.asset.ownerId;
      tx.asset.ownerId = tx.newOwnerId;
 
+     const oldOwner = tx.asset.owner;
+     tx.asset.newOwner = tx.newOwner;
+
+
      const oldOwnerList = tx.asset.ownerList;
      console.log('oldOwnerList' + oldOwnerList);
      var tempNewList = tx.asset.ownerList + ',' + tx.newOwnerList.toString();
@@ -28,6 +32,8 @@
     event.newOwnerId = tx.newOwnerId;
     event.oldOwnerList = oldOwnerList;
     event.newOwnerList = newList
+    event.oldOwner = oldOwner;
+    event.newOwner = tx.newOwner;
     emit(event);
 
 
