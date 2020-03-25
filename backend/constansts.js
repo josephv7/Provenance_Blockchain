@@ -1,0 +1,1 @@
+exports.blockchainBaseURL  = "http://localhost:3000/api/";
