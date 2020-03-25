@@ -19,15 +19,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-// Vehicle 1000 Series
-// Customer 2000 Series
-// Manufacturer 3000 Series
+var blockchainBaseURL = "http://localhost:3000/api/";
 
 app.get('/', function(req, res){
 
     console.log("Basic GET API");
     res.send("Basic GET API");
-
 
 });
 
@@ -44,7 +41,7 @@ app.get('/createCustomer', function (req,res) {
 
 
 
-    axios.get('http://localhost:3000/api/Customer').then(function (response){
+    axios.get(blockchainBaseURL + "Customer").then(function (response){
         console.log(response.data);
         jsonResponse = response.data;
 
@@ -61,7 +58,7 @@ app.get('/createCustomer', function (req,res) {
 
         Request.post({
             "headers": { "content-type": "application/json" },
-            "url": "http://localhost:3000/api/Customer",
+            "url": blockchainBaseURL + "Customer",
             "body": JSON.stringify({
                 "customerName" : req.query.customerName,
                 "participantId" : count.toString(),
@@ -104,7 +101,7 @@ app.get('/createManufacturer', function (req,res) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
 
-    axios.get('http://localhost:3000/api/Manufacturer').then(function (response){
+    axios.get(blockchainBaseURL + "Manufacturer").then(function (response){
         console.log(response.data);
         jsonResponse = response.data;
 
@@ -121,7 +118,7 @@ app.get('/createManufacturer', function (req,res) {
 
         Request.post({
             "headers": { "content-type": "application/json" },
-            "url": "http://localhost:3000/api/Manufacturer",
+            "url": blockchainBaseURL + "Manufacturer",
             "body": JSON.stringify({
                 "manufacturerName" : req.query.manufacturerName,
                 "participantId" : count.toString(),
@@ -151,10 +148,11 @@ app.post('/api/userLogin', function (req,res) {
     var userType = req.body.userType;
     var url;
 
+
     if(userType == "customer"){
-        url = url = 'http://localhost:3000/api/Customer/' + userId.toString();
+        url = blockchainBaseURL + 'Customer/' + userId.toString();
     }else if(userType == "manufacturer"){
-        url = url = 'http://localhost:3000/api/Manufacturer/' + userId.toString();
+        url = blockchainBaseURL + 'Manufacturer/' + userId.toString();
     }
 
 
@@ -209,7 +207,7 @@ app.get('/createVehicle', function (req,res) {
 
     Request.post({
         "headers": { "content-type": "application/json" },
-        "url": "http://localhost:3000/api/Vehicle",
+        "url": blockchainBaseURL + "Vehicle",
         "body": JSON.stringify({
             "chassisNumber": req.query.chassisNumber,
             "owner": owner,
@@ -237,7 +235,7 @@ app.get('/createVehicle', function (req,res) {
 app.get('/listVehicles', function (req,res) {
 
 
-    axios.get('http://localhost:3000/api/Vehicle').then(function (response){
+    axios.get(blockchainBaseURL + 'Vehicle').then(function (response){
         console.log(response.data);
         jsonResponse = response.data;
 
@@ -263,7 +261,7 @@ app.get('/listVehicles', function (req,res) {
 app.get('/listCustomers', function (req,res) {
 
 
-    axios.get('http://localhost:3000/api/Customer').then(function (response){
+    axios.get(blockchainBaseURL + 'Customer').then(function (response){
         console.log(response.data);
         jsonResponse = response.data;
 
@@ -285,7 +283,7 @@ app.get('/listCustomers', function (req,res) {
 app.get('/listManufacturers', function (req,res) {
 
 
-    axios.get('http://localhost:3000/api/Manufacturer').then(function (response){
+    axios.get(blockchainBaseURL + 'Manufacturer').then(function (response){
         console.log(response.data);
         jsonResponse = response.data;
 
@@ -316,7 +314,7 @@ app.get('/ownerChange', function (req,res) {
 
     Request.post({
         "headers": { "content-type": "application/json" },
-        "url": "http://localhost:3000/api/AssetTransfer",
+        "url": blockchainBaseURL + "AssetTransfer",
         "body": JSON.stringify({
             "asset": asset,
             "newOwnerId": newOwnerId,
@@ -337,7 +335,7 @@ app.get('/getVehicleTransactions', function (req,res) {
     console.log(req.query.chassisNumber);
 
     var vehichleAsset = "resource%3Aorg.example.mynetwork.Vehicle%23" + req.query.chassisNumber;
-    var queryUrl = "http://localhost:3000/api/queries/ListVehichleTransactions?id=" + vehichleAsset;
+    var queryUrl = blockchainBaseURL + "queries/ListVehichleTransactions?id=" + vehichleAsset;
 
     axios.get(queryUrl).then(function (response){
         console.log(response.data);
@@ -373,12 +371,12 @@ app.get('/listUserVehicles', function (req,res) {
 
         var customerAsset = "resource%3Aorg.example.mynetwork.Customer%23" + userId;
         console.log('customer');
-        requestUrl = "http://localhost:3000/api/queries/ListUserVehichles?id=" + customerAsset;
+        requestUrl = blockchainBaseURL + "queries/ListUserVehichles?id=" + customerAsset;
     }else {
 
         var manufacturerAsset = "resource%3Aorg.example.mynetwork.Manufacturer%23" + userId;
         console.log('manufcaturer');
-        requestUrl = "http://localhost:3000/api/queries/ListUserVehichles?id=" + manufacturerAsset;
+        requestUrl = blockchainBaseURL + "queries/ListUserVehichles?id=" + manufacturerAsset;
 
     }
 
@@ -405,7 +403,7 @@ app.get('/vehichleInfo', function (req,res) {
 
     var chassisNumber = req.query.chassisNumber;
 
-    var requestUrl = "http://localhost:3000/api/Vehicle/" + chassisNumber;
+    var requestUrl = blockchainBaseURL + "Vehicle/" + chassisNumber;
 
     axios.get(requestUrl).then(function (response){
         console.log(response.data);
