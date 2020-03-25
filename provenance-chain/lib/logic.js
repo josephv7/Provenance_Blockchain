@@ -8,6 +8,9 @@
      const oldOwnerId = tx.asset.ownerId;
      tx.asset.ownerId = tx.newOwnerId;
 
+     tx.asset.owner = getFactory().newRelationship('org.example.mynetwork', 'Customer', String(tx.asset.ownerId))
+
+
      const oldOwnerList = tx.asset.ownerList;
      console.log('oldOwnerList' + oldOwnerList);
      var tempNewList = tx.asset.ownerList + ',' + tx.newOwnerList.toString();
@@ -28,6 +31,8 @@
     event.newOwnerId = tx.newOwnerId;
     event.oldOwnerList = oldOwnerList;
     event.newOwnerList = newList
+    // event.oldOwner = oldOwner;
+    // event.newOwner = tx.newOwner;
     emit(event);
 
 
