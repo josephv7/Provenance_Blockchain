@@ -50,7 +50,7 @@ transaction AssetTransfer {
   --> Vehicle asset
   o String newOwnerId
   o String[] newOwnerList
-  o Customer newOwner
+  // o Customer newOwner
 }
 
 event AssetTransferEvent {

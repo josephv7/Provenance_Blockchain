@@ -8,8 +8,7 @@
      const oldOwnerId = tx.asset.ownerId;
      tx.asset.ownerId = tx.newOwnerId;
 
-    //  const oldOwner = tx.asset.owner;
-     tx.asset.owner = tx.newOwner;
+     tx.asset.owner = getFactory().newRelationship('org.example.mynetwork', 'Customer', String(tx.asset.ownerId))
 
 
      const oldOwnerList = tx.asset.ownerList;
