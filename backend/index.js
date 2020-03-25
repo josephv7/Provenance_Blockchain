@@ -8,7 +8,7 @@ const cors = require('cors');
 const SHA256 = require("crypto-js/sha256");
 
 
-const customerController = require("./controllers/createCustomer");
+const customerController = require("./controllers/customer");
 
 
 const config = require("./config");
@@ -18,87 +18,31 @@ const client = require('twilio')(accountSid, authToken);
 
 
 let app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
 
 var blockchainBaseURL = "http://localhost:3000/api/";
 
-app.get('/', function(req, res){
+app.get('/', function (req, res) {
 
     console.log("Basic GET API");
     res.send("Basic GET API");
 
 });
 
-app.get('/test', (req,res) =>{
+app.get('/test', (req, res) => {
 
-    return customerController.createCustimer(req,res);
-
-});
-
-app.get('/createCustomer', function (req,res) {
-
-    console.log(req.query.customerName);
-    console.log(req.query.password);
-
-    var count;
-
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
-
-
-    axios.get(blockchainBaseURL + "Customer").then(function (response){
-        console.log(response.data);
-        jsonResponse = response.data;
-
-
-    }).then(function (response){
-        findCustomerCount();
-    }).catch(function (error) {
-        console.log(error);
-    });
-
-    function findCustomerCount(){
-
-        count =  2001 + jsonResponse.length;
-
-        Request.post({
-            "headers": { "content-type": "application/json" },
-            "url": blockchainBaseURL + "Customer",
-            "body": JSON.stringify({
-                "customerName" : req.query.customerName,
-                "participantId" : count.toString(),
-                "participantType" : "user",
-                "password" : SHA256(req.query.password).toString()
-
-            })
-        }, (error, response, body) => {
-            if(error) {
-                return console.dir(error);
-            }
-
-            client.messages.create({
-                body: 'Hey ' + req.query.customerName + '! Your password is ' + req.query.password,
-                from: 'whatsapp:+14155238886',
-                to: 'whatsapp:+919496710560'
-            })
-                .then(message => console.log(message.sid))
-                .done();
-
-            console.dir(JSON.parse(body));
-            res.end(JSON.stringify({ status: "ok" }));
-        });
-
-    }
+    // return customerController.createCustomer(req,res);
 
 });
 
+app.get('/createCustomer', function (req, res) {
+    return customerController.createCustomer(req, res);
+});
 
 
-app.get('/createManufacturer', function (req,res) {
+app.get('/createManufacturer', function (req, res) {
 
     console.log(req.query.manufacturerName);
     console.log(req.query.password);
@@ -110,12 +54,12 @@ app.get('/createManufacturer', function (req,res) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
 
-    axios.get(blockchainBaseURL + "Manufacturer").then(function (response){
+    axios.get(blockchainBaseURL + "Manufacturer").then(function (response) {
         console.log(response.data);
         jsonResponse = response.data;
 
 
-    }).then(function (response){
+    }).then(function (response) {
         findManufacturerCount();
     }).catch(function (error) {
         console.log(error);
@@ -126,21 +70,21 @@ app.get('/createManufacturer', function (req,res) {
         count = 3001 + jsonResponse.length;
 
         Request.post({
-            "headers": { "content-type": "application/json" },
+            "headers": {"content-type": "application/json"},
             "url": blockchainBaseURL + "Manufacturer",
             "body": JSON.stringify({
-                "manufacturerName" : req.query.manufacturerName,
-                "participantId" : count.toString(),
-                "participantType" : "manufacturer",
-                "password" : SHA256(req.query.password).toString()
+                "manufacturerName": req.query.manufacturerName,
+                "participantId": count.toString(),
+                "participantType": "manufacturer",
+                "password": SHA256(req.query.password).toString()
 
             })
         }, (error, response, body) => {
-            if(error) {
+            if (error) {
                 return console.dir(error);
             }
             console.dir(JSON.parse(body));
-            res.end(JSON.stringify({ status: "ok" }));
+            res.end(JSON.stringify({status: "ok"}));
         });
 
     }
@@ -149,8 +93,7 @@ app.get('/createManufacturer', function (req,res) {
 });
 
 
-
-app.post('/api/userLogin', function (req,res) {
+app.post('/api/userLogin', function (req, res) {
 
     var userId = req.body.userId;
     var password = req.body.password;
@@ -158,50 +101,48 @@ app.post('/api/userLogin', function (req,res) {
     var url;
 
 
-    if(userType == "customer"){
+    if (userType == "customer") {
         url = blockchainBaseURL + 'Customer/' + userId.toString();
-    }else if(userType == "manufacturer"){
+    } else if (userType == "manufacturer") {
         url = blockchainBaseURL + 'Manufacturer/' + userId.toString();
     }
 
 
-    axios.get(url).then(function (response){
+    axios.get(url).then(function (response) {
         // console.log(response.data);
         jsonResponse = response.data;
 
 
-    }).then(function (response){
+    }).then(function (response) {
         var response2 = jsonResponse;
         checkPassword(response2)
     }).catch(function (error) {
         console.log(error);
         // send invalid id message here
-        res.end(JSON.stringify({ status: "error" }));
+        res.end(JSON.stringify({status: "error"}));
     });
 
 
-    function checkPassword(response){
+    function checkPassword(response) {
         //   console.log(response);
         console.log(response.password);
         console.log('inside check');
 
-        if(SHA256(password) == response.password){
-            res.end(JSON.stringify([{ status: "ok" }]));
+        if (SHA256(password) == response.password) {
+            res.end(JSON.stringify([{status: "ok"}]));
             console.log('here');
-        }else{
-            res.end(JSON.stringify([{ status: "incorrect" }]));
+        } else {
+            res.end(JSON.stringify([{status: "incorrect"}]));
         }
 
 
     }
 
 
-
 });
 
 
-
-app.get('/createVehicle', function (req,res) {
+app.get('/createVehicle', function (req, res) {
 
 
     console.log(req.query.chassisNumber);
@@ -215,7 +156,7 @@ app.get('/createVehicle', function (req,res) {
 
 
     Request.post({
-        "headers": { "content-type": "application/json" },
+        "headers": {"content-type": "application/json"},
         "url": blockchainBaseURL + "Vehicle",
         "body": JSON.stringify({
             "chassisNumber": req.query.chassisNumber,
@@ -228,34 +169,32 @@ app.get('/createVehicle', function (req,res) {
 
         })
     }, (error, response, body) => {
-        if(error) {
+        if (error) {
             return console.dir(error);
         }
         console.dir(JSON.parse(body));
-        res.end(JSON.stringify({ status: "ok" }));
+        res.end(JSON.stringify({status: "ok"}));
     });
-
 
 
 });
 
 
+app.get('/listVehicles', function (req, res) {
 
-app.get('/listVehicles', function (req,res) {
 
-
-    axios.get(blockchainBaseURL + 'Vehicle').then(function (response){
+    axios.get(blockchainBaseURL + 'Vehicle').then(function (response) {
         console.log(response.data);
         jsonResponse = response.data;
 
-    }).then(function (response){
+    }).then(function (response) {
         showData();
     }).catch(function (error) {
         console.log(error);
     });
 
 
-    function showData(){
+    function showData() {
         console.log(jsonResponse);
         res.send(jsonResponse);
     }
@@ -263,25 +202,21 @@ app.get('/listVehicles', function (req,res) {
 });
 
 
+app.get('/listCustomers', function (req, res) {
 
 
-
-
-app.get('/listCustomers', function (req,res) {
-
-
-    axios.get(blockchainBaseURL + 'Customer').then(function (response){
+    axios.get(blockchainBaseURL + 'Customer').then(function (response) {
         console.log(response.data);
         jsonResponse = response.data;
 
-    }).then(function (response){
+    }).then(function (response) {
         showData();
     }).catch(function (error) {
         console.log(error);
     });
 
 
-    function showData(){
+    function showData() {
         console.log(jsonResponse);
         res.send(jsonResponse);
     }
@@ -289,21 +224,21 @@ app.get('/listCustomers', function (req,res) {
 });
 
 
-app.get('/listManufacturers', function (req,res) {
+app.get('/listManufacturers', function (req, res) {
 
 
-    axios.get(blockchainBaseURL + 'Manufacturer').then(function (response){
+    axios.get(blockchainBaseURL + 'Manufacturer').then(function (response) {
         console.log(response.data);
         jsonResponse = response.data;
 
-    }).then(function (response){
+    }).then(function (response) {
         showData();
     }).catch(function (error) {
         console.log(error);
     });
 
 
-    function showData(){
+    function showData() {
         console.log(jsonResponse);
         res.send(jsonResponse);
     }
@@ -311,8 +246,7 @@ app.get('/listManufacturers', function (req,res) {
 });
 
 
-
-app.get('/ownerChange', function (req,res) {
+app.get('/ownerChange', function (req, res) {
 
     console.log(req.query.chassisNumber);
     var newOwnerId = req.query.newOwnerId;
@@ -322,42 +256,42 @@ app.get('/ownerChange', function (req,res) {
     var asset = 'org.example.mynetwork.Vehicle#' + req.query.chassisNumber;
 
     Request.post({
-        "headers": { "content-type": "application/json" },
+        "headers": {"content-type": "application/json"},
         "url": blockchainBaseURL + "AssetTransfer",
         "body": JSON.stringify({
             "asset": asset,
             "newOwnerId": newOwnerId,
-            "newOwnerList" : [newOwnerId]
+            "newOwnerList": [newOwnerId]
         })
     }, (error, response, body) => {
-        if(error) {
+        if (error) {
             return console.dir(error);
         }
         console.dir(JSON.parse(body));
-        res.end(JSON.stringify([{ status: "ok" }]));
+        res.end(JSON.stringify([{status: "ok"}]));
     });
 
 });
 
-app.get('/getVehicleTransactions', function (req,res) {
+app.get('/getVehicleTransactions', function (req, res) {
 
     console.log(req.query.chassisNumber);
 
     var vehichleAsset = "resource%3Aorg.example.mynetwork.Vehicle%23" + req.query.chassisNumber;
     var queryUrl = blockchainBaseURL + "queries/ListVehichleTransactions?id=" + vehichleAsset;
 
-    axios.get(queryUrl).then(function (response){
+    axios.get(queryUrl).then(function (response) {
         console.log(response.data);
         jsonResponse = response.data;
 
-    }).then(function (response){
+    }).then(function (response) {
         showData();
     }).catch(function (error) {
         console.log(error);
     });
 
 
-    function showData(){
+    function showData() {
         console.log(jsonResponse);
         res.send(jsonResponse);
     }
@@ -366,7 +300,7 @@ app.get('/getVehicleTransactions', function (req,res) {
 });
 
 
-app.get('/listUserVehicles', function (req,res) {
+app.get('/listUserVehicles', function (req, res) {
 
     var userType = req.query.userType;
     console.log(userType);
@@ -376,12 +310,12 @@ app.get('/listUserVehicles', function (req,res) {
 
     var requestUrl;
 
-    if(req.query.userType == "customer"){
+    if (req.query.userType == "customer") {
 
         var customerAsset = "resource%3Aorg.example.mynetwork.Customer%23" + userId;
         console.log('customer');
         requestUrl = blockchainBaseURL + "queries/ListUserVehichles?id=" + customerAsset;
-    }else {
+    } else {
 
         var manufacturerAsset = "resource%3Aorg.example.mynetwork.Manufacturer%23" + userId;
         console.log('manufcaturer');
@@ -390,41 +324,40 @@ app.get('/listUserVehicles', function (req,res) {
     }
 
 
-
-    axios.get(requestUrl).then(function (response){
+    axios.get(requestUrl).then(function (response) {
         console.log(response.data);
         jsonResponse = response.data;
 
-    }).then(function (response){
+    }).then(function (response) {
         showData();
     }).catch(function (error) {
         console.log(error);
     });
 
-    function showData(){
+    function showData() {
         console.log(jsonResponse);
         res.send(jsonResponse);
     }
 
 });
 
-app.get('/vehichleInfo', function (req,res) {
+app.get('/vehichleInfo', function (req, res) {
 
     var chassisNumber = req.query.chassisNumber;
 
     var requestUrl = blockchainBaseURL + "Vehicle/" + chassisNumber;
 
-    axios.get(requestUrl).then(function (response){
+    axios.get(requestUrl).then(function (response) {
         console.log(response.data);
         jsonResponse = response.data;
 
-    }).then(function (response){
+    }).then(function (response) {
         showData();
     }).catch(function (error) {
         console.log(error);
     });
 
-    function showData(){
+    function showData() {
         console.log(jsonResponse);
         res.send(jsonResponse);
     }
@@ -433,7 +366,6 @@ app.get('/vehichleInfo', function (req,res) {
 });
 
 
-
-let server = app.listen(4000, function() {
+let server = app.listen(4000, function () {
     console.log('Server is listening on port 4000')
 });
