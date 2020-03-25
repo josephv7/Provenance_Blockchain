@@ -8,7 +8,7 @@
      const oldOwnerId = tx.asset.ownerId;
      tx.asset.ownerId = tx.newOwnerId;
 
-     const oldOwner = tx.asset.owner;
+    //  const oldOwner = tx.asset.owner;
      tx.asset.owner = tx.newOwner;
 
 
@@ -32,8 +32,8 @@
     event.newOwnerId = tx.newOwnerId;
     event.oldOwnerList = oldOwnerList;
     event.newOwnerList = newList
-    event.oldOwner = oldOwner;
-    event.newOwner = tx.newOwner;
+    // event.oldOwner = oldOwner;
+    // event.newOwner = tx.newOwner;
     emit(event);
 
 

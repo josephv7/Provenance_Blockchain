@@ -59,8 +59,8 @@ event AssetTransferEvent {
   o String newOwnerId
   o String[] oldOwnerList
   o String[] newOwnerList
-  o Customer oldOwner
-  o Customer newOwner
+  // o Customer oldOwner
+  // o Customer newOwner
 }
 
 
