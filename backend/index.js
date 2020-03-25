@@ -8,6 +8,9 @@ const cors = require('cors');
 const SHA256 = require("crypto-js/sha256");
 
 
+const customerController = require("./controllers/createCustomer");
+
+
 const config = require("./config");
 const accountSid = config.accountSid;
 const authToken = config.authToken;
@@ -25,6 +28,12 @@ app.get('/', function(req, res){
 
     console.log("Basic GET API");
     res.send("Basic GET API");
+
+});
+
+app.get('/test', (req,res) =>{
+
+    return customerController.createCustimer(req,res);
 
 });
 
