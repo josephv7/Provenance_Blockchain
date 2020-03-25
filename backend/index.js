@@ -19,15 +19,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-// Vehicle 1000 Series
-// Customer 2000 Series
-// Manufacturer 3000 Series
-
 app.get('/', function(req, res){
 
     console.log("Basic GET API");
     res.send("Basic GET API");
-
 
 });
 
@@ -313,6 +308,7 @@ app.get('/ownerChange', function (req,res) {
 
 
     var asset = 'org.example.mynetwork.Vehicle#' + req.query.chassisNumber;
+    var vehichleAsset = 'resource:org.example.mynetwork.Customer#' + req.query.newOwnerId;
 
     Request.post({
         "headers": { "content-type": "application/json" },
@@ -320,7 +316,8 @@ app.get('/ownerChange', function (req,res) {
         "body": JSON.stringify({
             "asset": asset,
             "newOwnerId": newOwnerId,
-            "newOwnerList" : [newOwnerId]
+            "newOwnerList" : [newOwnerId],
+            "newOwner" : vehichleAsset
         })
     }, (error, response, body) => {
         if(error) {
