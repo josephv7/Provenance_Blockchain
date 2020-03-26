@@ -4,7 +4,7 @@ const SHA256 = require("crypto-js/sha256");
 const constants = require("../constansts");
 
 module.exports = {
-    userLogin : (req,res) => {
+    userLogin: (req, res) => {
 
         var userId = req.body.userId;
         var password = req.body.password;

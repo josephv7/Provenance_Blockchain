@@ -4,7 +4,7 @@ const SHA256 = require("crypto-js/sha256");
 const constants = require("../constansts");
 
 module.exports = {
-    ownerChange : (req,res) => {
+    ownerChange: (req, res) => {
         console.log(req.query.chassisNumber);
         var newOwnerId = req.query.newOwnerId;
         console.log(newOwnerId);

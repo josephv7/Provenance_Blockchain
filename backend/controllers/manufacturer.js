@@ -4,7 +4,7 @@ const SHA256 = require("crypto-js/sha256");
 const constants = require("../constansts");
 
 module.exports = {
-    createManufacturer : (req,res) => {
+    createManufacturer: (req, res) => {
 
         console.log(req.query.manufacturerName);
         console.log(req.query.password);
@@ -54,7 +54,7 @@ module.exports = {
 
     },
 
-    listManufacturers : (req,res) => {
+    listManufacturers: (req, res) => {
         axios.get(constants.blockchainBaseURL + 'Manufacturer').then(function (response) {
             console.log(response.data);
             jsonResponse = response.data;

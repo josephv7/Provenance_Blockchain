@@ -4,7 +4,7 @@ const SHA256 = require("crypto-js/sha256");
 const constants = require("../constansts");
 
 module.exports = {
-    createVehicle : (req,res) => {
+    createVehicle: (req, res) => {
 
 
         console.log(req.query.chassisNumber);
@@ -41,7 +41,7 @@ module.exports = {
 
     },
 
-    listVehicles : (req,res) => {
+    listVehicles: (req, res) => {
         axios.get(constants.blockchainBaseURL + 'Vehicle').then(function (response) {
             console.log(response.data);
             jsonResponse = response.data;
@@ -57,6 +57,29 @@ module.exports = {
             console.log(jsonResponse);
             res.send(jsonResponse);
         }
+
+    },
+
+    vehicleInfo: (req, res) => {
+        var chassisNumber = req.query.chassisNumber;
+
+        var requestUrl = constants.blockchainBaseURL + "Vehicle/" + chassisNumber;
+
+        axios.get(requestUrl).then(function (response) {
+            console.log(response.data);
+            jsonResponse = response.data;
+
+        }).then(function (response) {
+            showData();
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+        function showData() {
+            console.log(jsonResponse);
+            res.send(jsonResponse);
+        }
+
 
     }
 };

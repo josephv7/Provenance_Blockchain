@@ -67,7 +67,7 @@ module.exports = {
 
     },
 
-    listCustomers : (req,res) => {
+    listCustomers: (req, res) => {
 
         axios.get(constants.blockchainBaseURL + 'Customer').then(function (response) {
             console.log(response.data);
