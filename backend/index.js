@@ -9,6 +9,7 @@ const SHA256 = require("crypto-js/sha256");
 
 
 const customerController = require("./controllers/customer");
+const manufacturerController = require("./controllers/manufacturer");
 
 
 const config = require("./config");
@@ -43,53 +44,7 @@ app.get('/createCustomer', function (req, res) {
 
 
 app.get('/createManufacturer', function (req, res) {
-
-    console.log(req.query.manufacturerName);
-    console.log(req.query.password);
-
-    var count;
-
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
-
-    axios.get(blockchainBaseURL + "Manufacturer").then(function (response) {
-        console.log(response.data);
-        jsonResponse = response.data;
-
-
-    }).then(function (response) {
-        findManufacturerCount();
-    }).catch(function (error) {
-        console.log(error);
-    });
-
-    function findManufacturerCount() {
-
-        count = 3001 + jsonResponse.length;
-
-        Request.post({
-            "headers": {"content-type": "application/json"},
-            "url": blockchainBaseURL + "Manufacturer",
-            "body": JSON.stringify({
-                "manufacturerName": req.query.manufacturerName,
-                "participantId": count.toString(),
-                "participantType": "manufacturer",
-                "password": SHA256(req.query.password).toString()
-
-            })
-        }, (error, response, body) => {
-            if (error) {
-                return console.dir(error);
-            }
-            console.dir(JSON.parse(body));
-            res.end(JSON.stringify({status: "ok"}));
-        });
-
-    }
-
-
+    return manufacturerController.createManufacturer(req,res);
 });
 
 
@@ -208,24 +163,7 @@ app.get('/listCustomers', function (req, res) {
 
 
 app.get('/listManufacturers', function (req, res) {
-
-
-    axios.get(blockchainBaseURL + 'Manufacturer').then(function (response) {
-        console.log(response.data);
-        jsonResponse = response.data;
-
-    }).then(function (response) {
-        showData();
-    }).catch(function (error) {
-        console.log(error);
-    });
-
-
-    function showData() {
-        console.log(jsonResponse);
-        res.send(jsonResponse);
-    }
-
+    return manufacturerController.listManufacturers(req,res);
 });
 
 
