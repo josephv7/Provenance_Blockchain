@@ -203,24 +203,7 @@ app.get('/listVehicles', function (req, res) {
 
 
 app.get('/listCustomers', function (req, res) {
-
-
-    axios.get(blockchainBaseURL + 'Customer').then(function (response) {
-        console.log(response.data);
-        jsonResponse = response.data;
-
-    }).then(function (response) {
-        showData();
-    }).catch(function (error) {
-        console.log(error);
-    });
-
-
-    function showData() {
-        console.log(jsonResponse);
-        res.send(jsonResponse);
-    }
-
+    return customerController.listCustomers(req,res);
 });
 
 
