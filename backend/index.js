@@ -10,6 +10,7 @@ const SHA256 = require("crypto-js/sha256");
 
 const customerController = require("./controllers/customer");
 const manufacturerController = require("./controllers/manufacturer");
+const vehicleController = require("./controllers/vehicle");
 
 
 const config = require("./config");
@@ -98,62 +99,12 @@ app.post('/api/userLogin', function (req, res) {
 
 
 app.get('/createVehicle', function (req, res) {
-
-
-    console.log(req.query.chassisNumber);
-    console.log(req.query.ownerId);
-    console.log(req.query.manufacturerLocation);
-    console.log(req.query.manufacturer);
-    console.log(req.query.plateNumber);
-
-
-    var owner = "org.example.mynetwork.Customer#" + req.query.ownerId;
-
-
-    Request.post({
-        "headers": {"content-type": "application/json"},
-        "url": blockchainBaseURL + "Vehicle",
-        "body": JSON.stringify({
-            "chassisNumber": req.query.chassisNumber,
-            "owner": owner,
-            "plateNumber": req.query.plateNumber,
-            "manufactureLocation": req.query.manufacturerLocation,
-            "manufacturer": req.query.manufacturer,
-            "ownerList": [req.query.ownerId],
-            "ownerId": req.query.ownerId
-
-        })
-    }, (error, response, body) => {
-        if (error) {
-            return console.dir(error);
-        }
-        console.dir(JSON.parse(body));
-        res.end(JSON.stringify({status: "ok"}));
-    });
-
-
+    return vehicleController.createVehicle(req,res);
 });
 
 
 app.get('/listVehicles', function (req, res) {
-
-
-    axios.get(blockchainBaseURL + 'Vehicle').then(function (response) {
-        console.log(response.data);
-        jsonResponse = response.data;
-
-    }).then(function (response) {
-        showData();
-    }).catch(function (error) {
-        console.log(error);
-    });
-
-
-    function showData() {
-        console.log(jsonResponse);
-        res.send(jsonResponse);
-    }
-
+    return vehicleController.listVehicles(req,res);
 });
 
 
