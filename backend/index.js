@@ -11,6 +11,7 @@ const SHA256 = require("crypto-js/sha256");
 const customerController = require("./controllers/customer");
 const manufacturerController = require("./controllers/manufacturer");
 const vehicleController = require("./controllers/vehicle");
+const transactionController = require("./controllers/transactions");
 
 
 const config = require("./config");
@@ -30,12 +31,6 @@ app.get('/', function (req, res) {
 
     console.log("Basic GET API");
     res.send("Basic GET API");
-
-});
-
-app.get('/test', (req, res) => {
-
-    // return customerController.createCustomer(req,res);
 
 });
 
@@ -119,30 +114,7 @@ app.get('/listManufacturers', function (req, res) {
 
 
 app.get('/ownerChange', function (req, res) {
-
-    console.log(req.query.chassisNumber);
-    var newOwnerId = req.query.newOwnerId;
-    console.log(newOwnerId);
-
-
-    var asset = 'org.example.mynetwork.Vehicle#' + req.query.chassisNumber;
-
-    Request.post({
-        "headers": {"content-type": "application/json"},
-        "url": blockchainBaseURL + "AssetTransfer",
-        "body": JSON.stringify({
-            "asset": asset,
-            "newOwnerId": newOwnerId,
-            "newOwnerList": [newOwnerId]
-        })
-    }, (error, response, body) => {
-        if (error) {
-            return console.dir(error);
-        }
-        console.dir(JSON.parse(body));
-        res.end(JSON.stringify([{status: "ok"}]));
-    });
-
+    return transactionController.ownerChange(req,res);
 });
 
 app.get('/getVehicleTransactions', function (req, res) {
