@@ -47,7 +47,7 @@ module.exports = {
                     res.end(JSON.stringify({status: "error"}));
 
                     return console.dir(error);
-                }else {
+                } else {
                     console.dir(JSON.parse(body));
                     res.end(JSON.stringify({status: "ok"}));
                 }

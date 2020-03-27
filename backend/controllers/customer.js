@@ -51,7 +51,7 @@ module.exports = {
                 if (error) {
                     res.end(JSON.stringify({status: "error"}));
                     return console.dir(error);
-                }else {
+                } else {
 
                     client.messages.create({
                         body: 'Hey ' + req.query.customerName + '! Your password is ' + req.query.password,
