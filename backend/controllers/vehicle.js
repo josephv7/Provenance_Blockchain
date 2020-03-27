@@ -32,10 +32,13 @@ module.exports = {
             })
         }, (error, response, body) => {
             if (error) {
+                res.end(JSON.stringify({status: "error"}));
                 return console.dir(error);
+            } else {
+
+                console.dir(JSON.parse(body));
+                res.end(JSON.stringify({status: "ok"}));
             }
-            console.dir(JSON.parse(body));
-            res.end(JSON.stringify({status: "ok"}));
         });
 
 
@@ -49,6 +52,7 @@ module.exports = {
         }).then(function (response) {
             showData();
         }).catch(function (error) {
+            res.end(JSON.stringify({status: "error"}));
             console.log(error);
         });
 
