@@ -76,6 +76,7 @@ module.exports = {
         }).then(function (response) {
             showData();
         }).catch(function (error) {
+            res.end(JSON.stringify({status: "error"}));
             console.log(error);
         });
 
