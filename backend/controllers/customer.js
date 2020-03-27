@@ -30,6 +30,7 @@ module.exports = {
             findCustomerCount();
         }).catch(function (error) {
             console.log(error);
+            res.end(JSON.stringify({status: "error"}));
         });
 
         function findCustomerCount() {
@@ -48,19 +49,24 @@ module.exports = {
                 })
             }, (error, response, body) => {
                 if (error) {
+                    res.end(JSON.stringify({status: "error"}));
                     return console.dir(error);
+                }else {
+
+                    client.messages.create({
+                        body: 'Hey ' + req.query.customerName + '! Your password is ' + req.query.password,
+                        from: 'whatsapp:+14155238886',
+                        to: 'whatsapp:+919496710560'
+                    })
+                        .then(message => console.log(message.sid))
+                        .done();
+
+                    console.dir(JSON.parse(body));
+                    res.end(JSON.stringify({status: "ok"}));
+
                 }
 
-                client.messages.create({
-                    body: 'Hey ' + req.query.customerName + '! Your password is ' + req.query.password,
-                    from: 'whatsapp:+14155238886',
-                    to: 'whatsapp:+919496710560'
-                })
-                    .then(message => console.log(message.sid))
-                    .done();
 
-                console.dir(JSON.parse(body));
-                res.end(JSON.stringify({status: "ok"}));
             });
 
         }
@@ -77,6 +83,8 @@ module.exports = {
             showData();
         }).catch(function (error) {
             console.log(error);
+            res.end(JSON.stringify({status: "error"}));
+
         });
 
 
