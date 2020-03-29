@@ -1,19 +1,18 @@
 
-import Index from "views/Index.js";
+import Dashboard from "views/Dashboard.js";
 import CreateConsumer from "views/createConsumer";
 import CreateManufacturer from "views/createManufacturer";
 import ListCustomer from "views/listConsumers";
-import ListVehicles from "views/listVehicles"
-import ListManufacturer from "views/listManufacturer"
-
+import ListVehicles from "views/listVehicles";
+import ListManufacturer from "views/listManufacturer";
 import OwnerChange from "views/ownerChange";
 
 var AdminRoute = [
   {
-    path: "/index",
+    path: "/dashboard",
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
-    component: Index,
+    component: Dashboard,
     layout: "/admin"
   },
   {

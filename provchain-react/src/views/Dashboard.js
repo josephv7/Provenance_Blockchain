@@ -17,7 +17,7 @@ import {
 
 import Header from "components/Headers/Header.js";
 
-class Index extends React.Component {
+class Dashboard extends React.Component {
   constructor(props){
     super(props);
   }
@@ -51,4 +51,4 @@ class Index extends React.Component {
   }
 }
 
-export default Index;
+export default Dashboard;
