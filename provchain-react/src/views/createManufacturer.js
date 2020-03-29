@@ -31,17 +31,11 @@ class CreateManufacturer extends React.Component {
     manufacturerName: '',
     manufacturerPassword: '',
     exampleModal: false,
-    failModal: false,
     loading: false
   }
   toggleModal(){
     this.setState({
       exampleModal: !this.state.exampleModal
-    });
-  };
-  toggleFailModal(){
-    this.setState({
-      failModal: !this.state.failModal
     });
   };
   nameHandleChange = event => {
@@ -66,13 +60,9 @@ class CreateManufacturer extends React.Component {
     .then(res => {
       console.log(res.status)
       console.log(res.data.status)
-      if(res.data.status=="ok" && res.status=="200"){
+      if(res.data.status=="ok"){
             this.toggleModal();
             this.setState({loading: false})
-      }
-      else{
-          this.toggleFailModal();
-          this.setState({loading: false})
       }
     })
     // axios.post(nodeURL+`/createManufacturer`, 
@@ -114,6 +104,7 @@ class CreateManufacturer extends React.Component {
           <div className="modal-body text-center">
             <i class="ri-heart-line ri-3x text-success"></i>
             <h4 class="text-success">Success</h4>
+            <h4 class="text-muted">Manufacturer <span class="text-success">{this.state.manufacturerName}</span> was added successfully !</h4>
           </div>
           <div className="modal-footer">
             <Button
@@ -121,40 +112,6 @@ class CreateManufacturer extends React.Component {
               data-dismiss="modal"
               type="button"
               onClick={() => this.toggleModal("exampleModal")}
-            >
-              Close
-            </Button>
-          </div>
-        </Modal>
-        <Modal
-          className="modal-dialog-centered"
-          isOpen={this.state.exampleModal}
-          toggle={() => this.toggleFailModal("exampleModal")}
-        >
-          <div className="modal-header">
-            <h2 className="modal-title" id="exampleModalLabel">
-              Failure
-            </h2>
-            <button
-              aria-label="Close"
-              className="close"
-              data-dismiss="modal"
-              type="button"
-              onClick={() => this.toggleFailModal("exampleModal")}
-            >
-              <span aria-hidden={true}>×</span>
-            </button>
-          </div>
-          <div className="modal-body text-center">
-            <i class="ri-heart-line ri-3x text-danger"></i>
-            <h4 class="text-danger">Failed !</h4>
-          </div>
-          <div className="modal-footer">
-            <Button
-              color="secondary"
-              data-dismiss="modal"
-              type="button"
-              onClick={() => this.toggleFailModal("exampleModal")}
             >
               Close
             </Button>
