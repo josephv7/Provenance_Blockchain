@@ -1,10 +1,12 @@
 
 import Index from "views/Index.js";
 import CreateConsumer from "views/createConsumer";
+import CreateManufacturer from "views/createManufacturer";
 import ListCustomer from "views/listConsumers";
 import ListVehicles from "views/listVehicles"
 import ListManufacturer from "views/listManufacturer"
-import CreateManufacturer from "views/createManufacturer";
+
+import OwnerChange from "views/ownerChange";
 
 var AdminRoute = [
   {
@@ -12,6 +14,13 @@ var AdminRoute = [
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
+    layout: "/admin"
+  },
+  {
+    path: "/ownerChange",
+    name: "Owner Change",
+    icon: "ni ni-single-02 text-red",
+    component: OwnerChange,
     layout: "/admin"
   },
   {
@@ -47,13 +56,6 @@ var AdminRoute = [
     name: "List Vehicles",
     icon: "ni ni-bullet-list-67 text-red",
     component: ListVehicles,
-    layout: "/admin"
-  },
-  {
-    path: "/ownerChange",
-    name: "Owner Change",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: ListCustomer,
     layout: "/admin"
   }
 ];
