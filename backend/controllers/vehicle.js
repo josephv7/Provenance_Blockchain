@@ -36,8 +36,13 @@ module.exports = {
                 return console.dir(error);
             } else {
 
-                console.dir(JSON.parse(body));
-                res.end(JSON.stringify({status: "ok"}));
+                if(JSON.parse(body).hasOwnProperty('error')){
+                    res.end(JSON.stringify({status: "error"}));
+                }else {
+                    console.dir(JSON.parse(body));
+                    res.end(JSON.stringify({status: "ok"}));
+                }
+
             }
         });
 
