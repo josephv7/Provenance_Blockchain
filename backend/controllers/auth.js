@@ -11,30 +11,44 @@ module.exports = {
         var userType;
         var url;
 
-        console.log(userId.charAt(0));
 
         if (userId.charAt(0) == "2") {
             url = constants.blockchainBaseURL + 'Customer/' + userId.toString();
             userType = "customer";
+            fetchDataFromBlockchain();
         } else if (userId.charAt(0) == "3") {
             url = constants.blockchainBaseURL + 'Manufacturer/' + userId.toString();
             userType = "manufacturer";
+            fetchDataFromBlockchain()
+        }else if(userId == "admin") {
+            userType = "admin";
+            tempCheck();
         }
 
+        function tempCheck(){
+            if(req.body.userId == "admin" && req.body.password == "admin"){
+                res.end(JSON.stringify([{status: "ok", userType: userType}]));
+            }else{
+                res.end(JSON.stringify([{status: "incorrect"}]));
+            }
+        }
 
-        axios.get(url).then(function (response) {
-            // console.log(response.data);
-            jsonResponse = response.data;
+        function fetchDataFromBlockchain(){
+            axios.get(url).then(function (response) {
+                // console.log(response.data);
+                jsonResponse = response.data;
 
 
-        }).then(function (response) {
-            var response2 = jsonResponse;
-            checkPassword(response2)
-        }).catch(function (error) {
-            console.log(error);
-            // send invalid id message here
-            res.end(JSON.stringify({status: "error"}));
-        });
+            }).then(function (response) {
+                var response2 = jsonResponse;
+                checkPassword(response2)
+            }).catch(function (error) {
+                console.log(error);
+                // send invalid id message here
+                res.end(JSON.stringify({status: "error"}));
+            });
+        }
+
 
 
         function checkPassword(response) {
