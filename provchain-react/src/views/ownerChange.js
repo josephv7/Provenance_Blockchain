@@ -9,6 +9,8 @@ import {
   CardBody,
   FormGroup,
   Form,
+  Modal,
+  Spinner,
   Input,
   Container,
   Row,
@@ -26,8 +28,15 @@ import axios from "axios"
 class OwnerChange extends React.Component {
   state = {
     chassisNumber: '',
-    newOwnerId: ''
+    newOwnerId: '',
+    exampleModal: false,
+    loading: false
   }
+  toggleModal(){
+    this.setState({
+      exampleModal: !this.state.exampleModal
+    });
+  };
   nameHandleChange = event => {
     console.log("name change called")
     this.setState({ chassisNumber: event.target.value });
@@ -45,7 +54,16 @@ class OwnerChange extends React.Component {
       chassisNumber: this.state.chassisNumber,
       newOwnerId: this.state.newOwnerId 
     }
-    axios.get(nodeURL+"/ownerChange?chassisNumber="+vehicle.chassisNumber+"&newOwnerId="+vehicle.newOwnerId);
+    this.setState({loading: true})
+    axios.get(nodeURL+"/ownerChange?chassisNumber="+vehicle.chassisNumber+"&newOwnerId="+vehicle.newOwnerId)
+    .then(res => {
+      console.log(res)
+      console.log(res.data.status)
+      if(res.data.status=="ok"){
+            this.toggleModal();
+            this.setState({loading: false})
+      }
+    })
     // axios.post(nodeURL+`/ownerChange`, 
     //   { headers: {
     //             "Content-Type": "application/json",
@@ -63,7 +81,41 @@ class OwnerChange extends React.Component {
     return (
       <>
         <Header />
-        {/* Page content */}
+        <Modal
+          className="modal-dialog-centered"
+          isOpen={this.state.exampleModal}
+          toggle={() => this.toggleModal("exampleModal")}
+        >
+          <div className="modal-header">
+            <h2 className="modal-title" id="exampleModalLabel">
+              Success
+            </h2>
+            <button
+              aria-label="Close"
+              className="close"
+              data-dismiss="modal"
+              type="button"
+              onClick={() => this.toggleModal("exampleModal")}
+            >
+              <span aria-hidden={true}>×</span>
+            </button>
+          </div>
+          <div className="modal-body text-center">
+            <i class="ri-heart-line ri-3x text-success"></i>
+            <h4 class="text-success">Success</h4>
+            <h4 class="text-muted">New Owner is <span class="text-success">{this.state.newOwnerId}</span></h4>
+          </div>
+          <div className="modal-footer">
+            <Button
+              color="secondary"
+              data-dismiss="modal"
+              type="button"
+              onClick={() => this.toggleModal("exampleModal")}
+            >
+              Close
+            </Button>
+          </div>
+        </Modal>
         <Container className="mt--7" fluid>
           <Row>
             <Col className="order-xl-1" xl="10">
@@ -86,6 +138,7 @@ class OwnerChange extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
+                  {this.state.loading ? <Spinner color="dark" /> :
                   <Form onSubmit = {this.handleSubmit}>
                     <h6 className="heading-small text-muted mb-4">
                       Invoke Owner Chagne Event on a Vehicle
@@ -142,6 +195,7 @@ class OwnerChange extends React.Component {
                     </div>
                     
                   </Form>
+                  }
                 </CardBody>
               </Card>
             </Col>

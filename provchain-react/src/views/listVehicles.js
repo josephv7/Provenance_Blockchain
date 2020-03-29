@@ -111,7 +111,7 @@ class ListVehicles extends React.Component {
         </Modal>
         <Container className="mt--7" fluid>
         <Row>
-            <Col md={5} xs={12}>
+            <Col md={8} xs={12}>
                     <div className="col">
                         <Card className="shadow">
                           <CardHeader>
@@ -163,8 +163,8 @@ class ListVehicles extends React.Component {
                         </Card>
                       </div>
               </Col>
-              <Col xs={12} md={7}>
-            <div className="col">
+              <Col xs={12} md={12}>
+            <div className="col mt-2">
               <Card className="shadow">
                 <CardHeader className="border-0">
                   <h3 className="mb-0">List All Vehicles</h3>
@@ -175,7 +175,8 @@ class ListVehicles extends React.Component {
                       <th scope="col">Chassis Number</th>
                       <th scope="col">Plate Number</th>
                       <th scope="col">Manufacturer</th>
-                      <th scope="col">Owner ID</th>                                            
+                      <th scope="col">Owner ID</th>                                                                                                        
+                      <th scope="col">Owner List</th>                                            
                     </tr>
                   </thead>
                   <tbody>
@@ -185,7 +186,8 @@ class ListVehicles extends React.Component {
                                 <td>{object.chassisNumber}</td>
                                 <td>{object.plateNumber}</td>
                                 <td>{object.manufacturer}</td>
-                                <td>{object.ownerId}</td>
+                                <td>{object.ownerId}</td>                              
+                                <td>{object.ownerList +String(", ")}</td>
                               </tr>
                             </>
                     ))}
