@@ -40,7 +40,7 @@ module.exports = {
             console.log('inside check');
 
             if (SHA256(password) == response.password) {
-                res.end(JSON.stringify([{status: "ok"}]));
+                res.end(JSON.stringify([{status: "ok", userType: req.body.userType}]));
                 console.log('here');
             } else {
                 res.end(JSON.stringify([{status: "incorrect"}]));
