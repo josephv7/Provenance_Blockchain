@@ -53,16 +53,20 @@ module.exports = {
                     return console.dir(error);
                 } else {
 
-                    client.messages.create({
-                        body: 'Hey ' + req.query.customerName + '! Your password is ' + req.query.password,
-                        from: 'whatsapp:+14155238886',
-                        to: 'whatsapp:+919496710560'
-                    })
-                        .then(message => console.log(message.sid))
-                        .done();
+                    if(JSON.parse(body).hasOwnProperty('error')){
+                        res.end(JSON.stringify({status: "error"}));
+                    }else {
+                        client.messages.create({
+                            body: 'Hey ' + req.query.customerName + '! Your password is ' + req.query.password,
+                            from: 'whatsapp:+14155238886',
+                            to: 'whatsapp:+919496710560'
+                        })
+                            .then(message => console.log(message.sid))
+                            .done();
 
-                    console.dir(JSON.parse(body));
-                    res.end(JSON.stringify({status: "ok"}));
+                        console.dir(JSON.parse(body));
+                        res.end(JSON.stringify({status: "ok"}));
+                    }
 
                 }
 
