@@ -10,6 +10,7 @@ import {
   FormGroup,
   Form,
   Input,
+  Modal,
   Container,
   Row,
   Col
@@ -21,13 +22,20 @@ import Header from "components/Headers/Header.js";
 // To per form POST request to nodeJS url 
 import {nodeURL} from "components/variables"
 import axios from "axios"
+import 'remixicon/fonts/remixicon.css'
 
 
 class CreateManufacturer extends React.Component {
   state = {
     manufacturerName: '',
-    manufacturerPassword: ''
+    manufacturerPassword: '',
+    exampleModal: false
   }
+  toggleModal(){
+    this.setState({
+      exampleModal: !this.state.exampleModal
+    });
+  };
   nameHandleChange = event => {
     console.log("name change called")
     this.setState({ manufacturerName: event.target.value });
@@ -45,7 +53,14 @@ class CreateManufacturer extends React.Component {
       manufacturerName: this.state.manufacturerName,
       password: this.state.manufacturerPassword 
     }
-    axios.get(nodeURL+"/createManufacturer?manufacturerName="+manufacturer.manufacturerName+"&password="+manufacturer.password);
+    axios.get(nodeURL+"/createManufacturer?manufacturerName="+manufacturer.manufacturerName+"&password="+manufacturer.password)
+    .then(res => {
+      console.log(res)
+      console.log(res.data.status)
+      if(res.data.status=="ok"){
+            this.toggleModal();
+      }
+    })
     // axios.post(nodeURL+`/createManufacturer`, 
     //   { headers: {
     //             "Content-Type": "application/json",
@@ -63,7 +78,40 @@ class CreateManufacturer extends React.Component {
     return (
       <>
         <Header />
-        {/* Page content */}
+        <Modal
+          className="modal-dialog-centered"
+          isOpen={this.state.exampleModal}
+          toggle={() => this.toggleModal("exampleModal")}
+        >
+          <div className="modal-header">
+            <h2 className="modal-title" id="exampleModalLabel">
+              Success
+            </h2>
+            <button
+              aria-label="Close"
+              className="close"
+              data-dismiss="modal"
+              type="button"
+              onClick={() => this.toggleModal("exampleModal")}
+            >
+              <span aria-hidden={true}>×</span>
+            </button>
+          </div>
+          <div className="modal-body text-center">
+            <i class="ri-heart-line ri-3x text-success"></i>
+            <h4 class="text-success">Success</h4>
+          </div>
+          <div className="modal-footer">
+            <Button
+              color="secondary"
+              data-dismiss="modal"
+              type="button"
+              onClick={() => this.toggleModal("exampleModal")}
+            >
+              Close
+            </Button>
+          </div>
+        </Modal>
         <Container className="mt--7" fluid>
           <Row>
             <Col className="order-xl-1" xl="10">
