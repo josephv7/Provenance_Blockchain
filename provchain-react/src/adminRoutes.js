@@ -1,9 +1,9 @@
 
 import Index from "views/Index.js";
 import CreateConsumer from "views/createConsumer";
-import createManufactrer from "views/createManufacturer";
-import Tables from "views/Tables.js";
-import Login from "views/Login"
+import ListCustomer from "views/listConsumers";
+import ListVehicles from "views/listVehicles"
+import ListManufacturer from "views/listManufacturer"
 import CreateManufacturer from "views/createManufacturer";
 
 var AdminRoute = [
@@ -29,31 +29,31 @@ var AdminRoute = [
     layout: "/admin"
   },
   {
-    path: "/listConsumers",
-    name: "List Consumers",
+    path: "/listCustomers",
+    name: "List Customers",
     icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
+    component: ListCustomer,
     layout: "/admin"
   },
   {
     path: "/listManufacturers",
     name: "List Manufacturers",
     icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
+    component: ListManufacturer,
     layout: "/admin"
   },
   {
     path: "/listVehicles",
     name: "List Vehicles",
     icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
+    component: ListVehicles,
     layout: "/admin"
   },
   {
     path: "/ownerChange",
     name: "Owner Change",
     icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
+    component: ListCustomer,
     layout: "/admin"
   }
 ];
