@@ -26,8 +26,7 @@ import {nodeURL} from "components/variables";
 class Login extends React.Component {
     state = {
       userId: '',
-      password: '',
-      userType: ''
+      password: ''
     }
   nameHandleChange = event => {
     console.log("name change called")
@@ -36,10 +35,6 @@ class Login extends React.Component {
   passwordHandleChange = event => {
     console.log("password change called")
     this.setState({ password: event.target.value });
-  }
-  typeHandleChange = event => {
-    console.log("password change called")
-    this.setState({ userType: event.target.value });
   }
   
   handleSubmit = event => {
@@ -62,9 +57,9 @@ class Login extends React.Component {
       { data: auth})
       .then(res => {
         // console.log(JSON.stringify(res.data));
-        console.log(res.data["status"]);
+        console.log(res.data);
         console.log(JSON.stringify(res.data[0].status))
-        if(JSON.stringify(res.data[0].status)=="\"ok\""){
+        if(JSON.stringify(res.data[0].status)=="\"ok\"" && JSON.stringify(res.data[0].userType)=="\"customer\"" ){
           history.push('/admin/dashboard');
         }
         else{
@@ -109,16 +104,6 @@ class Login extends React.Component {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input placeholder="Password" type="password" onChange={this.passwordHandleChange}/>
-                    </InputGroup>
-                  </FormGroup>
-                  <FormGroup>
-                    <InputGroup className="input-group-alternative">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="ni ni-lock-circle-open" />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input placeholder="User Type" type="text" onChange={this.typeHandleChange}/>
                     </InputGroup>
                   </FormGroup>
                   <div className="text-center">
