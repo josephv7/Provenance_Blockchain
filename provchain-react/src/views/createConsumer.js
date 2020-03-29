@@ -11,6 +11,7 @@ import {
   Form,
   Modal,
   Input,
+  Spinner,
   Container,
   Row,
   Col
@@ -30,7 +31,8 @@ class CreateConsumer extends React.Component {
   state = {
     customerName: '',
     customerPassword: '',
-    exampleModal: false
+    exampleModal: false,
+    loading: false
   }
   // componentDidMount(){
   //   this.state.customerName = "null";
@@ -59,13 +61,14 @@ class CreateConsumer extends React.Component {
       password: this.state.customerPassword 
     }
     console.log("name"+customer.customerName)
-    
+    this.setState({loading: true})
     axios.get(nodeURL+"/createCustomer?customerName="+customer.customerName+"&password="+customer.password)
     .then(res => {
       console.log(res)
       console.log(res.data.status)
       if(res.data.status=="ok"){
             this.toggleModal();
+            this.setState({loading: false})
       }
     })
     // axios.post(nodeURL+`/createConsumer`, 
@@ -143,6 +146,7 @@ class CreateConsumer extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
+                  {this.state.loading ? <Spinner color="dark" /> :
                   <Form onSubmit = {this.handleSubmit}>
                     <h6 className="heading-small text-muted mb-4">
                       Add Customer Information
@@ -201,6 +205,7 @@ class CreateConsumer extends React.Component {
                     </div>
                     
                   </Form>
+                  }
                 </CardBody>
               </Card>
             </Col>
