@@ -67,7 +67,7 @@ class ListManufacturer extends React.Component {
                               <tr>
                                 <td>{object.manufacturerName}</td>
                                 <td>{object.participantId}</td>
-                                <td>{object.particpantType}</td>
+                                <td>{object.participantType}</td>
                               </tr>
                             </>
                     ))}

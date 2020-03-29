@@ -66,7 +66,7 @@ class ListCustomers extends React.Component {
                               <tr>
                                 <td>{object.customerName}</td>
                                 <td>{object.participantId}</td>
-                                <td>{object.particpantType}</td>
+                                <td>{object.participantType}</td>
                               </tr>
                             </>
                     ))}

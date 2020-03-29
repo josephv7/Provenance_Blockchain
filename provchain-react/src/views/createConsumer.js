@@ -28,6 +28,10 @@ class CreateConsumer extends React.Component {
     customerName: '',
     customerPassword: ''
   }
+  // componentDidMount(){
+  //   this.state.customerName = "null";
+  //   this.state.customerPassword = "null"
+  // }
   nameHandleChange = event => {
     console.log("name change called")
     this.setState({ customerName: event.target.value });
@@ -43,21 +47,22 @@ class CreateConsumer extends React.Component {
   
     const customer = {
       customerName: this.state.customerName,
-      password: this.state.password 
+      password: this.state.customerPassword 
     }
-    
-    axios.post(nodeURL+`/createConsumer`, 
-      { headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-                'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',}},
-      { data: customer})
-      .then(res => {
-        console.log(res);
-      })
-      .catch(function (error) {
-        console.log("error from catch"+error);
-      })    
+    console.log("name"+customer.customerName)
+    axios.get(nodeURL+"/createCustomer?customerName="+customer.customerName+"&password="+customer.password);
+    // axios.post(nodeURL+`/createConsumer`, 
+    //   { headers: {
+    //             "Content-Type": "application/json",
+    //             "Access-Control-Allow-Origin": "*",
+    //             'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',}},
+    //   { data: customer})
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(function (error) {
+    //     console.log("error from catch"+error);
+    //   })    
   };
   render() {
     return (
@@ -105,6 +110,7 @@ class CreateConsumer extends React.Component {
                               id="input-username"
                               placeholder="Username"
                               type="text"
+                              name = "customerName"
                               onChange = {this.nameHandleChange}
                             />
                           </FormGroup>
@@ -118,6 +124,7 @@ class CreateConsumer extends React.Component {
                               Password
                             </label>
                             <Input
+                              name="password"
                               className="form-control-alternative"
                               id="input-email"
                               placeholder="*********"
@@ -133,7 +140,6 @@ class CreateConsumer extends React.Component {
                         <Button
                           color="success"              
                           type="submit"
-                          onClick={e => e.preventDefault()}
                           size="lg"
                         >
                           Submit

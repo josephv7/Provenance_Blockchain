@@ -41,22 +41,23 @@ class CreateManufacturer extends React.Component {
     event.preventDefault();
     console.log("submit called")
   
-    const customer = {
+    const manufacturer = {
       manufacturerName: this.state.manufacturerName,
-      password: this.state.password 
+      password: this.state.manufacturerPassword 
     }
-    axios.post(nodeURL+`/createManufacturer`, 
-      { headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-                'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',}},
-      { data: customer})
-      .then(res => {
-        console.log(res);
-      })
-      .catch(function (error) {
-        console.log("error from catch"+error);
-      })    
+    axios.get(nodeURL+"/createManufacturer?manufacturerName="+manufacturer.manufacturerName+"&password="+manufacturer.password);
+    // axios.post(nodeURL+`/createManufacturer`, 
+    //   { headers: {
+    //             "Content-Type": "application/json",
+    //             "Access-Control-Allow-Origin": "*",
+    //             'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',}},
+    //   { data: customer})
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(function (error) {
+    //     console.log("error from catch"+error);
+    //   })    
   };
   render() {
     return (
@@ -131,8 +132,7 @@ class CreateManufacturer extends React.Component {
                         <Col className="text-right" xs="12">
                         <Button
                           color="success"              
-                          type="submit"
-                          onClick={e => e.preventDefault()}
+                          type="submit"                      
                           size="lg"
                         >
                           Submit
