@@ -4,7 +4,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
 
-// import routes from "routes.js";
+import routes from "authRoutes.js";
 
 class Auth extends React.Component {
   componentDidMount() {
@@ -13,21 +13,21 @@ class Auth extends React.Component {
   componentWillUnmount() {
     document.body.classList.remove("bg-default");
   }
-  // getRoutes = routes => {
-  //   return routes.map((prop, key) => {
-  //     if (prop.layout === "/auth") {
-  //       return (
-  //         <Route
-  //           path={prop.layout + prop.path}
-  //           component={prop.component}
-  //           key={key}
-  //         />
-  //       );
-  //     } else {
-  //       return null;
-  //     }
-  //   });
-  // };
+  getRoutes = routes => {
+    return routes.map((prop, key) => {
+      if (prop.layout === "/auth") {
+        return (
+          <Route
+            path={prop.layout + prop.path}
+            component={prop.component}
+            key={key}
+          />
+        );
+      } else {
+        return null;
+      }
+    });
+  };
   render() {
     return (
       <>
@@ -60,14 +60,14 @@ class Auth extends React.Component {
             </div>
           </div>
           {/* Page content */}
-          {/* <Container className="mt--8 pb-5">
+          <Container className="mt--8 pb-5">
             <Row className="justify-content-center">
               <Switch>
                 {this.getRoutes(routes)}
                 <Redirect from="*" to="/auth/login" />
               </Switch>
             </Row>
-          </Container> */}
+          </Container>
         </div>
         
       </>
