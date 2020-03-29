@@ -14,10 +14,51 @@ import {
   Row,
   Col
 } from "reactstrap";
+
 // core components
 import Header from "components/Headers/Header.js";
 
-class UserForm extends React.Component {
+// To per form POST request to nodeJS url 
+import {nodeURL} from "components/variables"
+import axios from "axios"
+
+
+class CreateConsumer extends React.Component {
+  state = {
+    customerName: '',
+    customerPassword: ''
+  }
+  nameHandleChange = event => {
+    console.log("name change called")
+    this.setState({ customerName: event.target.value });
+  }
+  passwordHandleChange = event => {
+    console.log("password change called")
+    this.setState({ customerPassword: event.target.value });
+  }
+  
+  handleSubmit = event => {
+    event.preventDefault();
+    console.log("submit called")
+  
+    const customer = {
+      customerName: this.state.customerName,
+      password: this.state.password 
+    }
+    
+    axios.post(nodeURL+`/createConsumer`, 
+      { headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',}},
+      { data: customer})
+      .then(res => {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log("error from catch"+error);
+      })    
+  };
   render() {
     return (
       <>
@@ -30,7 +71,7 @@ class UserForm extends React.Component {
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
                     <Col xs="8">
-                      <h3 className="mb-0">Title</h3>
+                      <h3 className="mb-0">Create Customers</h3>
                     </Col>
                     <Col className="text-right" xs="4">
                       <Button
@@ -39,15 +80,15 @@ class UserForm extends React.Component {
                         onClick={e => e.preventDefault()}
                         size="sm"
                       >
-                        Button
+                        Customer
                       </Button>
                     </Col>
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <Form>
+                  <Form onSubmit = {this.handleSubmit}>
                     <h6 className="heading-small text-muted mb-4">
-                      User information
+                      Add Customer Information
                     </h6>
                     <div className="pl-lg-4">
                       <Row>
@@ -57,14 +98,14 @@ class UserForm extends React.Component {
                               className="form-control-label"
                               htmlFor="input-username"
                             >
-                              Username
+                              Customer Name
                             </label>
                             <Input
-                              className="form-control-alternative"
-                              defaultValue="lucky.jesse"
+                              className="form-control-alternative"                
                               id="input-username"
                               placeholder="Username"
                               type="text"
+                              onChange = {this.nameHandleChange}
                             />
                           </FormGroup>
                         </Col>
@@ -74,56 +115,24 @@ class UserForm extends React.Component {
                               className="form-control-label"
                               htmlFor="input-email"
                             >
-                              Email address
+                              Password
                             </label>
                             <Input
                               className="form-control-alternative"
                               id="input-email"
-                              placeholder="jesse@example.com"
-                              type="email"
+                              placeholder="*********"
+                              type="password"
+                              onChange = {this.passwordHandleChange}
                             />
                           </FormGroup>
                         </Col>
                       </Row>
+                      <hr className="my-4" />
                       <Row>
-                        <Col lg="6">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-first-name"
-                            >
-                              First name
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue="Lucky"
-                              id="input-first-name"
-                              placeholder="First name"
-                              type="text"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col lg="6">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-last-name"
-                            >
-                              Last name
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue="Jesse"
-                              id="input-last-name"
-                              placeholder="Last name"
-                              type="text"
-                            />
-                          </FormGroup>
-                        </Col>
                         <Col className="text-right" xs="12">
                         <Button
-                          color="success"
-                          href="#pablo"
+                          color="success"              
+                          type="submit"
                           onClick={e => e.preventDefault()}
                           size="lg"
                         >
@@ -132,7 +141,7 @@ class UserForm extends React.Component {
                     </Col>
                       </Row>
                     </div>
-                    <hr className="my-4" />
+                    
                   </Form>
                 </CardBody>
               </Card>
@@ -144,4 +153,4 @@ class UserForm extends React.Component {
   }
 }
 
-export default UserForm;
+export default CreateConsumer;
