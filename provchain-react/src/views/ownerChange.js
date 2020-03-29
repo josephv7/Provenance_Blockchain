@@ -58,8 +58,8 @@ class OwnerChange extends React.Component {
     axios.get(nodeURL+"/ownerChange?chassisNumber="+vehicle.chassisNumber+"&newOwnerId="+vehicle.newOwnerId)
     .then(res => {
       console.log(res)
-      console.log(res.data.status)
-      if(res.data.status=="ok"){
+      console.log(res.data[0].status)
+      if(res.data[0].status=="ok"){
             this.toggleModal();
             this.setState({loading: false})
       }

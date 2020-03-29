@@ -17,17 +17,23 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Col
+  Col,
+  UncontrolledAlert
 } from "reactstrap";
 import Header from "components/Headers/Header.js";
 import axios from "axios";
 import {nodeURL} from "components/variables";
+import 'remixicon/fonts/remixicon.css'
 
 class Login extends React.Component {
     state = {
       userId: '',
-      password: ''
+      password: '',
+      invalid: false
     }
+  reloadForm(){
+    this.setState({invalid: false})
+  }
   nameHandleChange = event => {
     console.log("name change called")
     this.setState({ userId: event.target.value });
@@ -58,16 +64,29 @@ class Login extends React.Component {
       .then(res => {
         // console.log(JSON.stringify(res.data));
         console.log(res.data);
-        console.log(JSON.stringify(res.data[0].status))
-        if(JSON.stringify(res.data[0].status)=="\"ok\"" && JSON.stringify(res.data[0].userType)=="\"customer\"" ){
+        // console.log(JSON.stringify(res.data[0].status))
+        // render dashboard for govt
+        if(JSON.stringify(res.data[0].status)=="\"ok\"" && JSON.stringify(res.data[0].userType)=="\"admin\"" ){
+          console.log("admin");
           history.push('/admin/dashboard');
         }
-        else{
-            console.log("else")
+        // render dashboard for Manufacturer
+        if(JSON.stringify(res.data[0].status)=="\"ok\"" && JSON.stringify(res.data[0].userType)=="\"manufacturer\"" ){
+          console.log("Manufacturer");
+          history.push('/admin/dashboard');
         }
+        // render dashboard for Customer
+        // if(JSON.stringify(res.data[0].status)=="\"ok\"" && JSON.stringify(res.data[0].userType)=="\"customer\"" ){
+        else{
+          console.log("Consumer");
+          history.push('/admin/dashboard');
+        }
+     
       })
-      .catch(function (error) {
-        console.log("error from catch"+error);
+      .catch( (error) => {
+        // console.log("error from catch"+error);
+        this.setState({invalid: true});
+        console.log("state "+this.state.invalid)
       })    
   };
   render() {
@@ -83,35 +102,44 @@ class Login extends React.Component {
             <Card className="bg-secondary shadow border-0">
               <CardHeader className="bg-transparent pb-5">
                 <h2 className="text-muted text-center">ProvChain Auth</h2>
-              </CardHeader>
+              </CardHeader>             
               <CardBody className="px-lg-5 py-lg-5">
-                <Form role="form" onSubmit={this.handleSubmit}>
-                  <FormGroup className="mb-3">
-                    <InputGroup className="input-group-alternative">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="ni ni-email-83" />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input placeholder="Username" type="text" autoComplete="new-email" onChange={this.nameHandleChange}/>
-                    </InputGroup>
-                  </FormGroup>
-                  <FormGroup>
-                    <InputGroup className="input-group-alternative">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="ni ni-lock-circle-open" />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input placeholder="Password" type="password" onChange={this.passwordHandleChange}/>
-                    </InputGroup>
-                  </FormGroup>
-                  <div className="text-center">
-                    <Button className="my-4" color="primary" type="submit">
-                      Sign in
-                    </Button>
-                  </div>
-                </Form>
+              {this.state.invalid ? 
+                    <UncontrolledAlert color="danger" fade={true}>
+                    <span className="alert-inner--icon">
+                      <i className="ri-thumb-down-fill text-white mr-2 ri-1x" />
+                    </span>{" "}
+                    <span className="alert-inner--text" >
+                      <strong>Invalid</strong> Login Credentials !
+                    </span>
+                </UncontrolledAlert>  : <Form role="form" onSubmit={this.handleSubmit}>
+                    <FormGroup className="mb-3">
+                      <InputGroup className="input-group-alternative">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="ni ni-email-83" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input placeholder="Username" type="text" autoComplete="new-email" onChange={this.nameHandleChange}/>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <InputGroup className="input-group-alternative">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="ni ni-lock-circle-open" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input placeholder="Password" type="password" onChange={this.passwordHandleChange}/>
+                      </InputGroup>
+                    </FormGroup>
+                    <div className="text-center">
+                      <Button className="my-4" color="primary" type="submit">
+                        Sign in
+                      </Button>
+                    </div>
+                  </Form>
+                 }
               </CardBody>
             </Card>
           </Col>
