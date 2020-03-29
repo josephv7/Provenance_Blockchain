@@ -25,6 +25,7 @@ module.exports = {
             findManufacturerCount();
         }).catch(function (error) {
             console.log(error);
+            res.end(JSON.stringify({status: "error"}));
         });
 
         function findManufacturerCount() {
@@ -43,10 +44,20 @@ module.exports = {
                 })
             }, (error, response, body) => {
                 if (error) {
+                    res.end(JSON.stringify({status: "error"}));
+
                     return console.dir(error);
+                } else {
+
+                    if(JSON.parse(body).hasOwnProperty('error')){
+                        res.end(JSON.stringify({status: "error"}));
+                    }else {
+                        console.dir(JSON.parse(body));
+                        res.end(JSON.stringify({status: "ok"}));
+                    }
+
                 }
-                console.dir(JSON.parse(body));
-                res.end(JSON.stringify({status: "ok"}));
+
             });
 
         }
@@ -62,6 +73,7 @@ module.exports = {
         }).then(function (response) {
             showData();
         }).catch(function (error) {
+            res.end(JSON.stringify({status: "error"}));
             console.log(error);
         });
 
