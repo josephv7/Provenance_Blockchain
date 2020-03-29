@@ -1,7 +1,7 @@
 const Request = require("request");
 const axios = require('axios');
 const SHA256 = require("crypto-js/sha256");
-const constants = require("../constansts");
+const constants = require("../constants");
 
 module.exports = {
     ownerChange: (req, res) => {

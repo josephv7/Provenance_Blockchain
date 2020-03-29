@@ -1,7 +1,7 @@
 const Request = require("request");
 const axios = require('axios');
 const SHA256 = require("crypto-js/sha256");
-const constants = require("../constansts");
+const constants = require("../constants");
 
 module.exports = {
     userLogin: (req, res) => {
@@ -15,7 +15,7 @@ module.exports = {
         if (userType == "customer") {
             url = constants.blockchainBaseURL + 'Customer/' + userId.toString();
         } else if (userType == "manufacturer") {
-            url = constanst.blockchainBaseURL + 'Manufacturer/' + userId.toString();
+            url = constants.blockchainBaseURL + 'Manufacturer/' + userId.toString();
         }
 
 
