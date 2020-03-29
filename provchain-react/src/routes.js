@@ -2,6 +2,7 @@
 import Index from "views/Index.js";
 import Form from "views/Form.js";
 import Tables from "views/Tables.js";
+import Login from "views/Login"
 
 var routes = [
   {
