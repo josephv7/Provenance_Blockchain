@@ -124,7 +124,6 @@ class CreateConsumer extends React.Component {
             </Button>
           </div>
         </Modal>
-        {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
             <Col className="order-xl-1" xl="10">
