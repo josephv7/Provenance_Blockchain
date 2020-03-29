@@ -25,39 +25,39 @@ import axios from "axios"
 
 class OwnerChange extends React.Component {
   state = {
-    customerName: '',
-    customerPassword: ''
+    chassisNumber: '',
+    newOwnerId: ''
   }
   nameHandleChange = event => {
     console.log("name change called")
-    this.setState({ customerName: event.target.value });
+    this.setState({ chassisNumber: event.target.value });
   }
   passwordHandleChange = event => {
     console.log("password change called")
-    this.setState({ customerPassword: event.target.value });
+    this.setState({ newOwnerId: event.target.value });
   }
   
   handleSubmit = event => {
     event.preventDefault();
     console.log("submit called")
   
-    const customer = {
-      customerName: this.state.customerName,
-      password: this.state.password 
+    const vehicle = {
+      chassisNumber: this.state.chassisNumber,
+      newOwnerId: this.state.newOwnerId 
     }
-    
-    axios.post(nodeURL+`/ownerChange`, 
-      { headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-                'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',}},
-      { data: customer})
-      .then(res => {
-        console.log(res);
-      })
-      .catch(function (error) {
-        console.log("error from catch"+error);
-      })    
+    axios.get(nodeURL+"/ownerChange?chassisNumber="+vehicle.chassisNumber+"&newOwnerId="+vehicle.newOwnerId);
+    // axios.post(nodeURL+`/ownerChange`, 
+    //   { headers: {
+    //             "Content-Type": "application/json",
+    //             "Access-Control-Allow-Origin": "*",
+    //             'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',}},
+    //   { data: vehicle})
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(function (error) {
+    //     console.log("error from catch"+error);
+    //   })    
   };
   render() {
     return (
@@ -132,8 +132,7 @@ class OwnerChange extends React.Component {
                         <Col className="text-right" xs="12">
                         <Button
                           color="success"              
-                          type="submit"
-                          onClick={e => e.preventDefault()}
+                          type="submit"                        
                           size="lg"
                         >
                           Submit

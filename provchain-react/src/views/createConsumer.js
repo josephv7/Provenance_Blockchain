@@ -50,6 +50,7 @@ class CreateConsumer extends React.Component {
       password: this.state.customerPassword 
     }
     console.log("name"+customer.customerName)
+    
     axios.get(nodeURL+"/createCustomer?customerName="+customer.customerName+"&password="+customer.password);
     // axios.post(nodeURL+`/createConsumer`, 
     //   { headers: {
