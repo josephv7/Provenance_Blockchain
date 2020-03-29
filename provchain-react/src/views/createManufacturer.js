@@ -12,6 +12,7 @@ import {
   Input,
   Modal,
   Container,
+  Spinner,
   Row,
   Col
 } from "reactstrap";
@@ -29,7 +30,8 @@ class CreateManufacturer extends React.Component {
   state = {
     manufacturerName: '',
     manufacturerPassword: '',
-    exampleModal: false
+    exampleModal: false,
+    loading: false
   }
   toggleModal(){
     this.setState({
@@ -53,12 +55,14 @@ class CreateManufacturer extends React.Component {
       manufacturerName: this.state.manufacturerName,
       password: this.state.manufacturerPassword 
     }
+    this.setState({loading: true})
     axios.get(nodeURL+"/createManufacturer?manufacturerName="+manufacturer.manufacturerName+"&password="+manufacturer.password)
     .then(res => {
       console.log(res)
       console.log(res.data.status)
       if(res.data.status=="ok"){
             this.toggleModal();
+            this.setState({loading: false})
       }
     })
     // axios.post(nodeURL+`/createManufacturer`, 
@@ -134,6 +138,9 @@ class CreateManufacturer extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
+                  
+                  {this.state.loading ?  <Spinner color="dark" />  : 
+              
                   <Form onSubmit = {this.handleSubmit}>
                     <h6 className="heading-small text-muted mb-4">
                       Add Manufacturer Information
@@ -190,6 +197,7 @@ class CreateManufacturer extends React.Component {
                     </div>
                     
                   </Form>
+                  }
                 </CardBody>
               </Card>
             </Col>
