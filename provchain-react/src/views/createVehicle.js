@@ -29,10 +29,11 @@ import 'remixicon/fonts/remixicon.css'
 
 class CreateVehicle extends React.Component {
     state = {
-        customerName: '',
-        customerPassword: '',
-        exampleModal: false,
-        loading: false
+        chassisNumber: '',
+        ownerId: '',
+        manufacturerLocation: 'Kochi',
+        manufacturer: localStorage.getItem('userId'),
+        plateNumber: ''
     }
     // componentDidMount(){
     //   this.state.customerName = "null";
@@ -43,6 +44,8 @@ class CreateVehicle extends React.Component {
             exampleModal: !this.state.exampleModal
         });
     };
+
+
     nameHandleChange = event => {
         console.log("name change called")
         this.setState({ customerName: event.target.value });
@@ -202,6 +205,7 @@ class CreateVehicle extends React.Component {
                                                         </Button>
                                                     </Col>
                                                 </Row>
+
                                             </div>
 
                                         </Form>
