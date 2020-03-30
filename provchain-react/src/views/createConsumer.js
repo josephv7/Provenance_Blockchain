@@ -43,6 +43,15 @@ class CreateConsumer extends React.Component {
       exampleModal: !this.state.exampleModal
     });
   };
+
+  handleChange = event => {
+    console.log('handle change called')
+    const {name,value} = event.target
+    this.setState({
+      [name] : value
+    })
+  }
+
   nameHandleChange = event => {
     console.log("name change called")
     this.setState({ customerName: event.target.value });
@@ -167,7 +176,7 @@ class CreateConsumer extends React.Component {
                               placeholder="Username"
                               type="text"
                               name = "customerName"
-                              onChange = {this.nameHandleChange}
+                              onChange = {this.handleChange}
                             />
                           </FormGroup>
                         </Col>
@@ -180,12 +189,12 @@ class CreateConsumer extends React.Component {
                               Password
                             </label>
                             <Input
-                              name="password"
+                              name="customerPassword"
                               className="form-control-alternative"
                               id="input-email"
                               placeholder="*********"
                               type="password"
-                              onChange = {this.passwordHandleChange}
+                              onChange = {this.handleChange}
                             />
                           </FormGroup>
                         </Col>
