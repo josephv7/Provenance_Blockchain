@@ -59,6 +59,10 @@ app.get('/listUserVehicles', function (req, res) {
     return queryController.listUserVehicles(req, res);
 });
 
+app.get('/listManufacturervehicles', function (req,res) {
+    return queryController.listManufacturerVehicles(req,res);
+});
+
 app.get('/vehichleInfo', function (req, res) {
     vehicleController.vehicleInfo(req, res);
 });
