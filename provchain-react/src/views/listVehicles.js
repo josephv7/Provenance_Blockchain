@@ -33,7 +33,7 @@ class ListVehicles extends React.Component {
   toggleModal(id){
     if(this.state.exampleModal==false){
       console.log("fetch by id")
-      axios.get("https://d5911af3.ngrok.io/api/Vehicle/"+id)
+      axios.get(nodeURL+'/vehichleInfo?chassisNumber='+id)
       .then(res => {
         // const vehicleIdDetails = res.data;
         this.setState({ vehicleIdDetails: res.data });
