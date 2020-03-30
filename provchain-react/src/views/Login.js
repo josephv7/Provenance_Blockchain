@@ -76,10 +76,10 @@ class Login extends React.Component {
           history.push('/admin/dashboard');
         }
         // render dashboard for Customer
-        // if(JSON.stringify(res.data[0].status)=="\"ok\"" && JSON.stringify(res.data[0].userType)=="\"customer\"" ){
-        else{
-          console.log("Consumer");
-          history.push('/admin/dashboard');
+        if(JSON.stringify(res.data[0].status)=="\"ok\"" && JSON.stringify(res.data[0].userType)=="\"customer\"" ){
+        // else{
+          console.log("Customer");
+          history.push('/customer/dashboard');
         }
      
       })

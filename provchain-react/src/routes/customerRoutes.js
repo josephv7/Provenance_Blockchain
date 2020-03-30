@@ -16,7 +16,7 @@ var CustomerRoute = [
         name: "List Vehicles",
         icon: "ri-file-list-2-line text-red",
         component: ListVehicles,
-        layout: "/admin"
+        layout: "/customer"
     }
 ];
 
