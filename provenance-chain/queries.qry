@@ -9,3 +9,9 @@ query ListUserVehichles {
   statement:
       SELECT org.example.mynetwork.Vehicle WHERE (owner == _$id)
 }
+
+query ListManufacturerVehicles {
+    description: "List all vehicles manufactured by a manufacturer"
+    statement:
+        SELECT org.example.mynetwork.Vehicle WHERE (manufacturer == _$id)
+}
