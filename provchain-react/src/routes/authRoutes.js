@@ -1,5 +1,5 @@
 
-import Login from "views/Login.js";
+import Login from "../views/Login.js";
 
 import 'remixicon/fonts/remixicon.css'
 

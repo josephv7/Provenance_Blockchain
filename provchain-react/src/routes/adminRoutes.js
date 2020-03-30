@@ -1,11 +1,11 @@
 
-import Dashboard from "views/Dashboard.js";
-import CreateConsumer from "views/createConsumer";
-import CreateManufacturer from "views/createManufacturer";
-import ListCustomer from "views/listConsumers";
-import ListVehicles from "views/listVehicles";
-import ListManufacturer from "views/listManufacturer";
-import OwnerChange from "views/ownerChange";
+import Dashboard from "../views/Dashboard";
+import CreateConsumer from "../views/createConsumer";
+import CreateManufacturer from "../views/createManufacturer";
+import ListCustomer from "../views/listConsumers";
+import ListVehicles from "../views/listVehicles";
+import ListManufacturer from "../views/listManufacturer";
+import OwnerChange from "../views/ownerChange";
 
 import 'remixicon/fonts/remixicon.css'
 

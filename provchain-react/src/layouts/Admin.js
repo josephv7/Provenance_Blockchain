@@ -7,7 +7,7 @@ import { Container } from "reactstrap";
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
-import routes from "adminRoutes";
+import routes from "../routes/adminRoutes";
 
 class Admin extends React.Component {
   componentDidUpdate(e) {

@@ -33,7 +33,7 @@ class ListVehicles extends React.Component {
   toggleModal(id){
     if(this.state.exampleModal==false){
       console.log("fetch by id")
-      axios.get("https://d5911af3.ngrok.io/api/Vehicle/"+id)
+      axios.get(nodeURL+'/vehichleInfo?chassisNumber='+id)
       .then(res => {
         // const vehicleIdDetails = res.data;
         this.setState({ vehicleIdDetails: res.data });
@@ -48,10 +48,24 @@ class ListVehicles extends React.Component {
     console.log("password change called")
     this.setState({ fetchId: event.target.value });
   }
+
+
   
-  // use after POST or while fetch by ID
+  // TODO use after POST or while fetch by ID
   fetchData(){
-    fetch(nodeURL+'/listVehicles')
+
+    let userType = localStorage.getItem('userType')
+    let userId = localStorage.getItem('userId')
+    let fetchurl;
+    if(userType == "customer"){
+      fetchurl = nodeURL+'/listUserVehicles?userId='+userId
+    }else if (userType == "manufacturer"){
+      fetchurl = nodeURL+'/listManufacturerVehicles?userId='+userId
+    }else if(userType == "admin"){
+      fetchurl = nodeURL+'/listVehicles'
+    }
+
+    fetch(fetchurl)
     .then(res => res.json())
     .then((data) => {
       this.setState({apiData: data })
@@ -61,7 +75,20 @@ class ListVehicles extends React.Component {
   }
   componentDidMount() {
     // console.log("hi");
-    fetch(nodeURL+'/listVehicles')
+
+    //TODO make seperate function later
+    let userType = localStorage.getItem('userType')
+    let userId = localStorage.getItem('userId')
+    let fetchurl;
+    if(userType == "customer"){
+      fetchurl = nodeURL+'/listUserVehicles?userId='+userId
+    }else if (userType == "manufacturer"){
+      fetchurl = nodeURL+'/listManufacturerVehicles?userId='+userId
+    }else if(userType == "admin"){
+      fetchurl = nodeURL+'/listVehicles'
+    }
+
+    fetch(fetchurl)
     .then(res => res.json())
     .then((data) => {
       this.setState({apiData: data })
