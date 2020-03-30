@@ -65,13 +65,24 @@ class CreateVehicle extends React.Component {
         event.preventDefault();
         console.log("submit called")
 
-        const customer = {
-            customerName: this.state.customerName,
-            password: this.state.customerPassword
+        const vehicle = {
+            chassisNumber: this.state.chassisNumber,
+            ownerId: this.state.ownerId,
+            manufacturerLocation: this.state.manufacturerLocation,
+            manufacturer: this.state.manufacturer,
+            plateNumber: this.state.plateNumber
         }
-        console.log("name"+customer.customerName)
+
         this.setState({loading: true})
-        axios.get(nodeURL+"/createCustomer?customerName="+customer.customerName+"&password="+customer.password)
+        axios.get(nodeURL+'/createVehicle',{
+            params : {
+                chassisNumber : vehicle.chassisNumber,
+                ownerId : vehicle.ownerId,
+                manufacturerLocation : vehicle.manufacturerLocation,
+                manufacturer : vehicle.manufacturer,
+                plateNumber : vehicle.plateNumber
+            }
+        })
             .then(res => {
                 console.log(res)
                 console.log(res.data.status)
@@ -175,7 +186,7 @@ class CreateVehicle extends React.Component {
                                                                 id="input-username"
                                                                 placeholder="Chassis Number"
                                                                 type="text"
-                                                                name = "customerName"
+                                                                name = "chassisNumber"
                                                                 onChange = {this.handleChange}
                                                             />
                                                         </FormGroup>
@@ -199,9 +210,6 @@ class CreateVehicle extends React.Component {
                                                         </FormGroup>
                                                     </Col>
                                                 </Row>
-
-
-
 
 
 
@@ -243,9 +251,6 @@ class CreateVehicle extends React.Component {
                                                         </FormGroup>
                                                     </Col>
                                                 </Row>
-
-
-
 
 
 
