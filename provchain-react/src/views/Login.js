@@ -88,7 +88,7 @@ class Login extends React.Component {
                         console.log("Manufacturer");
                       this.setState({userType: 'manufacturer'})
                         localStorage.setItem('userType', this.state.userType)
-                        history.push('/admin/dashboard');
+                        history.push('/manufacturer/dashboard');
                     }
                     // render dashboard for Customer
                     else if (JSON.stringify(res.data[0].userType) == "\"customer\"") {
