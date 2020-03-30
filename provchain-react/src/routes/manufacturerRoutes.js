@@ -3,6 +3,7 @@ import Dashboard from "../views/Dashboard";
 import CreateConsumer from "../views/createConsumer";
 import ListCustomer from "../views/listConsumers";
 import ListVehicles from "../views/listVehicles";
+import CreateVehicle from "../views/createVehicle";
 import 'remixicon/fonts/remixicon.css'
 
 var ManufacturerRoute = [
@@ -18,6 +19,13 @@ var ManufacturerRoute = [
         name: "Create Consumer",
         icon: "ri-user-add-line text-primary",
         component: CreateConsumer,
+        layout: "/manufacturer"
+    },
+    {
+        path: "/createVehicle",
+        name: "Create Vehicle",
+        icon: "ri-user-add-line text-primary",
+        component: CreateVehicle,
         layout: "/manufacturer"
     },
     {
