@@ -13,6 +13,7 @@ module.exports = {
 
         console.log(req.query.customerName);
         console.log(req.query.password);
+        console.log(req.query.address);
 
         var count;
 
@@ -44,6 +45,7 @@ module.exports = {
                     "customerName": req.query.customerName,
                     "participantId": count.toString(),
                     "participantType": "user",
+                    "address" : req.query.address,
                     "password": SHA256(req.query.password).toString()
 
                 })
