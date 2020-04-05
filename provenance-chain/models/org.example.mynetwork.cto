@@ -17,18 +17,14 @@ namespace org.example.mynetwork
 
 asset Vehicle identified by chassisNumber {
   o String chassisNumber
-  --> Customer owner
   o String plateNumber default=""
   o String manufactureLocation
-  o String manufacturer
+  o String manufacturerName
+  o String manufacturerId
+  o String dealerName default=""
+  o String dealerId default=""
   o String[] ownerList default=""
-  o String ownerId
-}
-
-abstract participant User {
-  o String participantId
-  o String participantType
-  o String password
+  o String ownerId default=""
 }
 
 
@@ -37,6 +33,16 @@ participant Customer identified by participantId {
   o String participantId
   o String participantType
   o String password
+  o String address
+}
+
+participant Dealer identified by participantId {
+  o String participantId
+  o String dealerName
+  o String participantType
+  o String password
+  o String address
+  o String manufacturerId
 }
 
 participant Manufacturer identified by participantId{
@@ -44,13 +50,14 @@ participant Manufacturer identified by participantId{
   o String participantId
   o String participantType
   o String password
+  o String mainAddress
+  o String[] locations default=""
 }
 
 transaction AssetTransfer {
   --> Vehicle asset
   o String newOwnerId
   o String[] newOwnerList
-  // o Customer newOwner
 }
 
 event AssetTransferEvent {
@@ -59,9 +66,9 @@ event AssetTransferEvent {
   o String newOwnerId
   o String[] oldOwnerList
   o String[] newOwnerList
-  // o Customer oldOwner
-  // o Customer newOwner
 }
+
+// TODO Add transaction to add new manufacturer locations
 
 
 

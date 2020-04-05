@@ -3,17 +3,13 @@ const axios = require('axios');
 const SHA256 = require("crypto-js/sha256");
 const constants = require("../constants");
 
-const config = require("../config");
-const accountSid = config.accountSid;
-const authToken = config.authToken;
-const client = require('twilio')(accountSid, authToken);
-
 module.exports = {
-    createCustomer: (req, res) => {
-
-        console.log(req.query.customerName);
+    createDealer: (req, res) => {
+        console.log(req.query.dealerName);
         console.log(req.query.password);
         console.log(req.query.address);
+        cosnole.log(req.query.manufacturerId);
+
 
         var count;
 
@@ -22,31 +18,32 @@ module.exports = {
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
 
-        axios.get(constants.blockchainBaseURL + "Customer").then(function (response) {
+        axios.get(constants.blockchainBaseURL + "Dealer").then(function (response) {
             console.log(response.data);
             jsonResponse = response.data;
 
 
         }).then(function (response) {
-            findCustomerCount();
+            findDealerCount();
         }).catch(function (error) {
             console.log(error);
             res.end(JSON.stringify({status: "error"}));
         });
 
-        function findCustomerCount() {
+        function findDealerCount() {
 
-            count = 2001 + jsonResponse.length;
+            count = 4001 + jsonResponse.length;
 
             Request.post({
                 "headers": {"content-type": "application/json"},
-                "url": constants.blockchainBaseURL + "Customer",
+                "url": constants.blockchainBaseURL + "Dealer",
                 "body": JSON.stringify({
-                    "customerName": req.query.customerName,
+                    "dealerName": req.query.dealerName,
                     "participantId": count.toString(),
-                    "participantType": "user",
-                    "address" : req.query.address,
-                    "password": SHA256(req.query.password).toString()
+                    "participantType": "dealer",
+                    "address": req.query.address,
+                    "password": SHA256(req.query.password).toString(),
+                    "manufacturerId": req.query.manufacturerId
 
                 })
             }, (error, response, body) => {
@@ -55,16 +52,16 @@ module.exports = {
                     return console.dir(error);
                 } else {
 
-                    if(JSON.parse(body).hasOwnProperty('error')){
+                    if (JSON.parse(body).hasOwnProperty('error')) {
                         res.end(JSON.stringify({status: "error"}));
-                    }else {
-                        client.messages.create({
-                            body: 'Hey ' + req.query.customerName + '! Your password is ' + req.query.password,
-                            from: 'whatsapp:+14155238886',
-                            to: 'whatsapp:+919496710560'
-                        })
-                            .then(message => console.log(message.sid))
-                            .done();
+                    } else {
+                        // client.messages.create({
+                        //     body: 'Hey ' + req.query.customerName + '! Your password is ' + req.query.password,
+                        //     from: 'whatsapp:+14155238886',
+                        //     to: 'whatsapp:+919496710560'
+                        // })
+                        //     .then(message => console.log(message.sid))
+                        //     .done();
 
                         console.dir(JSON.parse(body));
                         res.end(JSON.stringify({status: "ok"}));
@@ -77,11 +74,12 @@ module.exports = {
 
         }
 
+
     },
 
-    listCustomers: (req, res) => {
+    listDealers : (req,res) => {
 
-        axios.get(constants.blockchainBaseURL + 'Customer').then(function (response) {
+        axios.get(constants.blockchainBaseURL + 'Dealer').then(function (response) {
             console.log(response.data);
             jsonResponse = response.data;
 
@@ -98,6 +96,5 @@ module.exports = {
             console.log(jsonResponse);
             res.send(jsonResponse);
         }
-
     }
 };
