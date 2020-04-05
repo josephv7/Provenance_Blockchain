@@ -20,20 +20,24 @@ module.exports = {
             url = constants.blockchainBaseURL + 'Manufacturer/' + userId.toString();
             userType = "manufacturer";
             fetchDataFromBlockchain()
-        }else if(userId == "admin") {
+        } else if (userId.charAt(0) == "4") {
+            url = constants.blockchainBaseURL + 'Dealer/' + userId.toString();
+            userType = "dealer";
+            fetchDataFromBlockchain()
+        } else if (userId == "admin") {
             userType = "admin";
             tempCheck();
         }
 
-        function tempCheck(){
-            if(req.body.userId == "admin" && req.body.password == "admin"){
+        function tempCheck() {
+            if (req.body.userId == "admin" && req.body.password == "admin") {
                 res.end(JSON.stringify([{status: "ok", userType: userType}]));
-            }else{
+            } else {
                 res.end(JSON.stringify([{status: "incorrect"}]));
             }
         }
 
-        function fetchDataFromBlockchain(){
+        function fetchDataFromBlockchain() {
             axios.get(url).then(function (response) {
                 // console.log(response.data);
                 jsonResponse = response.data;
@@ -48,7 +52,6 @@ module.exports = {
                 res.end(JSON.stringify({status: "error"}));
             });
         }
-
 
 
         function checkPassword(response) {
