@@ -19,8 +19,10 @@ asset Vehicle identified by chassisNumber {
   o String chassisNumber
   o String plateNumber default=""
   o String manufactureLocation
-  o String manufacturer
+  o String manufacturerName
+  o String manufacturerId
   o String dealerName default=""
+  o String dealerId default=""
   o String[] ownerList default=""
   o String ownerId default=""
 }
@@ -40,6 +42,7 @@ participant Dealer identified by participantId {
   o String participantType
   o String password
   o String address
+  o String manufacturerId
 }
 
 participant Manufacturer identified by participantId{
@@ -48,7 +51,7 @@ participant Manufacturer identified by participantId{
   o String participantType
   o String password
   o String mainAddress
-  o String[] locations 
+  o String[] locations default=""
 }
 
 transaction AssetTransfer {
