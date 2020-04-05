@@ -9,9 +9,13 @@ module.exports = {
 
         console.log(req.query.chassisNumber);
         console.log(req.query.ownerId);
-        console.log(req.query.manufacturerLocation);
-        console.log(req.query.manufacturer);
+        console.log(req.query.manufactureLocation);
+        console.log(req.query.manufacturerName);
         console.log(req.query.plateNumber);
+        console.log(req.query.manufacturerId);
+        console.log(req.query.dealerName);
+        console.log(req.query.dealerId);
+
 
 
         var owner = "org.example.mynetwork.Customer#" + req.query.ownerId;
@@ -24,10 +28,14 @@ module.exports = {
                 "chassisNumber": req.query.chassisNumber,
                 "owner": owner,
                 "plateNumber": req.query.plateNumber,
-                "manufactureLocation": req.query.manufacturerLocation,
-                "manufacturer": req.query.manufacturer,
+                "manufactureLocation": req.query.manufactureLocation,
+                "manufacturer": req.query.manufacturerName,
                 "ownerList": [req.query.ownerId],
-                "ownerId": req.query.ownerId
+                "ownerId": req.query.ownerId,
+                "manufacturerId" : req.query.manufacturerId,
+                "dealerName" : req.query.dealerName,
+                "dealerId" : req.query.dealerId
+
 
             })
         }, (error, response, body) => {

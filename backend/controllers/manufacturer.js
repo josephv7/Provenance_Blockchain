@@ -8,6 +8,10 @@ module.exports = {
 
         console.log(req.query.manufacturerName);
         console.log(req.query.password);
+        console.log(req.query.mainAddress);
+        console.log(req.query.locations);
+        //pass locations as a string array
+
 
         var count;
 
@@ -39,7 +43,9 @@ module.exports = {
                     "manufacturerName": req.query.manufacturerName,
                     "participantId": count.toString(),
                     "participantType": "manufacturer",
-                    "password": SHA256(req.query.password).toString()
+                    "password": SHA256(req.query.password).toString(),
+                    "mainAddress": req.query.mainAddress,
+                    "locations": req.query.locations
 
                 })
             }, (error, response, body) => {

@@ -8,6 +8,7 @@ const vehicleController = require("./controllers/vehicle");
 const transactionController = require("./controllers/transactions");
 const queryController = require("./controllers/query");
 const authController = require("./controllers/auth");
+const dealerController = require("./controllers/dealer");
 
 let app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -25,6 +26,10 @@ app.get('/createCustomer', function (req, res) {
 
 app.get('/createManufacturer', function (req, res) {
     return manufacturerController.createManufacturer(req, res);
+});
+
+app.get('/createDealer', function(req,res){
+    return dealerController.createDealer(req,res);
 });
 
 app.post('/api/userLogin', function (req, res) {
@@ -45,6 +50,10 @@ app.get('/listCustomers', function (req, res) {
 
 app.get('/listManufacturers', function (req, res) {
     return manufacturerController.listManufacturers(req, res);
+});
+
+app.get('/listDealers', function(req,res){
+    return dealerController.listDealers(req,res);
 });
 
 app.get('/ownerChange', function (req, res) {
