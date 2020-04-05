@@ -17,14 +17,14 @@ namespace org.example.mynetwork
 
 asset Vehicle identified by chassisNumber {
   o String chassisNumber
-  o String plateNumber default=""
+  o String plateNumber
   o String manufactureLocation
   o String manufacturerName
   o String manufacturerId
-  o String dealerName default=""
-  o String dealerId default=""
-  o String[] ownerList default=""
-  o String ownerId default=""
+  o String dealerName
+  o String dealerId
+  o String[] ownerList
+  o String ownerId
 }
 
 
