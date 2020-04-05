@@ -99,5 +99,29 @@ module.exports = {
             res.send(jsonResponse);
         }
 
+    },
+    getCustomerInfo : (req,res) => {
+
+        //TODO check if starting with 2, else send error response
+        axios.get(constants.blockchainBaseURL + 'Customer/' + req.query.id)
+            .then(function (response) {
+            console.log(response.data);
+            jsonResponse = response.data;
+
+        }).then(function (response) {
+            showData();
+        }).catch(function (error) {
+            console.log(error);
+            console.log('hi');
+            res.end(JSON.stringify({status: "error"}));
+
+        });
+
+        //TODO check if not present error in response from blockchain and send corresponding reponse to frontend
+        function showData() {
+            // console.log(jsonResponse);
+            res.send(jsonResponse);
+        }
+
     }
 };

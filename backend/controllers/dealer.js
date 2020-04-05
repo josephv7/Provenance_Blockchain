@@ -8,7 +8,7 @@ module.exports = {
         console.log(req.query.dealerName);
         console.log(req.query.password);
         console.log(req.query.address);
-        cosnole.log(req.query.manufacturerId);
+        console.log(req.query.manufacturerId);
 
 
         var count;
