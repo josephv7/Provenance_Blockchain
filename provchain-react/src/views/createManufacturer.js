@@ -65,9 +65,7 @@ class CreateManufacturer extends React.Component {
                 manufacturerName: manufacturer.manufacturerName,
                 password: manufacturer.password,
                 mainAddress: manufacturer.mainAddress,
-                locations: [manufacturer.locations],
-                manufacturerId: '3001'
-            //  TODO 3001, need to read from localStorage
+                locations: [manufacturer.locations]
             }
         })
             .then(res => {
