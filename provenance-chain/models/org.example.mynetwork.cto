@@ -34,8 +34,8 @@ participant Customer identified by participantId {
   o String address
 }
 
-participant Dealer identified by participantKey {
-  o String participantKey
+participant Dealer identified by participantId {
+  o String participantId
   o String dealerName
   o String participantType
   o String password
