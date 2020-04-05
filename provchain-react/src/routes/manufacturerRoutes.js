@@ -15,13 +15,6 @@ var ManufacturerRoute = [
         layout: "/manufacturer"
     },
     {
-        path: "/createConsumer",
-        name: "Create Consumer",
-        icon: "ri-user-add-line text-primary",
-        component: CreateConsumer,
-        layout: "/manufacturer"
-    },
-    {
         path: "/createVehicle",
         name: "Create Vehicle",
         icon: "ri-user-add-line text-primary",
