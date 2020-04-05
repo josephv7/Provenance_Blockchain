@@ -28,8 +28,8 @@ app.get('/createManufacturer', function (req, res) {
     return manufacturerController.createManufacturer(req, res);
 });
 
-app.get('/createDealer', function(req,res){
-    return dealerController.createDealer(req,res);
+app.get('/createDealer', function (req, res) {
+    return dealerController.createDealer(req, res);
 });
 
 app.post('/api/userLogin', function (req, res) {
@@ -52,8 +52,8 @@ app.get('/listManufacturers', function (req, res) {
     return manufacturerController.listManufacturers(req, res);
 });
 
-app.get('/listDealers', function(req,res){
-    return dealerController.listDealers(req,res);
+app.get('/listDealers', function (req, res) {
+    return dealerController.listDealers(req, res);
 });
 
 app.get('/ownerChange', function (req, res) {
@@ -68,12 +68,16 @@ app.get('/listUserVehicles', function (req, res) {
     return queryController.listUserVehicles(req, res);
 });
 
-app.get('/listManufacturervehicles', function (req,res) {
-    return queryController.listManufacturerVehicles(req,res);
+app.get('/listManufacturervehicles', function (req, res) {
+    return queryController.listManufacturerVehicles(req, res);
 });
 
 app.get('/vehichleInfo', function (req, res) {
     vehicleController.vehicleInfo(req, res);
+});
+
+app.get('/getCustomerInfo', function (req, res) {
+    customerController.getCustomerInfo(req, res);
 });
 
 
