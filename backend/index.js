@@ -80,6 +80,10 @@ app.get('/getCustomerInfo', function (req, res) {
     customerController.getCustomerInfo(req, res);
 });
 
+app.get('/getManufacturerInfo', function (req, res) {
+    manufacturerController.getManufacturerInfo(req, res);
+});
+
 
 let server = app.listen(4000, function () {
     console.log('Server is listening on port 4000')
