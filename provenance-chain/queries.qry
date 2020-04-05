@@ -13,5 +13,5 @@ query ListUserVehichles {
 query ListManufacturerVehicles {
     description: "List all vehicles manufactured by a manufacturer"
     statement:
-        SELECT org.example.mynetwork.Vehicle WHERE (manufacturer == _$id)
+        SELECT org.example.mynetwork.Vehicle WHERE (manufacturerId == _$id)
 }
