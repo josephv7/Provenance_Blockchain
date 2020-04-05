@@ -4,10 +4,11 @@ const SHA256 = require("crypto-js/sha256");
 const constants = require("../constants");
 
 module.exports = {
-    createDealer: (req,res) => {
+    createDealer: (req, res) => {
         console.log(req.query.dealerName);
         console.log(req.query.password);
         console.log(req.query.address);
+        cosnole.log(req.query.manufacturerId);
 
 
         var count;
@@ -40,8 +41,9 @@ module.exports = {
                     "dealerName": req.query.dealerName,
                     "participantId": count.toString(),
                     "participantType": "dealer",
-                    "address" : req.query.address,
-                    "password": SHA256(req.query.password).toString()
+                    "address": req.query.address,
+                    "password": SHA256(req.query.password).toString(),
+                    "manufacturerId": req.query.manufacturerId
 
                 })
             }, (error, response, body) => {
@@ -50,9 +52,9 @@ module.exports = {
                     return console.dir(error);
                 } else {
 
-                    if(JSON.parse(body).hasOwnProperty('error')){
+                    if (JSON.parse(body).hasOwnProperty('error')) {
                         res.end(JSON.stringify({status: "error"}));
-                    }else {
+                    } else {
                         // client.messages.create({
                         //     body: 'Hey ' + req.query.customerName + '! Your password is ' + req.query.password,
                         //     from: 'whatsapp:+14155238886',
@@ -74,4 +76,4 @@ module.exports = {
 
 
     }
-}
+};
