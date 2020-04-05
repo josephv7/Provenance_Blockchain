@@ -30,6 +30,8 @@ class CreateManufacturer extends React.Component {
   state = {
     manufacturerName: '',
     manufacturerPassword: '',
+    mainAddress: '',
+    locations: '',
     exampleModal: false,
     loading: false
   }
@@ -38,13 +40,13 @@ class CreateManufacturer extends React.Component {
       exampleModal: !this.state.exampleModal
     });
   };
-  nameHandleChange = event => {
-    console.log("name change called")
-    this.setState({ manufacturerName: event.target.value });
-  }
-  passwordHandleChange = event => {
-    console.log("password change called")
-    this.setState({ manufacturerPassword: event.target.value });
+
+
+  handleChange=event=>{
+    const {name,value} = event.target;
+    this.setState({
+      [name] : value
+    })
   }
   
   handleSubmit = event => {
@@ -53,10 +55,19 @@ class CreateManufacturer extends React.Component {
   
     const manufacturer = {
       manufacturerName: this.state.manufacturerName,
-      password: this.state.manufacturerPassword 
+      password: this.state.manufacturerPassword ,
+      mainAddress: this.state.mainAddress,
+      locations: this.state.locations
     }
     this.setState({loading: true})
-    axios.get(nodeURL+"/createManufacturer?manufacturerName="+manufacturer.manufacturerName+"&password="+manufacturer.password)
+    axios.get(nodeURL+"/createManufacturer",{
+      params : {
+        manufacturerName : manufacturer.manufacturerName,
+        password: manufacturer.password,
+        mainAddress : manufacturer.mainAddress,
+        locations: [manufacturer.locations]
+      }
+    })
     .then(res => {
       console.log(res.status)
       console.log(res.data.status)
@@ -161,7 +172,8 @@ class CreateManufacturer extends React.Component {
                               id="input-username"
                               placeholder="Username"
                               type="text"
-                              onChange = {this.nameHandleChange}
+                              name="manufacturerName"
+                              onChange = {this.handleChange}
                             />
                           </FormGroup>
                         </Col>
@@ -178,11 +190,60 @@ class CreateManufacturer extends React.Component {
                               id="input-email"
                               placeholder="*********"
                               type="password"
-                              onChange = {this.passwordHandleChange}
+                              name="manufacturerPassword"
+                              onChange = {this.handleChange}
                             />
                           </FormGroup>
                         </Col>
                       </Row>
+
+
+
+
+
+
+                      <Row>
+                        <Col lg="6">
+                          <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-username"
+                            >
+                              Address
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                id="input-username"
+                                placeholder="Address"
+                                name="mainAddress"
+                                type="text"
+                                onChange = {this.handleChange}
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col lg="6">
+                          <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-email"
+                            >
+                              Locations
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                id="input-email"
+                                placeholder="Locations"
+                                type="password"
+                                name="locations"
+                                onChange = {this.handleChange}
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+
+
+
+
                       <hr className="my-4" />
                       <Row>
                         <Col className="text-right" xs="12">
