@@ -75,5 +75,26 @@ module.exports = {
         }
 
 
+    },
+
+    listDealers : (req,res) => {
+
+        axios.get(constants.blockchainBaseURL + 'Dealer').then(function (response) {
+            console.log(response.data);
+            jsonResponse = response.data;
+
+        }).then(function (response) {
+            showData();
+        }).catch(function (error) {
+            console.log(error);
+            res.end(JSON.stringify({status: "error"}));
+
+        });
+
+
+        function showData() {
+            console.log(jsonResponse);
+            res.send(jsonResponse);
+        }
     }
 };
