@@ -15,3 +15,9 @@ query ListManufacturerVehicles {
     statement:
         SELECT org.example.mynetwork.Vehicle WHERE (manufacturerId == _$id)
 }
+
+query ListDealerVehicles {
+  description: "List all vehicles sold by a manufacturer"
+    statement:
+        SELECT org.example.mynetwork.Vehicle WHERE (dealerId == _$id)
+}
