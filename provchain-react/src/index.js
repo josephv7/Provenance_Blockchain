@@ -5,6 +5,7 @@ import AdminLayout from "layouts/Admin.js";
 import CustomerLayout from "layouts/Customer";
 import AuthLayout from "layouts/Auth.js";
 import ManufacturerLayout from "layouts/Manufacturer";
+import DealerLayout from "layouts/Dealer";
 
 import "assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -20,6 +21,8 @@ ReactDOM.render(
             <Redirect path="/customer" to="/customer/dashboard"/>
             <Route path="/manufacturer" render={props => <ManufacturerLayout {...props} />}/>
             <Redirect path="/manufacturer" to="/manufacturer/dashboard"/>
+            <Route path="/dealer" render={props => <DealerLayout {...props} />}/>
+            <Redirect path="/dealer" to="/dealer/dashboard"/>
             <Route path="/auth" render={props => <AuthLayout {...props} />}/>
             <Redirect from="/" to="/auth/login"/>
         </Switch>

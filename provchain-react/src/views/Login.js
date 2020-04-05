@@ -98,6 +98,14 @@ class Login extends React.Component {
                         localStorage.setItem('userType', this.state.userType)
                         history.push('/customer/dashboard');
                     }
+                //    render dashboard for Dealer
+                    else if (JSON.stringify(res.data[0].userType) == "\"dealer\"") {
+                        // else{
+                        console.log("Dealer");
+                        this.setState({userType: 'dealer'})
+                        localStorage.setItem('userType', this.state.userType)
+                        history.push('/dealer/dashboard');
+                    }
 
                 }
 
