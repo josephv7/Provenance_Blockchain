@@ -7,11 +7,11 @@ query ListVehichleTransactions {
 query ListUserVehichles {
   description: "List all vehicles owned by a user"
   statement:
-      SELECT org.example.mynetwork.Vehicle WHERE (owner == _$id)
+      SELECT org.example.mynetwork.Vehicle WHERE (ownerId == _$id)
 }
 
 query ListManufacturerVehicles {
     description: "List all vehicles manufactured by a manufacturer"
     statement:
-        SELECT org.example.mynetwork.Vehicle WHERE (manufacturer == _$id)
+        SELECT org.example.mynetwork.Vehicle WHERE (manufacturerId == _$id)
 }
