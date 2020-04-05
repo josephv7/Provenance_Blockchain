@@ -91,5 +91,26 @@ module.exports = {
             console.log(jsonResponse);
             res.send(jsonResponse);
         }
+    },
+    listDealerVehicles: (req, res) => {
+        axios.get(constants.blockchainBaseURL + '/queries/ListDealerVehicles', {
+            params: {
+                id: req.query.userId
+            }
+        }).then(function (response) {
+            console.log(response.data);
+            jsonResponse = response.data;
+
+        }).then(function (response) {
+            showData();
+        }).catch(function (error) {
+            res.end(JSON.stringify({status: "error"}));
+            console.log(error);
+        });
+
+        function showData() {
+            console.log(jsonResponse);
+            res.send(jsonResponse);
+        }
     }
 };
