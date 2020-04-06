@@ -59,13 +59,41 @@ class CreateManufacturer extends React.Component {
             mainAddress: this.state.mainAddress,
             locations: this.state.locations
         }
+
+
+        var copyData = this.state.locations
+        var occurences = copyData.split(',').length - 1
+        var data = String(this.state.locations);
+        console.log(data)
+        var i = 0;
+        var array = []
+        var newIndex = data.indexOf(",")
+        var lastIndex = 0;
+        while (i < occurences) {
+            array.push(String(data.slice(lastIndex, newIndex)))
+            lastIndex = newIndex + 1;
+            data = data.slice(lastIndex)
+            console.log(data)
+            console.log("lastIndex: " + lastIndex)
+            newIndex = data.indexOf(",")
+            console.log("newIndex: " + newIndex)
+            lastIndex = 0;
+            if (i == occurences - 1) {
+                array.push(data);
+                break;
+            }
+            i += 1;
+        }
+        console.log(array);
+
+
         this.setState({loading: true})
         axios.get(nodeURL + "/createManufacturer", {
             params: {
                 manufacturerName: manufacturer.manufacturerName,
                 password: manufacturer.password,
                 mainAddress: manufacturer.mainAddress,
-                locations: [manufacturer.locations]
+                locations: array
             }
         })
             .then(res => {
@@ -76,18 +104,6 @@ class CreateManufacturer extends React.Component {
                     this.setState({loading: false})
                 }
             })
-        // axios.post(nodeURL+`/createManufacturer`,
-        //   { headers: {
-        //             "Content-Type": "application/json",
-        //             "Access-Control-Allow-Origin": "*",
-        //             'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',}},
-        //   { data: customer})
-        //   .then(res => {
-        //     console.log(res);
-        //   })
-        //   .catch(function (error) {
-        //     console.log("error from catch"+error);
-        //   })
     };
 
     render() {
