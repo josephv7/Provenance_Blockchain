@@ -3,11 +3,6 @@ import React from "react";
 import {
   Card,
   CardHeader,
-  Spinner,
-  Form,
-  FormGroup,
-  Input,
-  Button,
   Col,
   Modal,
   Table,
@@ -29,8 +24,23 @@ class AdminHistorian extends React.Component {
     axios.get(nodeURL+'/listAllTransactions', {
     })
         .then(res => {
-            this.setState({apiData: res.data});            
+            var data = res.data
+            var length = data.length;
+            var i = 0;
+            while(i<length){
+                data[i].transactionTimestamp = new Date(data[i].transactionTimestamp)                
+                data[i].participantInvoking = String(data[i].participantInvoking).slice(54)
+                i+=1
+            }
+            data = data.sort((a, b) => b.transactionTimestamp - a.transactionTimestamp)
+            var j=0;
+            while(j<data.length){
+                data[j].transactionTimestamp = String(data[j].transactionTimestamp).slice(0,25);
+                j+=1;
+            }                    
+            this.setState({ apiData: data })
         })
+        
   }
 
   fetchData(){
@@ -57,8 +67,8 @@ class AdminHistorian extends React.Component {
                   <thead className="thead-light">
                     <tr>
                       <th scope="col">Transaction Type</th>
-                      <th scope="col">Participant Invoking</th>
-                      <th scope="col">Transaction TimeStamp</th>                                                          
+                      <th className="text-center" scope="col">Participant Invoking</th>
+                      <th className="text-center" scope="col">Transaction TimeStamp</th>                                                          
                     </tr>
                   </thead>
                   <tbody>
@@ -66,8 +76,8 @@ class AdminHistorian extends React.Component {
                             <>
                               <tr>
                                 <td>{object.transactionType}</td>
-                                <td>{object.participantInvoking}</td>
-                                <td>{object.transactionTimestamp}</td>
+                                <td className="text-center">{object.participantInvoking}</td>
+                                <td className="text-center">{object.transactionTimestamp}</td>
                               </tr>
                             </>
                     ))}
