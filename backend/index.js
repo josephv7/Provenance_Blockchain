@@ -101,6 +101,10 @@ app.get('/dealerUpdation', function (req, res) {
     transactionController.dealerUpdation(req, res);
 });
 
+app.get('/listAllTransactions', function (req, res) {
+    queryController.listAllTransactions(req, res);
+});
+
 let server = app.listen(4000, function () {
     console.log('Server is listening on port 4000')
 });
