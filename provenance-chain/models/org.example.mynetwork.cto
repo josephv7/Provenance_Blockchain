@@ -71,6 +71,7 @@ event AssetTransferEvent {
 }
 
 transaction AssetTransferRequest {
+  --> Vehicle asset
   o String futureOwner
 }
 

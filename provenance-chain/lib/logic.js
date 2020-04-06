@@ -18,6 +18,9 @@
      console.log('newOwnerList' + newList);
      tx.asset.ownerList = newList;
 
+     tx.asset.verified = "true";
+     tx.asset.futureOwner = "_";
+
      // Get the asset registry for the asset.
     const assetRegistry = await getAssetRegistry('org.example.mynetwork.Vehicle');
     // Update the asset in the asset registry.
@@ -51,7 +54,6 @@
      const oldDealerId = tx.asset.dealerId;
      tx.asset.dealerId = tx.newDealerId;
 
-     tx.asset.verified = "true";
 
       // Get the asset registry for the asset.
     const assetRegistry = await getAssetRegistry('org.example.mynetwork.Vehicle');
