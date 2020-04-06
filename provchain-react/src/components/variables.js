@@ -1,4 +1,4 @@
-const nodeURL = "http://localhost:400"
+const nodeURL = "http://localhost:4000"
 
 module.exports = {
     nodeURL

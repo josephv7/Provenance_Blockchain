@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {Redirect} from 'react-router-dom';
+import logo from "../assets/img/brand/logo-png.png"
 
 // reactstrap components
 import {
@@ -123,8 +124,8 @@ class Login extends React.Component {
                 <Header/>
                 <Container fluid>
                     <Row>
-                        <Col>
-                            {/* add logo */}
+                        <Col md="5" lg="7">
+                            <img src={logo} style={{width:"100%", height:"100%"}}/>
                         </Col>
                         <Col className="order-xl-2" lg="5" md="7">
                             <Card className="bg-secondary shadow border-0">
