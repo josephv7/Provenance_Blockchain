@@ -37,3 +37,31 @@
 
 
  }
+
+ /**
+ * Transaction processor function.
+ * @param {org.example.mynetwork.DealerUpdation} tx The sample transaction instance.
+ * @transaction
+ */
+
+ async function dealerUpdation(tx){
+     const oldDealerName = tx.asset.dealerName;
+     tx.asset.dealerName = tx.newDealerName;
+
+     const oldDealerId = tx.asset.dealerId;
+     tx.asset.dealerId = tx.newDealerId;
+
+      // Get the asset registry for the asset.
+    const assetRegistry = await getAssetRegistry('org.example.mynetwork.Vehicle');
+    // Update the asset in the asset registry.
+    await assetRegistry.update(tx.asset);
+
+    let event = getFactory().newEvent('org.example.mynetwork', 'DealerUpdationEvent');
+    event.asset = tx.asset;
+    event.newDealerName = tx.newDealerName;
+    event.oldDealerName = oldDealerName;
+    event.newDealerId = tx.newDealerId
+    event.oldDealerId = oldDealerId;
+    emit(event);
+
+ }

@@ -70,13 +70,16 @@ event AssetTransferEvent {
 
 transaction DealerUpdation {
   --> Vehicle asset
-    o String newDealer
+    o String newDealerName
+    o String newDealerId
 }
 
 event DealerUpdationEvent {
   --> Vehicle asset 
-  o String oldDealer
-  o String newDealer
+  o String oldDealerName
+  o String newDealerName
+   o String oldDealerId
+  o String newDealerId
 }
 
 
