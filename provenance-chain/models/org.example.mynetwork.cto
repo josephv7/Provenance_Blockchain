@@ -68,7 +68,16 @@ event AssetTransferEvent {
   o String[] newOwnerList
 }
 
-// TODO Add transaction to add new manufacturer locations
+transaction DealerUpdation {
+  --> Vehicle asset
+    o String newDealer
+}
+
+event DealerUpdationEvent {
+  --> Vehicle asset 
+  o String oldDealer
+  o String newDealer
+}
 
 
 
