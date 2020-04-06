@@ -1,10 +1,9 @@
-
 import Dashboard from "../views/Dashboard";
 import CreateConsumer from "../views/createConsumer";
 import ListCustomer from "../views/listConsumers";
 import ListVehicles from "../views/listVehicles";
-import CreateVehicle from "../views/createVehicle";
 import 'remixicon/fonts/remixicon.css'
+import OwnerChange from "../views/ownerChange";
 
 var DealerRoute = [
     {
@@ -34,6 +33,13 @@ var DealerRoute = [
         icon: "ri-file-list-2-line text-red",
         component: ListVehicles,
         layout: "/dealer"
-    }
+    },
+    {
+        path: "/ownerChange",
+        name: "Owner Change",
+        icon: "ri-user-add-line text-primary",
+        component: OwnerChange,
+        layout: "/dealer"
+    },
 ];
 export default DealerRoute;
