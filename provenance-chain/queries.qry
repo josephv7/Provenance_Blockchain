@@ -21,3 +21,9 @@ query ListDealerVehicles {
     statement:
         SELECT org.example.mynetwork.Vehicle WHERE (dealerId == _$id)
 }
+
+query ListUnverifiedVehicles {
+  description: "List all vehicles pending transaction verification"
+  statement:
+        SELECT org.example.mynetwork.Vehicle WHERE (verified == "false")
+}
