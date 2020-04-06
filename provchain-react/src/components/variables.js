@@ -1,4 +1,4 @@
-const nodeURL = "https://54c5a647.ngrok.io"
+const nodeURL = "http://localhost:400"
 
 module.exports = {
     nodeURL

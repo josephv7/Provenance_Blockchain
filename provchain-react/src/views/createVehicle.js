@@ -31,7 +31,8 @@ class CreateVehicle extends React.Component {
         chassisNumber: '',
         manufacturerLocation: '',
         manufacturerId: localStorage.getItem('userId'),
-        manufacturerName: 'benz'
+        manufacturerName: 'benz',
+        fetchLocations: ''
         //    TODO need to store name in local storage after login
     }
     // componentDidMount(){
@@ -101,7 +102,22 @@ class CreateVehicle extends React.Component {
         //     console.log("error from catch"+error);
         //   })
     };
-
+    componentDidMount(){
+        const localManufacturerId = localStorage.getItem('userId');
+        axios.get(nodeURL+'/getManufacturerLocations', {
+            params : {
+                manufacturerId : localManufacturerId
+            }
+        })
+            .then(res => {
+                const locationDetails = res.data;
+                this.setState({
+                    fetchLocations : locationDetails
+                })
+                console.log(locationDetails.locations)
+                // this.setState({ vehicleIdDetails: res.data });                
+            })
+    }
     render() {
         return (
             <>
@@ -198,14 +214,13 @@ class CreateVehicle extends React.Component {
                                                             >
                                                                 Manufacturer Location
                                                             </label>
-                                                            <Input
-                                                                name="manufacturerLocation"
-                                                                className="form-control-alternative"
-                                                                id="input-username"
-                                                                placeholder="Owner Id"
-                                                                type="text"
-                                                                onChange={this.handleChange}
-                                                            />
+                                             
+                                                            
+                                                            <Input type="select" name="select" id="exampleSelect">
+                                                                {Array.isArray(this.state.fetchLocations.locations) && this.state.fetchLocations.locations.map(object => (
+                                                                    <option>{object}</option>
+                                                                ))}
+                                                            </Input>
                                                         </FormGroup>
                                                     </Col>
                                                 </Row>
