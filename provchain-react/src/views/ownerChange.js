@@ -63,8 +63,8 @@ class OwnerChange extends React.Component {
     })
     .then(res => {
       console.log(res)
-      console.log(res.data[0].status)
-      if(res.data[0].status=="ok"){
+      console.log(res.data.status)
+      if(res.data.status=="ok"){
             this.toggleModal();
             this.setState({loading: false})
       }
