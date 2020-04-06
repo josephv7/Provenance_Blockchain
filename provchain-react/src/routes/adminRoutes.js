@@ -5,6 +5,7 @@ import CreateDealer from "../views/createDealer";
 import ListCustomer from "../views/listConsumers";
 import ListVehicles from "../views/listVehicles";
 import ListManufacturer from "../views/listManufacturer";
+import VerifyTransactions from "../views/verifyTransactions";
 import OwnerChange from "../views/ownerChange";
 
 import 'remixicon/fonts/remixicon.css'
@@ -22,6 +23,13 @@ var AdminRoute = [
         name: "Owner Change Request",
         icon: "ri-swap-box-line text-red",
         component: OwnerChange,
+        layout: "/admin"
+    },
+    {
+        path: "/verifyChange",
+        name: "Verify Transactions",
+        icon: "ri-swap-box-line text-red",
+        component: VerifyTransactions,
         layout: "/admin"
     },
     {
