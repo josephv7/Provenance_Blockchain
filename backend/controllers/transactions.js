@@ -34,5 +34,37 @@ module.exports = {
             }
         });
 
+    },
+    dealerUpdation : (req,res) => {
+        console.log(req.query.dealerName);
+        console.log(req.query.dealerId);
+        console.log(req.query.chassisNumber);
+
+        //TODO fetch dealerName using dealerId here
+
+        var asset = 'org.example.mynetwork.Vehicle#' + req.query.chassisNumber;
+
+        Request.post({
+            "headers": {"content-type": "application/json"},
+            "url": constants.blockchainBaseURL + "DealerUpdation",
+            "body": JSON.stringify({
+                "asset": asset,
+                "newDealerName": req.query.dealerName,
+                "newDealerId": req.query.dealerId
+            })
+        }, (error, response, body) => {
+            if (error) {
+                res.end(JSON.stringify({status: "error"}));
+                return console.dir(error);
+            } else {
+                if(JSON.parse(body).hasOwnProperty('error')){
+                    res.end(JSON.stringify({status: "error"}));
+                }else {
+                    console.dir(JSON.parse(body));
+                    res.end(JSON.stringify({status: "ok"}));
+                }
+            }
+        });
+
     }
 };

@@ -89,6 +89,10 @@ app.get('/getManufacturerInfo', function (req, res) {
 });
 
 
+app.get('/dealerUpdation', function (req, res) {
+    transactionController.dealerUpdation(req, res);
+});
+
 let server = app.listen(4000, function () {
     console.log('Server is listening on port 4000')
 });
