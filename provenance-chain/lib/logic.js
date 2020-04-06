@@ -51,6 +51,8 @@
      const oldDealerId = tx.asset.dealerId;
      tx.asset.dealerId = tx.newDealerId;
 
+     tx.asset.verified = "true";
+
       // Get the asset registry for the asset.
     const assetRegistry = await getAssetRegistry('org.example.mynetwork.Vehicle');
     // Update the asset in the asset registry.
@@ -63,5 +65,29 @@
     event.newDealerId = tx.newDealerId
     event.oldDealerId = oldDealerId;
     emit(event);
+
+ }
+
+
+ /**
+ * Transaction processor function.
+ * @param {org.example.mynetwork.AssetTransferRequest} tx The sample transaction instance.
+ * @transaction
+ */
+
+ async function assetTransferRequest(tx){
+     const oldFutureOwner = tx.asset.futureOwner;
+     tx.asset.futureOwner = tx.futureOwner;
+
+    tx.asset.verified = "false";
+
+    const assetRegistry = await getAssetRegistry('org.example.mynetwork.Vehicle');
+    // Update the asset in the asset registry.
+    await assetRegistry.update(tx.asset);
+
+    let event = getFactory().newEvent('org.example.mynetwork', 'AssetTransferRequestEvent');
+    event.asset = tx.asset;
+    event.oldFutureOwner = oldFutureOwner;
+    event.newFutureOwner = tx.asset.futureOwner;
 
  }

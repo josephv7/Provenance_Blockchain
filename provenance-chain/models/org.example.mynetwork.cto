@@ -25,6 +25,8 @@ asset Vehicle identified by chassisNumber {
   o String dealerId
   o String[] ownerList
   o String ownerId
+  o String futureOwner
+  o String verified
 }
 
 
@@ -66,6 +68,15 @@ event AssetTransferEvent {
   o String newOwnerId
   o String[] oldOwnerList
   o String[] newOwnerList
+}
+
+transaction AssetTransferRequest {
+  o String futureOwner
+}
+
+event AssetTransferRequestEvent {
+  o String oldFutureOwner
+  o String newFutureOwner
 }
 
 transaction DealerUpdation {
