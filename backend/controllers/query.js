@@ -93,7 +93,7 @@ module.exports = {
         }
     },
     listDealerVehicles: (req, res) => {
-        axios.get(constants.blockchainBaseURL + '/queries/ListDealerVehicles', {
+        axios.get(constants.blockchainBaseURL + 'queries/ListDealerVehicles', {
             params: {
                 id: req.query.dealerId
             }
@@ -114,7 +114,7 @@ module.exports = {
         }
     },
     listUnverifiedVehicles : (req,res) => {
-        axios.get(constants.blockchainBaseURL + '/queries/ListUnverifiedVehicles', {
+        axios.get(constants.blockchainBaseURL + 'queries/ListUnverifiedVehicles', {
             params: {
                 id: req.query.dealerId
             }
