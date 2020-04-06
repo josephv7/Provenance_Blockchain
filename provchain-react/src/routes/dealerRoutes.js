@@ -36,7 +36,7 @@ var DealerRoute = [
     },
     {
         path: "/ownerChange",
-        name: "Owner Change",
+        name: "Owner Change Request",
         icon: "ri-user-add-line text-primary",
         component: OwnerChange,
         layout: "/dealer"

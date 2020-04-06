@@ -19,7 +19,7 @@ var AdminRoute = [
     },
     {
         path: "/ownerChange",
-        name: "Owner Change",
+        name: "Owner Change Request",
         icon: "ri-swap-box-line text-red",
         component: OwnerChange,
         layout: "/admin"

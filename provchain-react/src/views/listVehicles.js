@@ -88,7 +88,9 @@ class ListVehicles extends React.Component {
       fetchurl = nodeURL+'/listManufacturerVehicles?manufacturerId='+userId
     }else if(userType == "admin"){
       fetchurl = nodeURL+'/listVehicles'
-    }
+    }else if (userType == "dealer"){
+  fetchurl = nodeURL+'/listDealerVehicles?dealerId='+userId
+}
 
     fetch(fetchurl)
     .then(res => res.json())
