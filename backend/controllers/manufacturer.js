@@ -133,7 +133,7 @@ module.exports = {
         //TODO check if not present error in response from blockchain and send corresponding reponse to frontend
         function showData() {
             // console.log(jsonResponse);
-            res.send(jsonResponse['locations']);
+            res.send(JSON.stringify({locations: jsonResponse['locations']}));
         }
 
     }
