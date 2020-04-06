@@ -63,6 +63,8 @@ class ListVehicles extends React.Component {
       fetchurl = nodeURL+'/listManufacturerVehicles?userId='+userId
     }else if(userType == "admin"){
       fetchurl = nodeURL+'/listVehicles'
+    }else if(userType =="dealer"){
+      fetchurl = nodeURL+'/listDealerVehicles?userId='+userId
     }
 
     fetch(fetchurl)
@@ -83,7 +85,7 @@ class ListVehicles extends React.Component {
     if(userType == "customer"){
       fetchurl = nodeURL+'/listUserVehicles?userId='+userId
     }else if (userType == "manufacturer"){
-      fetchurl = nodeURL+'/listManufacturerVehicles?userId='+userId
+      fetchurl = nodeURL+'/listManufacturerVehicles?manufacturerId='+userId
     }else if(userType == "admin"){
       fetchurl = nodeURL+'/listVehicles'
     }
@@ -92,7 +94,7 @@ class ListVehicles extends React.Component {
     .then(res => res.json())
     .then((data) => {
       this.setState({apiData: data })
-      // console.log(data);
+      console.log(data);
     })
     .catch(console.log)
   }
@@ -122,7 +124,7 @@ class ListVehicles extends React.Component {
           </div>
           <div className="modal-body">
              <h5>Plate Number: {JSON.stringify(this.state.vehicleIdDetails["plateNumber"])}</h5>
-             <h5>Manufacturer Name : {JSON.stringify(this.state.vehicleIdDetails["manufacturer"])}</h5>
+             <h5>Manufacturer Name : {JSON.stringify(this.state.vehicleIdDetails["manufacturerName"])}</h5>
              <h5>Owner ID : {JSON.stringify(this.state.vehicleIdDetails["ownerId"])}</h5>
           </div>
           <div className="modal-footer">
@@ -200,9 +202,10 @@ class ListVehicles extends React.Component {
                   <thead className="thead-light">
                     <tr>
                       <th scope="col">Chassis Number</th>
-                      <th scope="col">Plate Number</th>
-                      <th scope="col">Manufacturer</th>
-                      <th scope="col">Owner ID</th>                                                                                                        
+                      <th scope="col">Dealer Name</th>
+                      <th scope="col">Manufacture Location</th>
+                      <th scope="col">Owner ID</th>
+                      {/*TODO show owner list only for dealer*/}
                       <th scope="col">Owner List</th>                                            
                     </tr>
                   </thead>
@@ -211,9 +214,10 @@ class ListVehicles extends React.Component {
                             <>
                               <tr>
                                 <td>{object.chassisNumber}</td>
-                                <td>{object.plateNumber}</td>
-                                <td>{object.manufacturer}</td>
-                                <td>{object.ownerId}</td>                              
+                                <td>{object.dealerName}</td>
+                                <td>{object.manufactureLocation}</td>
+                                <td>{object.ownerId}</td>
+                                {/*TODO show owner list only for dealer*/}
                                 <td>{object.ownerList +String(", ")}</td>
                               </tr>
                             </>
