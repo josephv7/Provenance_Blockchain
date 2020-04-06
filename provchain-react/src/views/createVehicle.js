@@ -31,7 +31,7 @@ class CreateVehicle extends React.Component {
         chassisNumber: '',
         manufacturerLocation: '',
         manufacturerId: localStorage.getItem('userId'),
-        manufacturerName: 'benz',
+        manufacturerName: 'manufacturer1',
         fetchLocations: ''
         //    TODO need to store name in local storage after login
     }
@@ -50,6 +50,9 @@ class CreateVehicle extends React.Component {
         this.setState({
             [name]: value
         })
+        console.log("change: "+event.target.value)
+        console.log(this.state.manufacturerLocation)
+        
     }
 
     nameHandleChange = event => {
@@ -64,6 +67,7 @@ class CreateVehicle extends React.Component {
     handleSubmit = event => {
         event.preventDefault();
         console.log("submit called")
+        
 
         const vehicle = {
             chassisNumber: this.state.chassisNumber,
@@ -216,9 +220,9 @@ class CreateVehicle extends React.Component {
                                                             </label>
                                              
                                                             
-                                                            <Input type="select" name="select" id="exampleSelect">
+                                                            <Input type="select" name="manufacturerLocation" onChange={this.handleChange}>
                                                                 {Array.isArray(this.state.fetchLocations.locations) && this.state.fetchLocations.locations.map(object => (
-                                                                    <option>{object}</option>
+                                                                    <option value={object} >{object}</option>
                                                                 ))}
                                                             </Input>
                                                         </FormGroup>
