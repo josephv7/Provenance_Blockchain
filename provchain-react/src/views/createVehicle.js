@@ -1,4 +1,3 @@
-
 import React from "react";
 
 // reactstrap components
@@ -30,35 +29,35 @@ import 'remixicon/fonts/remixicon.css'
 class CreateVehicle extends React.Component {
     state = {
         chassisNumber: '',
-        ownerId: '',
         manufacturerLocation: '',
-        manufacturer: localStorage.getItem('userId'),
-        plateNumber: ''
+        manufacturerId: localStorage.getItem('userId'),
+        manufacturerName: 'benz'
+        //    TODO need to store name in local storage after login
     }
     // componentDidMount(){
     //   this.state.customerName = "null";
     //   this.state.customerPassword = "null"
     // }
-    toggleModal(){
+    toggleModal() {
         this.setState({
             exampleModal: !this.state.exampleModal
         });
     };
 
     handleChange = event => {
-        const {name,value} = event.target
+        const {name, value} = event.target
         this.setState({
-            [name] : value
+            [name]: value
         })
     }
 
     nameHandleChange = event => {
         console.log("name change called")
-        this.setState({ customerName: event.target.value });
+        this.setState({customerName: event.target.value});
     }
     passwordHandleChange = event => {
         console.log("password change called")
-        this.setState({ customerPassword: event.target.value });
+        this.setState({customerPassword: event.target.value});
     }
 
     handleSubmit = event => {
@@ -67,26 +66,24 @@ class CreateVehicle extends React.Component {
 
         const vehicle = {
             chassisNumber: this.state.chassisNumber,
-            ownerId: this.state.ownerId,
             manufacturerLocation: this.state.manufacturerLocation,
-            manufacturer: this.state.manufacturer,
-            plateNumber: this.state.plateNumber
+            manufacturerName: this.state.manufacturerName,
+            manufacturerId: this.state.manufacturerId
         }
 
         this.setState({loading: true})
-        axios.get(nodeURL+'/createVehicle',{
-            params : {
-                chassisNumber : vehicle.chassisNumber,
-                ownerId : vehicle.ownerId,
-                manufacturerLocation : vehicle.manufacturerLocation,
-                manufacturer : vehicle.manufacturer,
-                plateNumber : vehicle.plateNumber
+        axios.get(nodeURL + '/createVehicle', {
+            params: {
+                chassisNumber: vehicle.chassisNumber,
+                manufactureLocation: vehicle.manufacturerLocation,
+                manufacturerId: vehicle.manufacturerId,
+                manufacturerName: vehicle.manufacturerName
             }
         })
             .then(res => {
                 console.log(res)
                 console.log(res.data.status)
-                if(res.data.status=="ok"){
+                if (res.data.status == "ok") {
                     this.toggleModal();
                     this.setState({loading: false})
                 }
@@ -104,11 +101,12 @@ class CreateVehicle extends React.Component {
         //     console.log("error from catch"+error);
         //   })
     };
+
     render() {
         return (
             <>
 
-                <Header />
+                <Header/>
                 <Modal
                     className="modal-dialog-centered"
                     isOpen={this.state.exampleModal}
@@ -131,7 +129,8 @@ class CreateVehicle extends React.Component {
                     <div className="modal-body text-center">
                         <i class="ri-heart-line ri-3x text-success"></i>
                         <h4 class="text-success">Success</h4>
-                        <h4 class="text-muted">Customer <span class="text-success">{this.state.customerName}</span> was added successfully !</h4>
+                        <h4 class="text-muted">Vehicle <span class="text-success">{this.state.chassisNumber}</span> was
+                            added successfully !</h4>
                     </div>
                     <div className="modal-footer">
                         <Button
@@ -151,7 +150,7 @@ class CreateVehicle extends React.Component {
                                 <CardHeader className="bg-white border-0">
                                     <Row className="align-items-center">
                                         <Col xs="8">
-                                            <h3 className="mb-0">Create Customers</h3>
+                                            <h3 className="mb-0">Create Vehicles</h3>
                                         </Col>
                                         <Col className="text-right" xs="4">
                                             <Button
@@ -160,16 +159,16 @@ class CreateVehicle extends React.Component {
                                                 onClick={e => e.preventDefault()}
                                                 size="sm"
                                             >
-                                                Customer
+                                                Vehicle
                                             </Button>
                                         </Col>
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
-                                    {this.state.loading ? <Spinner color="dark" /> :
-                                        <Form onSubmit = {this.handleSubmit}>
+                                    {this.state.loading ? <Spinner color="dark"/> :
+                                        <Form onSubmit={this.handleSubmit}>
                                             <h6 className="heading-small text-muted mb-4">
-                                                Add Customer Information
+                                                Add Vehicle Information
                                             </h6>
                                             <div className="pl-lg-4">
                                                 <Row>
@@ -186,8 +185,8 @@ class CreateVehicle extends React.Component {
                                                                 id="input-username"
                                                                 placeholder="Chassis Number"
                                                                 type="text"
-                                                                name = "chassisNumber"
-                                                                onChange = {this.handleChange}
+                                                                name="chassisNumber"
+                                                                onChange={this.handleChange}
                                                             />
                                                         </FormGroup>
                                                     </Col>
@@ -196,65 +195,63 @@ class CreateVehicle extends React.Component {
                                                             <label
                                                                 className="form-control-label"
                                                                 htmlFor="input-email"
-                                                            >
-                                                                Owner Id
-                                                            </label>
-                                                            <Input
-                                                                name="ownerId"
-                                                                className="form-control-alternative"
-                                                                id="input-username"
-                                                                placeholder="Owner Id"
-                                                                type="text"
-                                                                onChange = {this.handleChange}
-                                                            />
-                                                        </FormGroup>
-                                                    </Col>
-                                                </Row>
-
-
-
-                                                <Row>
-                                                    <Col lg="6">
-                                                        <FormGroup>
-                                                            <label
-                                                                className="form-control-label"
-                                                                htmlFor="input-username"
                                                             >
                                                                 Manufacturer Location
                                                             </label>
                                                             <Input
+                                                                name="manufacturerLocation"
                                                                 className="form-control-alternative"
                                                                 id="input-username"
-                                                                placeholder="Manufacturer Location"
+                                                                placeholder="Owner Id"
                                                                 type="text"
-                                                                name = "manufacturerLocation"
-                                                                onChange = {this.handleChange}
-                                                            />
-                                                        </FormGroup>
-                                                    </Col>
-                                                    <Col lg="6">
-                                                        <FormGroup>
-                                                            <label
-                                                                className="form-control-label"
-                                                                htmlFor="input-email"
-                                                            >
-                                                                Plate Number
-                                                            </label>
-                                                            <Input
-                                                                name="plateNumber"
-                                                                className="form-control-alternative"
-                                                                id="input-username"
-                                                                placeholder="Plate Number"
-                                                                type="text"
-                                                                onChange = {this.handleChange}
+                                                                onChange={this.handleChange}
                                                             />
                                                         </FormGroup>
                                                     </Col>
                                                 </Row>
 
 
+                                                {/*<Row>*/}
+                                                {/*    <Col lg="6">*/}
+                                                {/*        <FormGroup>*/}
+                                                {/*            <label*/}
+                                                {/*                className="form-control-label"*/}
+                                                {/*                htmlFor="input-username"*/}
+                                                {/*            >*/}
+                                                {/*                Manufacturer Location*/}
+                                                {/*            </label>*/}
+                                                {/*            <Input*/}
+                                                {/*                className="form-control-alternative"*/}
+                                                {/*                id="input-username"*/}
+                                                {/*                placeholder="Manufacturer Location"*/}
+                                                {/*                type="text"*/}
+                                                {/*                name="manufacturerLocation"*/}
+                                                {/*                onChange={this.handleChange}*/}
+                                                {/*            />*/}
+                                                {/*        </FormGroup>*/}
+                                                {/*    </Col>*/}
+                                                {/*    <Col lg="6">*/}
+                                                {/*        <FormGroup>*/}
+                                                {/*            <label*/}
+                                                {/*                className="form-control-label"*/}
+                                                {/*                htmlFor="input-email"*/}
+                                                {/*            >*/}
+                                                {/*                Plate Number*/}
+                                                {/*            </label>*/}
+                                                {/*            <Input*/}
+                                                {/*                name="plateNumber"*/}
+                                                {/*                className="form-control-alternative"*/}
+                                                {/*                id="input-username"*/}
+                                                {/*                placeholder="Plate Number"*/}
+                                                {/*                type="text"*/}
+                                                {/*                onChange={this.handleChange}*/}
+                                                {/*            />*/}
+                                                {/*        </FormGroup>*/}
+                                                {/*    </Col>*/}
+                                                {/*</Row>*/}
 
-                                                <hr className="my-4" />
+
+                                                <hr className="my-4"/>
                                                 <Row>
                                                     <Col className="text-right" xs="12">
                                                         <Button
