@@ -48,7 +48,7 @@ class VerifyTransactions extends React.Component {
               successModal: !this.state.successModal
           })
       }
-      else{
+      if(id=="failModal"){
           this.setState({
               failModal: !this.state.failModal
           })
@@ -62,14 +62,14 @@ class VerifyTransactions extends React.Component {
             this.setState({apiData: res.data});            
         })
   }
-  fetchData(){
-    axios.get(nodeURL+'/listUnverifiedVehicles', {
-    })
-        .then(res => {
-            this.setState({apiData: res.data});            
-        })
-  }
-  handleChange = event => {
+//   fetchData(){
+//     axios.get(nodeURL+'/listUnverifiedVehicles', {
+//     })
+//         .then(res => {
+//             this.setState({apiData: res.data});            
+//         })
+//   }
+  handleChange = event => {    
     console.log(JSON.parse(event.target.value))
     this.setState({
             chassisNumber: JSON.parse(event.target.value).chassisNumber, newOwnerId: JSON.parse(event.target.value).ownerId
@@ -79,7 +79,9 @@ class VerifyTransactions extends React.Component {
     this.toggleModal("exampleModal")
   }
   handleSubmit = event => {
-      event.pereventDefault();
+      event.preventDefault();
+      console.log("submit")
+    //   event.stopPropagation();
       this.setState({loading: true})
       axios.get(nodeURL+'/ownerChange', {
           params : {
@@ -89,14 +91,19 @@ class VerifyTransactions extends React.Component {
       })
       .then (res => {
           console.log(res)
+        //   console.log("success")
           if(res.data.status=="success"){
-              this.successModal("successModal")
+            console.log("success")
+              this.toggleModal("successModal")
+              this.toggleModal("exampleModal")
+              this.fetchData()
           }
           else{
-              this.failModal("failModal")
+              console.log("fail")
+              this.toggleModal("failModal")
+              this.toggleModal("exampleModal")
           }
-      })
-      this.fetchData()
+      })      
   }
   render() {
     const {apiData} = this.state;
@@ -143,9 +150,10 @@ class VerifyTransactions extends React.Component {
                                         id="input-username"
                                         disabled
                                         placeholder={this.state.chassisNumber}
+                                        value={this.state.chassisNumber}
                                         type="text"
                                         name="customerName"
-                                        onChange={this.handleChange}
+                                        
                                     />
                                 </FormGroup>
                             </Col>
@@ -163,8 +171,9 @@ class VerifyTransactions extends React.Component {
                                         className="form-control-alternative"
                                         id="input-email"
                                         placeholder={this.state.newOwnerId}
+                                        value={this.state.newOwnerId}
                                         type="text"
-                                        onChange={this.handleChange}
+                                        
                                     />
                                 </FormGroup>
                             </Col>
@@ -292,7 +301,7 @@ class VerifyTransactions extends React.Component {
                                 <td>{object.dealerId}</td>
                                 <td>{object.futureOwner}</td>
                                 <td>{object.ownerId}</td>
-                                <td onClick={this.verifyChange}>{object.verified}</td>
+                                <td>{object.verified}</td>
                                 <td className="text-center"><Button
                                             color="success"
                                             data-dismiss="modal"
