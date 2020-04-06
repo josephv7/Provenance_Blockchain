@@ -7,6 +7,7 @@ import ListVehicles from "../views/listVehicles";
 import ListManufacturer from "../views/listManufacturer";
 import VerifyTransactions from "../views/verifyTransactions";
 import OwnerChange from "../views/ownerChange";
+import AdminHistorian from "../views/adminHistorian";
 
 import 'remixicon/fonts/remixicon.css'
 
@@ -16,6 +17,13 @@ var AdminRoute = [
         name: "Dashboard",
         icon: "ri-dashboard-line text-primary",
         component: Dashboard,
+        layout: "/admin"
+    },
+    {
+        path: "/adminHistorian",
+        name: "Historian",
+        icon: "ri-dashboard-line text-primary",
+        component: AdminHistorian,
         layout: "/admin"
     },
     {
