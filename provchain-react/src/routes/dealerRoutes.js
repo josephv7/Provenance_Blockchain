@@ -22,13 +22,6 @@ var DealerRoute = [
         layout: "/dealer"
     },
     {
-        path: "/createVehicle",
-        name: "Create Vehicle",
-        icon: "ri-user-add-line text-primary",
-        component: CreateVehicle,
-        layout: "/dealer"
-    },
-    {
         path: "/listCustomers",
         name: "List Customers",
         icon: "ri-file-list-2-line text-red",
