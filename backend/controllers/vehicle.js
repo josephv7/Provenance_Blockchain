@@ -18,23 +18,21 @@ module.exports = {
 
 
 
-        var owner = "org.example.mynetwork.Customer#" + req.query.ownerId;
-
-
         Request.post({
             "headers": {"content-type": "application/json"},
             "url": constants.blockchainBaseURL + "Vehicle",
             "body": JSON.stringify({
                 "chassisNumber": req.query.chassisNumber,
-                "owner": owner,
-                "plateNumber": req.query.plateNumber,
+                "plateNumber": "_",
                 "manufactureLocation": req.query.manufactureLocation,
-                "manufacturer": req.query.manufacturerName,
-                "ownerList": [req.query.ownerId],
-                "ownerId": req.query.ownerId,
+                "manufacturerName": req.query.manufacturerName,
+                "ownerList": [],
+                "ownerId": "_",
                 "manufacturerId" : req.query.manufacturerId,
-                "dealerName" : req.query.dealerName,
-                "dealerId" : req.query.dealerId
+                "dealerName" : "_",
+                "dealerId" : "_",
+                "futureOwner": "_",
+                "verified" : "true"
 
 
             })

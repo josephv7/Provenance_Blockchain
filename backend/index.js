@@ -60,6 +60,10 @@ app.get('/ownerChange', function (req, res) {
     return transactionController.ownerChange(req, res);
 });
 
+app.get('/ownerChangeRequest', function (req, res) {
+    return transactionController.ownerChnangeRequest(req, res);
+});
+
 app.get('/getVehicleTransactions', function (req, res) {
     return queryController.getVehicleTransactions(req, res);
 });
@@ -70,6 +74,14 @@ app.get('/listUserVehicles', function (req, res) {
 
 app.get('/listManufacturervehicles', function (req, res) {
     return queryController.listManufacturerVehicles(req, res);
+});
+
+app.get('/listDealerVehicles', function (req, res) {
+    return queryController.listDealerVehicles(req, res);
+});
+
+app.get('/listUnverifiedVehicles', function (req, res) {
+    return queryController.listUnverifiedVehicles(req, res);
 });
 
 app.get('/vehichleInfo', function (req, res) {
@@ -84,6 +96,10 @@ app.get('/getManufacturerInfo', function (req, res) {
     manufacturerController.getManufacturerInfo(req, res);
 });
 
+
+app.get('/dealerUpdation', function (req, res) {
+    transactionController.dealerUpdation(req, res);
+});
 
 let server = app.listen(4000, function () {
     console.log('Server is listening on port 4000')
