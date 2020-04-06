@@ -95,7 +95,7 @@ module.exports = {
     listDealerVehicles: (req, res) => {
         axios.get(constants.blockchainBaseURL + '/queries/ListDealerVehicles', {
             params: {
-                id: req.query.userId
+                id: req.query.dealerId
             }
         }).then(function (response) {
             console.log(response.data);

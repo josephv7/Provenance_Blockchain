@@ -30,7 +30,9 @@ module.exports = {
                 "ownerId": "_",
                 "manufacturerId" : req.query.manufacturerId,
                 "dealerName" : "_",
-                "dealerId" : "_"
+                "dealerId" : "_",
+                "futureOwner": "_",
+                "verified" : "true"
 
 
             })

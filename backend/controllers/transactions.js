@@ -66,5 +66,37 @@ module.exports = {
             }
         });
 
+    },
+    ownerChnangeRequest : (req,res) => {
+
+        console.log(req.query.chassisNumber);
+        var newOwnerId = req.query.newOwnerId;
+        console.log(newOwnerId);
+
+        var asset = 'org.example.mynetwork.Vehicle#' + req.query.chassisNumber;
+
+        Request.post({
+            "headers": {"content-type": "application/json"},
+            "url": constants.blockchainBaseURL + "AssetTransferRequest",
+            "body": JSON.stringify({
+                "asset": asset,
+                "futureOwner": newOwnerId
+            })
+        }, (error, response, body) => {
+            if (error) {
+                res.end(JSON.stringify({status: "error"}));
+                return console.dir(error);
+            } else {
+                if(JSON.parse(body).hasOwnProperty('error')){
+                    res.end(JSON.stringify({status: "error"}));
+                }else {
+                    console.dir(JSON.parse(body));
+                    res.end(JSON.stringify({status: "ok"}));
+                }
+            }
+        });
+
+
+
     }
 };

@@ -60,6 +60,10 @@ app.get('/ownerChange', function (req, res) {
     return transactionController.ownerChange(req, res);
 });
 
+app.get('/ownerChangeRequest', function (req, res) {
+    return transactionController.ownerChnangeRequest(req, res);
+});
+
 app.get('/getVehicleTransactions', function (req, res) {
     return queryController.getVehicleTransactions(req, res);
 });
