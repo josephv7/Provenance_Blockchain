@@ -53,13 +53,15 @@ class OwnerChange extends React.Component {
 
         const vehicle = {
             chassisNumber: this.state.chassisNumber,
-            newOwnerId: this.state.newOwnerId
+            newOwnerId: this.state.newOwnerId,
+            plateNumber: this.state.plateNumber
         }
         this.setState({loading: true})
         axios.get(nodeURL + "/ownerChangeRequest", {
             params: {
                 chassisNumber: vehicle.chassisNumber,
-                newOwnerId: vehicle.newOwnerId
+                newOwnerId: vehicle.newOwnerId,
+                plateNumber: vehicle.plateNumber
             }
         })
             .then(res => {
