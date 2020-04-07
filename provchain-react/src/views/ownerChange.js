@@ -185,6 +185,33 @@ class OwnerChange extends React.Component {
                           </FormGroup>
                         </Col>
                       </Row>
+
+
+
+
+                      <Row>
+                        <Col lg="6">
+                          <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-username"
+                            >
+                              Plate Number
+                            </label>
+                            <Input
+                                name="plateNumber"
+                                className="form-control-alternative"
+                                id="input-username"
+                                placeholder="Chassis Number"
+                                type="text"
+                                onChange = {this.nameHandleChange}
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+
+
+
                       <hr className="my-4" />
                       <Row>
                         <Col className="text-right" xs="12">
