@@ -6,6 +6,7 @@ import ListVehicles from "../views/listVehicles";
 import CreateVehicle from "../views/createVehicle";
 import 'remixicon/fonts/remixicon.css'
 import DealerTransfer from "../views/dealerTransfer";
+import CreateDealer from "../views/createDealer";
 
 var ManufacturerRoute = [
     {
@@ -20,6 +21,13 @@ var ManufacturerRoute = [
         name: "Create Vehicle",
         icon: "ri-user-add-line text-primary",
         component: CreateVehicle,
+        layout: "/manufacturer"
+    },
+    {
+        path: "/createDealer",
+        name: "Create Dealer",
+        icon: "ri-user-add-line text-primary",
+        component: CreateDealer,
         layout: "/manufacturer"
     },
     {
