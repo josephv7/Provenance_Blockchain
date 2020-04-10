@@ -27,6 +27,7 @@ asset Vehicle identified by chassisNumber {
   o String ownerId
   o String futureOwner
   o String verified
+  o String futurePlateNumber
 }
 
 
@@ -73,6 +74,7 @@ event AssetTransferEvent {
 transaction AssetTransferRequest {
   --> Vehicle asset
   o String futureOwner
+  o String futurePlateNumber
 }
 
 event AssetTransferRequestEvent {
