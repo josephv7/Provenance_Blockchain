@@ -32,7 +32,8 @@ module.exports = {
                 "dealerName" : "_",
                 "dealerId" : "_",
                 "futureOwner": "_",
-                "verified" : "true"
+                "verified" : "true",
+                "futurePlateNumber" : "_"
 
 
             })
