@@ -11,12 +11,18 @@
     //  tx.asset.owner = getFactory().newRelationship('org.example.mynetwork', 'Customer', String(tx.asset.ownerId))
 
 
+
      const oldOwnerList = tx.asset.ownerList;
      console.log('oldOwnerList' + oldOwnerList);
      var tempNewList = tx.asset.ownerList + ',' + tx.newOwnerList.toString();
      var newList = tempNewList.split(',');
      console.log('newOwnerList' + newList);
      tx.asset.ownerList = newList;
+
+     if(tx.asset.futurePlateNumber != "_"){
+         tx.asset.plateNumber = tx.asset.futurePlateNumber;
+         tx.asset.futurePlateNumber = "_";
+     }
 
      tx.asset.verified = "true";
      tx.asset.futureOwner = "_";
@@ -84,7 +90,7 @@
      const transactionPlateNumber = tx.futurePlateNumber
 
      if(transactionPlateNumber != "_")
-        tx.asset.futurePlateNumber = transactionPlateNumber
+        tx.asset.futurePlateNumber = transactionPlateNumber;
 
     tx.asset.verified = "false";
 
