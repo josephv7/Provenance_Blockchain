@@ -81,6 +81,11 @@
      const oldFutureOwner = tx.asset.futureOwner;
      tx.asset.futureOwner = tx.futureOwner;
 
+     const transactionPlateNumber = tx.futurePlateNumber
+
+     if(transactionPlateNumber != "_")
+        tx.asset.futurePlateNumber = transactionPlateNumber
+
     tx.asset.verified = "false";
 
     const assetRegistry = await getAssetRegistry('org.example.mynetwork.Vehicle');
