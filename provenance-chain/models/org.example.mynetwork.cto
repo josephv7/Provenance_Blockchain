@@ -38,6 +38,8 @@ participant Customer identified by participantId {
   o String participantType
   o String password
   o String address
+  o String publicKey
+  o String privateKey
 }
 
 participant Dealer identified by participantId {
@@ -47,6 +49,8 @@ participant Dealer identified by participantId {
   o String password
   o String address
   o String manufacturerId
+  o String publicKey
+  o String privateKey
 }
 
 participant Manufacturer identified by participantId{
