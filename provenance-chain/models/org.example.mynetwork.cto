@@ -28,6 +28,7 @@ asset Vehicle identified by chassisNumber {
   o String futureOwner
   o String verified
   o String futurePlateNumber
+  o String contentKey
 }
 
 
