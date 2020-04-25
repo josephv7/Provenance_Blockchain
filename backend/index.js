@@ -96,9 +96,16 @@ app.get('/getManufacturerInfo', function (req, res) {
     manufacturerController.getManufacturerInfo(req, res);
 });
 
+app.get('/getManufacturerLocations', function (req, res) {
+    manufacturerController.getManufacturerLocations(req, res);
+});
 
 app.get('/dealerUpdation', function (req, res) {
     transactionController.dealerUpdation(req, res);
+});
+
+app.get('/listAllTransactions', function (req, res) {
+    queryController.listAllTransactions(req, res);
 });
 
 let server = app.listen(4000, function () {

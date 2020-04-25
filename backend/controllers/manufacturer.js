@@ -112,6 +112,30 @@ module.exports = {
             res.send(jsonResponse);
         }
 
+    },
+    getManufacturerLocations : (req,res) => {
+        console.log(req.query.manufacturerId)
+
+        axios.get(constants.blockchainBaseURL + 'Manufacturer/' + req.query.manufacturerId)
+            .then(function (response) {
+                console.log(response.data);
+                jsonResponse = response.data;
+
+            }).then(function (response) {
+            showData();
+        }).catch(function (error) {
+            console.log(error);
+            console.log('hi');
+            res.end(JSON.stringify({status: "error"}));
+
+        });
+
+        //TODO check if not present error in response from blockchain and send corresponding reponse to frontend
+        function showData() {
+            // console.log(jsonResponse);
+            res.send(JSON.stringify({locations: jsonResponse['locations']}));
+        }
+
     }
 
 };

@@ -2,6 +2,7 @@ const Request = require("request");
 const axios = require('axios');
 const SHA256 = require("crypto-js/sha256");
 const constants = require("../constants");
+const openssl = require('openssl-nodejs')
 
 module.exports = {
     createVehicle: (req, res) => {
@@ -17,40 +18,53 @@ module.exports = {
         console.log(req.query.dealerId);
 
 
-
-        Request.post({
-            "headers": {"content-type": "application/json"},
-            "url": constants.blockchainBaseURL + "Vehicle",
-            "body": JSON.stringify({
-                "chassisNumber": req.query.chassisNumber,
-                "plateNumber": "_",
-                "manufactureLocation": req.query.manufactureLocation,
-                "manufacturerName": req.query.manufacturerName,
-                "ownerList": [],
-                "ownerId": "_",
-                "manufacturerId" : req.query.manufacturerId,
-                "dealerName" : "_",
-                "dealerId" : "_",
-                "futureOwner": "_",
-                "verified" : "true"
+        openssl('openssl enc -aes-128-cbc -k secret -P -md sha1', function (err, buffer) {
+            if (err)
+                console.log(err.toString(), buffer.toString());
+            else {
+                aesKey = buffer.toString().substr(26, 32);
+                console.log(aesKey);
 
 
-            })
-        }, (error, response, body) => {
-            if (error) {
-                res.end(JSON.stringify({status: "error"}));
-                return console.dir(error);
-            } else {
+                Request.post({
+                    "headers": {"content-type": "application/json"},
+                    "url": constants.blockchainBaseURL + "Vehicle",
+                    "body": JSON.stringify({
+                        "chassisNumber": req.query.chassisNumber,
+                        "plateNumber": "_",
+                        "manufactureLocation": req.query.manufactureLocation,
+                        "manufacturerName": req.query.manufacturerName,
+                        "ownerList": [],
+                        "ownerId": "_",
+                        "manufacturerId": req.query.manufacturerId,
+                        "dealerName": "_",
+                        "dealerId": "_",
+                        "futureOwner": "_",
+                        "verified": "true",
+                        "futurePlateNumber": "_",
+                        "contentKey" : aesKey
 
-                if(JSON.parse(body).hasOwnProperty('error')){
-                    res.end(JSON.stringify({status: "error"}));
-                }else {
-                    console.dir(JSON.parse(body));
-                    res.end(JSON.stringify({status: "ok"}));
-                }
+
+                    })
+                }, (error, response, body) => {
+                    if (error) {
+                        res.end(JSON.stringify({status: "error"}));
+                        return console.dir(error);
+                    } else {
+                        //TODO handle vehicle already exists
+                        if (JSON.parse(body).hasOwnProperty('error')) {
+                            res.end(JSON.stringify({status: "error"}));
+                        } else {
+                            console.dir(JSON.parse(body));
+                            res.end(JSON.stringify({status: "ok"}));
+                        }
+
+                    }
+
+                });
 
             }
-        });
+        })
 
 
     },
