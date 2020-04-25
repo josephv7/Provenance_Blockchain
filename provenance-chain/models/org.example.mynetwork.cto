@@ -27,6 +27,8 @@ asset Vehicle identified by chassisNumber {
   o String ownerId
   o String futureOwner
   o String verified
+  o String futurePlateNumber
+  o String contentKey
 }
 
 
@@ -36,6 +38,8 @@ participant Customer identified by participantId {
   o String participantType
   o String password
   o String address
+  o String publicKey
+  o String privateKey
 }
 
 participant Dealer identified by participantId {
@@ -45,6 +49,8 @@ participant Dealer identified by participantId {
   o String password
   o String address
   o String manufacturerId
+  o String publicKey
+  o String privateKey
 }
 
 participant Manufacturer identified by participantId{
@@ -73,6 +79,7 @@ event AssetTransferEvent {
 transaction AssetTransferRequest {
   --> Vehicle asset
   o String futureOwner
+  o String futurePlateNumber
 }
 
 event AssetTransferRequestEvent {
