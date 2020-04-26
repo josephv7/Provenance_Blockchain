@@ -25,13 +25,13 @@ class ListVehicles extends React.Component {
     super();
     this.state = {
       apiData : {},
-      exampleModal: false,
+      successModal: false,
       vehicleIdDetails: '',
       fetchId: ''
     }
   }
   toggleModal(id){
-    if(this.state.exampleModal==false){
+    if(this.state.successModal==false){
       console.log("fetch by id")
       axios.get(nodeURL+'/vehichleInfo?chassisNumber='+id)
       .then(res => {
@@ -41,7 +41,7 @@ class ListVehicles extends React.Component {
       })
     }
     this.setState({
-      exampleModal: !this.state.exampleModal
+      successModal: !this.state.successModal
     });
   };
   fetchById = event => {
@@ -107,11 +107,11 @@ class ListVehicles extends React.Component {
         <Header />
         <Modal
           className="modal-dialog-centered"
-          isOpen={this.state.exampleModal}
-          toggle={() => this.toggleModal("exampleModal")}
+          isOpen={this.state.successModal}
+          toggle={() => this.toggleModal("successModal")}
         >
           <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">
+            <h5 className="modal-title" id="successModalLabel">
               Vehicle Details
             </h5>
             <button
@@ -119,7 +119,7 @@ class ListVehicles extends React.Component {
               className="close"
               data-dismiss="modal"
               type="button"
-              onClick={() => this.toggleModal("exampleModal")}
+              onClick={() => this.toggleModal("successModal")}
             >
               <span aria-hidden={true}>×</span>
             </button>
@@ -134,7 +134,7 @@ class ListVehicles extends React.Component {
               color="secondary"
               data-dismiss="modal"
               type="button"
-              onClick={() => this.toggleModal("exampleModal")}
+              onClick={() => this.toggleModal("successModal")}
             >
               Close
             </Button>
