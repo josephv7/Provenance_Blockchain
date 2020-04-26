@@ -16,7 +16,7 @@ import {
     Col
 } from "reactstrap";
 
-// core components
+
 import Header from "components/Headers/Header.js";
 
 // To per form POST request to nodeJS url 

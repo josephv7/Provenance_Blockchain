@@ -16,7 +16,7 @@ import {
     Col
 } from "reactstrap";
 
-// core components
+
 import Header from "components/Headers/Header.js";
 
 // To per form POST request to nodeJS url
@@ -39,19 +39,25 @@ class CreateVehicle extends React.Component {
     //   this.state.customerName = "null";
     //   this.state.customerPassword = "null"
     // }
-    toggleModal() {
-        this.setState({
-            exampleModal: !this.state.exampleModal
-        });
+    toggleModal(id) {
+        if(id=="failModal"){
+            this.setState({
+                failModal: !this.state.failModal
+            })
+        }else{
+            this.setState({
+                successModal: !this.state.successModal
+            });
+        }
     };
 
     handleChange = event => {
         const {name, value} = event.target
         this.setState({
             [name]: value
-        })
-        console.log("change: "+event.target.value)
-        console.log(this.state.manufacturerLocation)
+        },()=>{console.log("callback value: "+value)})
+        // console.log("change: "+event.target.value)
+        // console.log(this.state.manufacturerLocation)
         
     }
 
@@ -67,22 +73,15 @@ class CreateVehicle extends React.Component {
     handleSubmit = event => {
         event.preventDefault();
         console.log("submit called")
-        
 
-        const vehicle = {
-            chassisNumber: this.state.chassisNumber,
-            manufacturerLocation: this.state.manufacturerLocation,
-            manufacturerName: this.state.manufacturerName,
-            manufacturerId: this.state.manufacturerId
-        }
 
         this.setState({loading: true})
         axios.get(nodeURL + '/createVehicle', {
             params: {
-                chassisNumber: vehicle.chassisNumber,
-                manufactureLocation: vehicle.manufacturerLocation,
-                manufacturerId: vehicle.manufacturerId,
-                manufacturerName: vehicle.manufacturerName
+                chassisNumber: this.state.chassisNumber,
+                manufacturerLocation: this.state.manufacturerLocation,
+                manufacturerId: this.state.manufacturerId,
+                manufacturerName: this.state.manufacturerName
             }
         })
             .then(res => {
@@ -90,6 +89,11 @@ class CreateVehicle extends React.Component {
                 console.log(res.data.status)
                 if (res.data.status == "ok") {
                     this.toggleModal();
+                    this.setState({loading: false})
+                }
+                else{
+                    console.log("fail")
+                    this.toggleModal("failModal")
                     this.setState({loading: false})
                 }
             })
@@ -129,11 +133,11 @@ class CreateVehicle extends React.Component {
                 <Header/>
                 <Modal
                     className="modal-dialog-centered"
-                    isOpen={this.state.exampleModal}
-                    toggle={() => this.toggleModal("exampleModal")}
+                    isOpen={this.state.successModal}
+                    toggle={() => this.toggleModal("successModal")}
                 >
                     <div className="modal-header">
-                        <h2 className="modal-title" id="exampleModalLabel">
+                        <h2 className="modal-title" id="successModalLabel">
                             Success
                         </h2>
                         <button
@@ -141,7 +145,7 @@ class CreateVehicle extends React.Component {
                             className="close"
                             data-dismiss="modal"
                             type="button"
-                            onClick={() => this.toggleModal("exampleModal")}
+                            onClick={() => this.toggleModal("successModal")}
                         >
                             <span aria-hidden={true}>×</span>
                         </button>
@@ -157,12 +161,47 @@ class CreateVehicle extends React.Component {
                             color="secondary"
                             data-dismiss="modal"
                             type="button"
-                            onClick={() => this.toggleModal("exampleModal")}
+                            onClick={() => this.toggleModal("successModal")}
                         >
                             Close
                         </Button>
                     </div>
                 </Modal>
+                {/* Failure modal */}
+                <Modal
+                            className="modal-dialog-centered"
+                            isOpen={this.state.failModal}
+                            toggle={() => this.toggleModal("failModal")}
+                        >
+                            <div className="modal-header">
+                                <h2 className="modal-title" id="failModalLabel">
+                                    Failed
+                                </h2>
+                                <button
+                                    aria-label="Close"
+                                    className="close"
+                                    data-dismiss="modal"
+                                    type="button"
+                                    onClick={() => this.toggleModal("failModal")}
+                                >
+                                    <span aria-hidden={true}>×</span>
+                                </button>
+                            </div>
+                            <div className="modal-body text-center">
+                                <i className="ri-heart-line ri-3x text-danger"></i>
+                                <h4 className="text-danger">Fail</h4>                    
+                            </div>
+                            <div className="modal-footer">
+                                <Button
+                                    color="secondary"
+                                    data-dismiss="modal"
+                                    type="button"
+                                    onClick={() => this.toggleModal("failModal")}
+                                >
+                                    Close
+                                </Button>
+                            </div>
+                    </Modal>
                 <Container className="mt--7" fluid>
                     <Row>
                         <Col className="order-xl-1" xl="10">
@@ -195,8 +234,7 @@ class CreateVehicle extends React.Component {
                                                     <Col lg="6">
                                                         <FormGroup>
                                                             <label
-                                                                className="form-control-label"
-                                                                htmlFor="input-username"
+                                                                className="form-control-label"                                            
                                                             >
                                                                 Chassis Number
                                                             </label>
@@ -213,15 +251,15 @@ class CreateVehicle extends React.Component {
                                                     <Col lg="6">
                                                         <FormGroup>
                                                             <label
-                                                                className="form-control-label"
-                                                                htmlFor="input-email"
+                                                                className="form-control-label"                                                            
                                                             >
                                                                 Manufacturer Location
                                                             </label>
                                              
                                                             
-                                                            <Input type="select" name="manufacturerLocation" onChange={this.handleChange}>
-                                                                {Array.isArray(this.state.fetchLocations.locations) && this.state.fetchLocations.locations.map(object => (
+                                                            <Input type="select" name="manufacturerLocation" onChange={this.handleChange}>                                
+                                                                <option value="" disabled selected>Choose Location</option>                                
+                                                                {Array.isArray(this.state.fetchLocations.locations) && this.state.fetchLocations.locations.map(object => (                                                                    
                                                                     <option value={object} >{object}</option>
                                                                 ))}
                                                             </Input>
