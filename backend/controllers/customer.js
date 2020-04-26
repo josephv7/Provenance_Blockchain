@@ -4,6 +4,8 @@ const SHA256 = require("crypto-js/sha256");
 const constants = require("../constants");
 const cmd = require('node-cmd');
 const openssl = require('openssl-nodejs')
+const fs = require('fs')
+
 
 
 const config = require("../config");
