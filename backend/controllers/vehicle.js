@@ -9,19 +9,18 @@ module.exports = {
 
 
         console.log(req.query.chassisNumber);
-        console.log(req.query.ownerId);
-        console.log(req.query.manufactureLocation);
+        // console.log(req.query.ownerId);
+        console.log(req.query.manufacturerLocation);
         console.log(req.query.manufacturerName);
-        console.log(req.query.plateNumber);
+        // console.log(req.query.plateNumber);
         console.log(req.query.manufacturerId);
-        console.log(req.query.dealerName);
-        console.log(req.query.dealerId);
+        // console.log(req.query.dealerName);
+        // console.log(req.query.dealerId);
 
 
         openssl('openssl enc -aes-128-cbc -k secret -P -md sha1', function (err, buffer) {
-            if (err)
+
                 console.log(err.toString(), buffer.toString());
-            else {
                 aesKey = buffer.toString().substr(26, 32);
                 console.log(aesKey);
 
@@ -32,7 +31,7 @@ module.exports = {
                     "body": JSON.stringify({
                         "chassisNumber": req.query.chassisNumber,
                         "plateNumber": "_",
-                        "manufactureLocation": req.query.manufactureLocation,
+                        "manufactureLocation": req.query.manufacturerLocation,
                         "manufacturerName": req.query.manufacturerName,
                         "ownerList": [],
                         "ownerId": "_",
@@ -62,8 +61,6 @@ module.exports = {
                     }
 
                 });
-
-            }
         })
 
 
