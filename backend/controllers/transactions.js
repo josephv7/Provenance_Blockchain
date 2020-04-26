@@ -72,6 +72,7 @@ module.exports = {
         console.log(req.query.chassisNumber);
         var newOwnerId = req.query.newOwnerId;
         console.log(newOwnerId);
+        var plateNumber = req.query.plateNumber;
         console.log(plateNumber)
 
         var asset = 'org.example.mynetwork.Vehicle#' + req.query.chassisNumber;
