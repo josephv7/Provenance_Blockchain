@@ -167,6 +167,23 @@ class CreateDealer extends React.Component {
                                                                 className="form-control-label"
                                                                 htmlFor="input-username"
                                                             >
+                                                                User Id
+                                                            </label>
+                                                            <Input
+                                                                className="form-control-alternative"                                                                
+                                                                name="userId"
+                                                                placeholder={localStorage.getItem('userId')}
+                                                                type="text"
+                                                                disabled
+                                                            />
+                                                        </FormGroup>
+                                                    </Col> 
+                                                    <Col lg="6">
+                                                        <FormGroup>
+                                                            <label
+                                                                className="form-control-label"
+                                                                htmlFor="input-username"
+                                                            >
                                                                 Dealer Name
                                                             </label>
                                                             <Input
@@ -178,7 +195,9 @@ class CreateDealer extends React.Component {
                                                                 onChange={this.handleChange}
                                                             />
                                                         </FormGroup>
-                                                    </Col>
+                                                    </Col>                                                    
+                                                </Row>
+                                                <Row>
                                                     <Col lg="6">
                                                         <FormGroup>
                                                             <label
@@ -197,8 +216,6 @@ class CreateDealer extends React.Component {
                                                             />
                                                         </FormGroup>
                                                     </Col>
-                                                </Row>
-                                                <Row>
                                                     <Col lg="6">
                                                         <FormGroup>
                                                             <label

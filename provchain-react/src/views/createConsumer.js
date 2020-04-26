@@ -177,6 +177,23 @@ class CreateConsumer extends React.Component {
                                                                 className="form-control-label"
                                                                 htmlFor="input-username"
                                                             >
+                                                                User Id
+                                                            </label>
+                                                            <Input
+                                                                className="form-control-alternative"                                                                
+                                                                name="userId"
+                                                                placeholder={localStorage.getItem('userId')}
+                                                                type="text"
+                                                                disabled
+                                                            />
+                                                        </FormGroup>
+                                                    </Col> 
+                                                    <Col lg="6">
+                                                        <FormGroup>
+                                                            <label
+                                                                className="form-control-label"
+                                                                htmlFor="input-username"
+                                                            >
                                                                 Customer Name
                                                             </label>
                                                             <Input
@@ -189,6 +206,8 @@ class CreateConsumer extends React.Component {
                                                             />
                                                         </FormGroup>
                                                     </Col>
+                                                </Row>
+                                                <Row>
                                                     <Col lg="6">
                                                         <FormGroup>
                                                             <label
@@ -206,10 +225,8 @@ class CreateConsumer extends React.Component {
                                                                 onChange={this.handleChange}
                                                             />
                                                         </FormGroup>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col lg="6">
+                                                    </Col>                                                    
+                                                    <Col lg="6">                                                        
                                                         <FormGroup>
                                                             <label
                                                                 className="form-control-label"
