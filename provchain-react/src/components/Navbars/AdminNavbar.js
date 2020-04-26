@@ -1,25 +1,15 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
+import {Redirect} from 'react-router-dom';
 // reactstrap components
 import {
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Form,
-  FormGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Input,
-  InputGroup,
   Navbar,
-  Nav,
+  Nav, 
   Container,
   Media
 } from "reactstrap";
-
-class AdminNavbar extends React.Component {
+class AdminNavbar extends React.Component {    
   render() {
     return (
       <>
@@ -32,18 +22,9 @@ class AdminNavbar extends React.Component {
               {this.props.brandText}
             </Link>
             <Nav className="align-items-center d-none d-md-flex" navbar>
-              <UncontrolledDropdown nav>
-                <DropdownToggle className="pr-0" nav>
-                  <Media className="align-items-center">
-                    <Media className="ml-2 d-none d-lg-block">
-                      <span className="mb-0 text-sm font-weight-bold">
-                      <i className="ni ni-user-run mr-2" />
-                        <span>Logout</span>
-                      </span>
-                    </Media>
-                  </Media>
-                </DropdownToggle>
-              </UncontrolledDropdown>
+              <Link to ="/" className="text-light">
+                      Logout                  
+              </Link>
             </Nav>
           </Container>
         </Navbar>
