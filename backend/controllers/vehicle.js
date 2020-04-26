@@ -3,6 +3,8 @@ const axios = require('axios');
 const SHA256 = require("crypto-js/sha256");
 const constants = require("../constants");
 const openssl = require('openssl-nodejs')
+const CryptoJS = require("crypto-js");
+const IPFS = require('ipfs');
 
 module.exports = {
     createVehicle: (req, res) => {
@@ -131,7 +133,72 @@ module.exports = {
         });
 
         function writeData() {
+
             console.log(vehicleKey);
+
+
+
+            const node = new IPFS()
+            node.on('ready', async () => {
+                console.log('iniside sample code')
+
+
+                var date = new Date();
+                var timeStampString = date.getDate() + '_' + date.getHours() + '_' + date.getMinutes() + '_' + date.getSeconds() + '.txt';
+                console.log('trial')
+                console.log(timeStampString);
+
+                const filesAdded = await node.add({
+                    path: timeStampString,
+                    content: Buffer.from(CryptoJS.AES.encrypt(req.body.content,vehicleKey).toString())
+                })
+
+                console.log('Added file:', filesAdded[0].path, filesAdded[0].hash)
+
+                fileHash = filesAdded[0].hash;
+                console.log('After getting filehash')
+                console.log(fileHash)
+                // res.send(fileHash);
+                try {
+                    await node.stop()
+                    console.log('Node stopped!')
+                    // Request.post({
+                    //     "headers": { "content-type": "application/json" },
+                    //     "url": "http://localhost:3000/api/MedicalRecord",
+                    //     "body": JSON.stringify({
+                    //         "recordId": calculatedId,
+                    //         "owner" : ownerName,
+                    //         "value" : [fileHash],
+                    //         "doctorId" : [doctorname],
+                    //         "verified" : 'false'
+                    //     })
+                    // }, (error, response, body) => {
+                    //     if(error) {
+                    //         return console.dir(error);
+                    //     }
+                    //
+                    //
+                    //     client.messages.create({
+                    //         body: 'Record Created for patient' + username,
+                    //         from: 'whatsapp:+14155238886',
+                    //         to: 'whatsapp:+918289940688'
+                    //     })
+                    //         .then(message => console.log(message.sid))
+                    //         .done();
+                    //
+                    //
+                    //     console.dir(JSON.parse(body));
+                    //     res.end(JSON.stringify([{ status: "ok" }]));
+                    // });
+                } catch (error) {
+                    console.error('Node failed to stop cleanly!', error)
+                }
+
+
+            })
+
+
+
         }
 
 

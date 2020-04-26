@@ -15,6 +15,7 @@
     "crypto-js": "^4.0.0",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
+    "ipfs": "^0.34.4",
     "node-cmd": "^3.0.0",
     "openssl-nodejs": "^1.0.5",
     "querystring": "^0.2.0",
