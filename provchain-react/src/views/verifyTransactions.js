@@ -27,7 +27,7 @@ class VerifyTransactions extends React.Component {
     super();
     this.state = {
       apiData : {},
-      exampleModal: false,
+      infoModal: false,
       successModal: false,
       failModal: false,
       vehicleIdDetails: '',
@@ -38,9 +38,9 @@ class VerifyTransactions extends React.Component {
     }
   }
   toggleModal(id){ 
-      if(id=="exampleModal"){
+      if(id=="infoModal"){
         this.setState({
-            exampleModal: !this.state.exampleModal
+            infoModal: !this.state.infoModal
         });
       }
       if(id=="successModal"){
@@ -62,13 +62,13 @@ class VerifyTransactions extends React.Component {
             this.setState({apiData: res.data});            
         })
   }
-//   fetchData(){
-//     axios.get(nodeURL+'/listUnverifiedVehicles', {
-//     })
-//         .then(res => {
-//             this.setState({apiData: res.data});            
-//         })
-//   }
+  fetchData(){
+    axios.get(nodeURL+'/listUnverifiedVehicles', {
+    })
+        .then(res => {
+            this.setState({apiData: res.data});            
+        })
+  }
   handleChange = event => {    
     console.log(JSON.parse(event.target.value))
     this.setState({
@@ -76,7 +76,7 @@ class VerifyTransactions extends React.Component {
     }, () => {
         console.log("state: "+this.state.chassisNumber+" "+this.state.newOwnerId)
     })
-    this.toggleModal("exampleModal")
+    this.toggleModal("infoModal")
   }
   handleSubmit = event => {
       event.preventDefault();
@@ -92,16 +92,17 @@ class VerifyTransactions extends React.Component {
       .then (res => {
           console.log(res)
         //   console.log("success")
-          if(res.data.status=="success"){
-            console.log("success")
-              this.toggleModal("successModal")
-              this.toggleModal("exampleModal")
-              this.fetchData()
+          if(res.data.status=="ok"){
+                console.log("ok")
+                this.toggleModal("successModal")
+                this.toggleModal("infoModal")
+                this.fetchData()
+                this.setState({loading: false})
           }
           else{
-              console.log("fail")
-              this.toggleModal("failModal")
-              this.toggleModal("exampleModal")
+                console.log("fail")
+                this.toggleModal("failModal")
+                this.toggleModal("infoModal")
           }
       })      
   }
@@ -112,12 +113,12 @@ class VerifyTransactions extends React.Component {
         <Header />
             <Modal
             className="modal-dialog-centered"
-            isOpen={this.state.exampleModal}
+            isOpen={this.state.infoModal}
             size="lg"
-            toggle={() => this.toggleModal("exampleModal")            }
+            toggle={() => this.toggleModal("infoModal")            }
             >
             <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">
+                <h5 className="modal-title" id="infoModalLabel">
                 Vehicle Details
                 </h5>
                 <button
@@ -125,7 +126,7 @@ class VerifyTransactions extends React.Component {
                 className="close"
                 data-dismiss="modal"
                 type="button"
-                onClick={() => this.toggleModal("exampleModal")}
+                onClick={() => this.toggleModal("infoModal")}
                 >
                 <span aria-hidden={true}>×</span>
                 </button>
@@ -217,8 +218,8 @@ class VerifyTransactions extends React.Component {
                             </button>
                         </div>
                         <div className="modal-body text-center">
-                            <i class="ri-heart-line ri-3x text-success"></i>
-                            <h4 class="text-success">Success</h4>                    
+                            <i className="ri-heart-line ri-3x text-success"></i>
+                            <h4 className="text-success">Success</h4>                    
                         </div>
                         <div className="modal-footer">
                             <Button
@@ -252,8 +253,8 @@ class VerifyTransactions extends React.Component {
                                 </button>
                             </div>
                             <div className="modal-body text-center">
-                                <i class="ri-heart-line ri-3x text-danger"></i>
-                                <h4 class="text-danger">Fail</h4>                    
+                                <i className="ri-heart-line ri-3x text-danger"></i>
+                                <h4 className="text-danger">Fail</h4>                    
                             </div>
                             <div className="modal-footer">
                                 <Button
