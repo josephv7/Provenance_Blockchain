@@ -4,6 +4,7 @@ const SHA256 = require("crypto-js/sha256");
 const constants = require("../constants");
 const cmd = require('node-cmd');
 const openssl = require('openssl-nodejs')
+const fs = require('fs')
 
 module.exports = {
     createDealer: (req, res) => {

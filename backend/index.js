@@ -108,6 +108,10 @@ app.get('/listAllTransactions', function (req, res) {
     queryController.listAllTransactions(req, res);
 });
 
+app.post('/createServiceRecord',function (req,res) {
+        vehicleController.createServiceRecord(req,res)
+})
+
 let server = app.listen(4000, function () {
     console.log('Server is listening on port 4000')
 });
