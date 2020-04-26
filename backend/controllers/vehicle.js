@@ -108,5 +108,32 @@ module.exports = {
         }
 
 
+    },
+    createServiceRecord : (req,res) => {
+        console.log(req.body.chassisNumber)
+        console.log(req.body.dealerId)
+        console.log(req.body.content)
+
+
+        var requestUrl = constants.blockchainBaseURL + "Vehicle/" + req.body.chassisNumber;
+
+        axios.get(requestUrl).then(function (response) {
+            console.log(response.data);
+            jsonResponse = response.data;
+
+            vehicleKey = jsonResponse['contentKey'];
+
+        }).then(function (response) {
+            writeData()
+        }).catch(function (error) {
+            res.end(JSON.stringify({status: "error"}));
+            console.log(error);
+        });
+
+        function writeData() {
+            console.log(vehicleKey);
+        }
+
+
     }
 };
