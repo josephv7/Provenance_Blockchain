@@ -31,13 +31,13 @@ class CreateManufacturer extends React.Component {
         manufacturerPassword: '',
         mainAddress: '',
         locations: '',
-        exampleModal: false,
+        successModal: false,
         loading: false
     }
 
     toggleModal() {
         this.setState({
-            exampleModal: !this.state.exampleModal
+            successModal: !this.state.successModal
         });
     };
 
@@ -112,11 +112,11 @@ class CreateManufacturer extends React.Component {
                 <Header/>
                 <Modal
                     className="modal-dialog-centered"
-                    isOpen={this.state.exampleModal}
-                    toggle={() => this.toggleModal("exampleModal")}
+                    isOpen={this.state.successModal}
+                    toggle={() => this.toggleModal("successModal")}
                 >
                     <div className="modal-header">
-                        <h2 className="modal-title" id="exampleModalLabel">
+                        <h2 className="modal-title" id="successModalLabel">
                             Success
                         </h2>
                         <button
@@ -124,7 +124,7 @@ class CreateManufacturer extends React.Component {
                             className="close"
                             data-dismiss="modal"
                             type="button"
-                            onClick={() => this.toggleModal("exampleModal")}
+                            onClick={() => this.toggleModal("successModal")}
                         >
                             <span aria-hidden={true}>×</span>
                         </button>
@@ -140,7 +140,7 @@ class CreateManufacturer extends React.Component {
                             color="secondary"
                             data-dismiss="modal"
                             type="button"
-                            onClick={() => this.toggleModal("exampleModal")}
+                            onClick={() => this.toggleModal("successModal")}
                         >
                             Close
                         </Button>
@@ -183,6 +183,23 @@ class CreateManufacturer extends React.Component {
                                                                 className="form-control-label"
                                                                 htmlFor="input-username"
                                                             >
+                                                                User Id
+                                                            </label>
+                                                            <Input
+                                                                className="form-control-alternative"                                                                
+                                                                name="userId"
+                                                                placeholder={localStorage.getItem('userId')}
+                                                                type="text"
+                                                                disabled
+                                                            />
+                                                        </FormGroup>
+                                                    </Col> 
+                                                    <Col lg="6">
+                                                        <FormGroup>
+                                                            <label
+                                                                className="form-control-label"
+                                                                htmlFor="input-username"
+                                                            >
                                                                 Manufacturer Name
                                                             </label>
                                                             <Input
@@ -194,7 +211,11 @@ class CreateManufacturer extends React.Component {
                                                                 onChange={this.handleChange}
                                                             />
                                                         </FormGroup>
-                                                    </Col>
+                                                    </Col>                                                    
+                                                </Row>
+
+
+                                                <Row>
                                                     <Col lg="6">
                                                         <FormGroup>
                                                             <label
@@ -213,10 +234,6 @@ class CreateManufacturer extends React.Component {
                                                             />
                                                         </FormGroup>
                                                     </Col>
-                                                </Row>
-
-
-                                                <Row>
                                                     <Col lg="6">
                                                         <FormGroup>
                                                             <label
@@ -234,8 +251,10 @@ class CreateManufacturer extends React.Component {
                                                                 onChange={this.handleChange}
                                                             />
                                                         </FormGroup>
-                                                    </Col>
-                                                    <Col lg="6">
+                                                    </Col>                                                    
+                                                </Row>
+                                                <Row>
+                                                <Col lg="12">
                                                         <FormGroup>
                                                             <label
                                                                 className="form-control-label"
@@ -247,14 +266,13 @@ class CreateManufacturer extends React.Component {
                                                                 className="form-control-alternative"
                                                                 id="input-email"
                                                                 placeholder="Locations"
-                                                                type="text"
+                                                                type="textarea"
                                                                 name="locations"
                                                                 onChange={this.handleChange}
                                                             />
                                                         </FormGroup>
                                                     </Col>
                                                 </Row>
-
 
                                                 <hr className="my-4"/>
                                                 <Row>
