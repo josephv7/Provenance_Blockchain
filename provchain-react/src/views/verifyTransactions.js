@@ -282,11 +282,11 @@ class VerifyTransactions extends React.Component {
                   <thead className="thead-light">
                     <tr>
                       <th scope="col">Chassis Number</th>
-                      <th scope="col">Plate Number</th>
+                      <th scope="col">Future Plate Number</th>
                       <th scope="col">Dealer Name</th>                      
                       <th scope="col">Dealer ID</th>                                       
                       <th scope="col">Future Owner</th>                                       
-                      <th scope="col">Owner ID</th>                                       
+                      {/* <th scope="col">Owner ID</th>                                        */}
                       <th scope="col">Status</th>                                       
                       <th scope="col" className="text-center">Verify</th>                                       
                     </tr>
@@ -296,11 +296,11 @@ class VerifyTransactions extends React.Component {
                             <>
                               <tr>
                                 <td>{object.chassisNumber}</td>
-                                <td>{object.plateNumber}</td>
+                                <td>{object.futurePlateNumber}</td>
                                 <td>{object.dealerName}</td>
                                 <td>{object.dealerId}</td>
                                 <td>{object.futureOwner}</td>
-                                <td>{object.ownerId}</td>
+                                {/* <td>{object.futureOwner}</td> */}
                                 <td>{object.verified}</td>
                                 <td className="text-center"><Button
                                             color="success"
