@@ -104,3 +104,37 @@
     event.newFutureOwner = tx.asset.futureOwner;
 
  }
+
+
+
+
+
+ /**
+ * Transaction processor function.
+ * @param {org.example.mynetwork.RecordService} tx The sample transaction instance.
+ * @transaction
+ */
+
+async function recordService(tx) {
+    
+    const oldServiceRecord = tx.asset.serviceRecord;
+    var tempNewList = tx.asset.serviceRecord + ',' + tx.newServiceRecord.toString();
+    var newList = tempNewList.split(',');
+    tx.asset.serviceRecord = newList;
+
+    
+    // Get the asset registry for the asset.
+   const assetRegistry = await getAssetRegistry('org.example.mynetwork.Vehicle');
+   // Update the asset in the asset registry.
+   await assetRegistry.update(tx.asset);
+
+
+   // Emit an event for the modified asset.
+   let event = getFactory().newEvent('org.example.mynetwork', 'RecordServiceEvent');
+   event.asset = tx.asset;
+   event.oldServiceRecord = oldServiceRecord;
+   event.newServiceRecord = newList
+   emit(event);
+
+
+}

@@ -3,7 +3,7 @@
     "composer": "^0.20.6"
   },
   "name": "provenance-chain",
-  "version": "0.0.31",
+  "version": "0.0.32",
   "description": "Blockchain network to be used for cold-chain network",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/provenance-chain.bna",
