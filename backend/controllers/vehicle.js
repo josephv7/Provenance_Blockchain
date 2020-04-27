@@ -224,8 +224,32 @@ module.exports = {
 
             })
 
+        }
 
+    },
+    getVehicleKey : (req,res) => {
+        console.log(req.body.chassisNumber)
+        console.log(req.body.customerId)
 
+        //TODO check if starting with 2, else send error response
+        axios.get(constants.blockchainBaseURL + 'Customer/' + req.query.customerId)
+            .then(function (response) {
+                console.log(response.data);
+                publicKey = response.data['publicKey']
+
+            }).then(function (response) {
+            getAesKey()
+        }).catch(function (error) {
+            console.log(error);
+            res.end(JSON.stringify({status: "error"}));
+
+        });
+
+        //TODO check if not present error in response from blockchain and send corresponding reponse to frontend
+        function getAesKey() {
+            console.log('.....')
+            console.log(publicKey)
+            // res.send(jsonResponse);
         }
 
 
