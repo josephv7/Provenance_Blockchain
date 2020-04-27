@@ -77,6 +77,16 @@ event AssetTransferEvent {
   o String[] newOwnerList
 }
 
+transaction RecordService {
+  o String[] newServiceRecord
+}
+
+event RecordServiceEvent {
+  o String[] newServiceRecord
+  o String[] oldServiceRecord
+}
+
+
 transaction AssetTransferRequest {
   --> Vehicle asset
   o String futureOwner
