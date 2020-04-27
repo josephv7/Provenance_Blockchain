@@ -5,6 +5,7 @@ const constants = require("../constants");
 const openssl = require('openssl-nodejs')
 const CryptoJS = require("crypto-js");
 const IPFS = require('ipfs');
+const crypto = require("crypto");
 
 module.exports = {
     createVehicle: (req, res) => {
@@ -232,7 +233,7 @@ module.exports = {
         console.log(req.body.customerId)
 
         //TODO check if starting with 2, else send error response
-        axios.get(constants.blockchainBaseURL + 'Customer/' + req.query.customerId)
+        axios.get(constants.blockchainBaseURL + 'Customer/' + req.body.customerId)
             .then(function (response) {
                 console.log(response.data);
                 publicKey = response.data['publicKey']
@@ -247,9 +248,43 @@ module.exports = {
 
         //TODO check if not present error in response from blockchain and send corresponding reponse to frontend
         function getAesKey() {
-            console.log('.....')
-            console.log(publicKey)
+            // console.log('.....')
+            // console.log(publicKey)
+
+
             // res.send(jsonResponse);
+
+            var requestUrl = constants.blockchainBaseURL + "Vehicle/" + req.body.chassisNumber;
+
+            axios.get(requestUrl).then(function (response) {
+                console.log(response.data);
+                // jsonResponse = response.data;
+                aesKey = response.data['contentKey']
+
+            }).then(function (response) {
+                encryptKey()
+            }).catch(function (error) {
+                res.end(JSON.stringify({status: "error"}));
+                console.log(error);
+            });
+
+            function encryptKey() {
+                console.log('.....')
+                console.log(publicKey)
+                console.log(aesKey);
+
+
+                var encrypted = crypto.publicEncrypt(publicKey.substring(0, publicKey.length - 1),Buffer.from(aesKey));
+
+                console.log(encrypted.toString("base64") + 'bbbbbbbbb');
+
+                res.end(JSON.stringify({ encryptedKey: encrypted.toString("base64"), aesKey: aesKey}));
+
+
+
+            }
+
+
         }
 
 
