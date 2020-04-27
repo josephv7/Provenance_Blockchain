@@ -78,10 +78,12 @@ event AssetTransferEvent {
 }
 
 transaction RecordService {
+  --> Vehicle asset
   o String[] newServiceRecord
 }
 
 event RecordServiceEvent {
+  --> Vehicle asset
   o String[] newServiceRecord
   o String[] oldServiceRecord
 }
