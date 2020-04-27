@@ -163,6 +163,32 @@ module.exports = {
                 try {
                     await node.stop()
                     console.log('Node stopped!')
+
+
+                    var asset = 'org.example.mynetwork.Vehicle#' + req.body.chassisNumber;
+
+                    Request.post({
+                        "headers": {"content-type": "application/json"},
+                        "url": constants.blockchainBaseURL + "RecordService",
+                        "body": JSON.stringify({
+                            "asset": asset,
+                            "newServiceRecord" : [fileHash]
+                        })
+                    }, (error, response, body) => {
+                        if (error) {
+                            res.end(JSON.stringify({status: "error"}));
+                            return console.dir(error);
+                        } else {
+                            if(JSON.parse(body).hasOwnProperty('error')){
+                                res.end(JSON.stringify({status: "error"}));
+                            }else {
+                                console.dir(JSON.parse(body));
+                                res.end(JSON.stringify({status: "ok"}));
+                            }
+                        }
+                    });
+
+
                     // Request.post({
                     //     "headers": { "content-type": "application/json" },
                     //     "url": "http://localhost:3000/api/MedicalRecord",
