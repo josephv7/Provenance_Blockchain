@@ -55,7 +55,7 @@ class ServiceRecord extends React.Component {
         event.preventDefault();
         console.log("submit called")        
         this.setState({loading: true})
-        axios.get(nodeURL + "/createServiceRecord",{
+        axios.post(nodeURL + "/createServiceRecord",{
                 chassisNumber : this.state.chassisNumber,
                 dealerId : localStorage.getItem('userId'),
                 content : this.state.serviceRecord            
