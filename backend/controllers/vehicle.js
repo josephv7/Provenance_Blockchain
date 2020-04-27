@@ -36,6 +36,7 @@ module.exports = {
                         "manufactureLocation": req.query.manufacturerLocation,
                         "manufacturerName": req.query.manufacturerName,
                         "ownerList": [],
+                        "serviceRecord" : [],
                         "ownerId": "_",
                         "manufacturerId": req.query.manufacturerId,
                         "dealerName": "_",
