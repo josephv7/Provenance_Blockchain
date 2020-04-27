@@ -26,16 +26,15 @@ import axios from "axios"
 import 'remixicon/fonts/remixicon.css'
 
 
-class CreateConsumer extends React.Component {
+class ServiceRecord extends React.Component {
     state = {
-        customerName: '',
-        customerPassword: '',
-        address: '',
+        chassisNumber: '',
+        serviceRecord: '',
         successModal: false,
         loading: false
     }
     // componentDidMount(){
-    //   this.state.customerName = "null";
+    //   this.state.chassisNumber = "null";
     //   this.state.customerPassword = "null"
     // }
     toggleModal() {
@@ -52,32 +51,14 @@ class CreateConsumer extends React.Component {
         })
     }
 
-    nameHandleChange = event => {
-        console.log("name change called")
-        this.setState({customerName: event.target.value});
-    }
-    passwordHandleChange = event => {
-        console.log("password change called")
-        this.setState({customerPassword: event.target.value});
-    }
-
     handleSubmit = event => {
         event.preventDefault();
-        console.log("submit called")
-
-        const customer = {
-            customerName: this.state.customerName,
-            password: this.state.customerPassword,
-            location: this.state.address
-        }
-        console.log("name" + customer.customerName)
+        console.log("submit called")        
         this.setState({loading: true})
-        axios.get(nodeURL + "/createCustomer",{
-            params : {
-                customerName : customer.customerName,
-                password : customer.password,
-                address : customer.location
-            }
+        axios.post(nodeURL + "/createServiceRecord",{
+                chassisNumber : this.state.chassisNumber,
+                dealerId : localStorage.getItem('userId'),
+                content : this.state.serviceRecord            
         })
             .then(res => {
                 console.log(res)
@@ -87,7 +68,7 @@ class CreateConsumer extends React.Component {
                     this.setState({loading: false})
                 }
             })
-        // axios.post(nodeURL+`/createConsumer`,
+        // axios.post(nodeURL+`/ServiceRecord`,
         //   { headers: {
         //             "Content-Type": "application/json",
         //             "Access-Control-Allow-Origin": "*",
@@ -128,7 +109,7 @@ class CreateConsumer extends React.Component {
                     <div className="modal-body text-center">
                         <i class="ri-heart-line ri-3x text-success"></i>
                         <h4 class="text-success">Success</h4>
-                        <h4 class="text-muted">Customer <span class="text-success">{this.state.customerName}</span> was
+                        <h4 class="text-muted">Customer <span class="text-success">{this.state.chassisNumber}</span> was
                             added successfully !</h4>
                     </div>
                     <div className="modal-footer">
@@ -149,16 +130,16 @@ class CreateConsumer extends React.Component {
                                 <CardHeader className="bg-white border-0">
                                     <Row className="align-items-center">
                                         <Col xs="8">
-                                            <h3 className="mb-0">Create Customers</h3>
+                                            <h3 className="mb-0">Create Service Record</h3>
                                         </Col>
                                         <Col className="text-right" xs="4">
                                             <Button
-                                                color="primary"
+                                                color="success"
                                                 href="#"
                                                 onClick={e => e.preventDefault()}
                                                 size="sm"
                                             >
-                                                Customer
+                                                Service Record
                                             </Button>
                                         </Col>
                                     </Row>
@@ -167,7 +148,7 @@ class CreateConsumer extends React.Component {
                                     {this.state.loading ? <Spinner color="dark"/> :
                                         <Form onSubmit={this.handleSubmit}>
                                             <h6 className="heading-small text-muted mb-4">
-                                                Add Customer Information
+                                                Add Information For Service Record
                                             </h6>
                                             <div className="pl-lg-4">
                                                 <Row>
@@ -194,52 +175,34 @@ class CreateConsumer extends React.Component {
                                                                 className="form-control-label"
                                                                 htmlFor="input-username"
                                                             >
-                                                                Customer Name
+                                                                Chassis Number
                                                             </label>
                                                             <Input
                                                                 className="form-control-alternative"
                                                                 id="input-username"
-                                                                placeholder="Username"
+                                                                placeholder="Chassis Number"
                                                                 type="text"
-                                                                name="customerName"
+                                                                name="chassisNumber"
                                                                 onChange={this.handleChange}
                                                             />
                                                         </FormGroup>
                                                     </Col>
                                                 </Row>
-                                                <Row>
-                                                    <Col lg="6">
-                                                        <FormGroup>
-                                                            <label
-                                                                className="form-control-label"
-                                                                htmlFor="input-email"
-                                                            >
-                                                                Password
-                                                            </label>
-                                                            <Input
-                                                                name="customerPassword"
-                                                                className="form-control-alternative"
-                                                                id="input-email"
-                                                                placeholder="*********"
-                                                                type="password"
-                                                                onChange={this.handleChange}
-                                                            />
-                                                        </FormGroup>
-                                                    </Col>                                                    
-                                                    <Col lg="6">                                                        
+                                                <Row>                                                  
+                                                    <Col lg="12">                                                        
                                                         <FormGroup>
                                                             <label
                                                                 className="form-control-label"
                                                                 htmlFor="input-username"
                                                             >
-                                                                Address
+                                                                Service Record Text
                                                             </label>
                                                             <Input
                                                                 className="form-control-alternative"
                                                                 id="input-username"
-                                                                placeholder="Address"
-                                                                type="text"
-                                                                name="address"
+                                                                placeholder="Service Record"
+                                                                type="textarea"
+                                                                name="serviceRecord"
                                                                 onChange={this.handleChange}
                                                             />
                                                         </FormGroup>
@@ -272,4 +235,4 @@ class CreateConsumer extends React.Component {
     }
 }
 
-export default CreateConsumer;
+export default ServiceRecord;

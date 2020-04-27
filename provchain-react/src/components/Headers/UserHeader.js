@@ -31,7 +31,7 @@ class UserHeader extends React.Component {
                 </p>
                 <Button
                   color="info"
-                  href="#pablo"
+                  href="#"
                   onClick={e => e.preventDefault()}
                 >
                   Edit profile
