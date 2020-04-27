@@ -26,31 +26,45 @@ class ListVehicles extends React.Component {
     this.state = {
       apiData : {},
       successModal: false,
+      listModal : false,
       vehicleIdDetails: '',
       fetchId: ''
     }
   }
   toggleModal(id){
-    if(this.state.successModal==false){
-      console.log("fetch by id")
-      axios.get(nodeURL+'/vehichleInfo?chassisNumber='+id)
-      .then(res => {
-        // const vehicleIdDetails = res.data;
-        this.setState({ vehicleIdDetails: res.data });
-        console.log("by id: "+this.state.vehicleIdDetails)
-      })
+      if(id=="successModal"){
+        if(this.state.successModal==false){
+          console.log("fetch by id")
+          axios.get(nodeURL+'/vehichleInfo?chassisNumber='+this.state.fetchId)
+          .then(res => {
+            // const vehicleIdDetails = res.data;
+            this.setState({ vehicleIdDetails: res.data });
+            console.log("by id: "+this.state.vehicleIdDetails)
+          })
+        }
+        this.setState({
+          successModal: !this.state.successModal
+        });
     }
-    this.setState({
-      successModal: !this.state.successModal
-    });
+    else{
+      // if(this.state.listModal==false){
+      //   console.log("List Modal")
+        // axios.get(nodeURL+'/vehichleInfo?chassisNumber='+this.state.fetchId)
+        // .then(res => {
+        //   // const vehicleIdDetails = res.data;
+        //   this.setState({ vehicleIdDetails: res.data });
+        //   console.log("by id: "+this.state.vehicleIdDetails)
+        // })
+      // }
+      this.setState({
+        listModal: !this.state.listModal
+      });
+    }
   };
   fetchById = event => {
     console.log("password change called")
     this.setState({ fetchId: event.target.value });
-  }
-
-
-  
+  } 
   // TODO use after POST or while fetch by ID
   fetchData(){
 
@@ -140,6 +154,39 @@ class ListVehicles extends React.Component {
             </Button>
           </div>
         </Modal>
+        <Modal
+          className="modal-dialog-centered"
+          isOpen={this.state.listModal}
+          toggle={() => this.toggleModal("listModal")}
+        >
+          <div className="modal-header">
+            <h5 className="modal-title" id="listModalLabel">
+              Service Record Lists
+            </h5>
+            <button
+              aria-label="Close"
+              className="close"
+              data-dismiss="modal"
+              type="button"
+              onClick={() => this.toggleModal("listModal")}
+            >
+              <span aria-hidden={true}>×</span>
+            </button>
+          </div>
+          <div className="modal-body">
+             <h5>Service Records</h5>
+          </div>
+          <div className="modal-footer">
+            <Button
+              color="secondary"
+              data-dismiss="modal"
+              type="button"
+              onClick={() => this.toggleModal("listModal")}
+            >
+              Close
+            </Button>
+          </div>
+        </Modal>
         <Container className="mt--7" fluid>
         <Row>
             <Col md={8} xs={12}>
@@ -181,7 +228,7 @@ class ListVehicles extends React.Component {
                                     color="success"              
                                     // type="submit"
                                     size="lg"
-                                    onClick={() => this.toggleModal(this.state.fetchId)}
+                                    onClick={() => this.toggleModal("successModal")}
                                   >
                                     Submit
                                   </Button>
@@ -209,6 +256,7 @@ class ListVehicles extends React.Component {
                       <th scope="col">Owner ID</th>
                       {/*TODO show owner list only for dealer*/}
                       <th scope="col">Owner List</th>                                            
+                      <th scope="col" className="text-center">List Service Records</th>                                            
                     </tr>
                   </thead>
                   <tbody>
@@ -221,6 +269,18 @@ class ListVehicles extends React.Component {
                                 <td>{object.ownerId}</td>
                                 {/*TODO show owner list only for dealer*/}
                                 <td>{object.ownerList +String(", ")}</td>
+                                <td className="text-center">
+                                    <Button
+                                            color="primary"
+                                            data-dismiss="modal"
+                                            type="button"
+                                            size="sm"
+                                            value={JSON.stringify({chassisNumber : object.chassisNumber,ownerId: object.futureOwner})}
+                                            onClick={() => this.toggleModal("listModal")}
+                                        >
+                                            List Records
+                                        </Button>
+                                </td>
                               </tr>
                             </>
                     ))}
