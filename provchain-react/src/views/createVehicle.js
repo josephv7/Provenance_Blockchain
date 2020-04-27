@@ -214,7 +214,7 @@ class CreateVehicle extends React.Component {
                                         <Col className="text-right" xs="4">
                                             <Button
                                                 color="primary"
-                                                href="#pablo"
+                                                href="#"
                                                 onClick={e => e.preventDefault()}
                                                 size="sm"
                                             >
