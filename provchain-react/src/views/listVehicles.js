@@ -2,6 +2,7 @@
 import React from "react";
 
 import {
+  Badge,
   Card,
   CardHeader,
   CardFooter,
@@ -256,7 +257,7 @@ class ListVehicles extends React.Component {
                       <th scope="col">Owner ID</th>
                       {/*TODO show owner list only for dealer*/}
                       <th scope="col">Owner List</th>                                            
-                      <th scope="col" className="text-center">List Service Records</th>                                            
+                      {/* <th scope="col" className="text-center">List Service Records</th>                                             */}
                     </tr>
                   </thead>
                   <tbody>
@@ -269,17 +270,21 @@ class ListVehicles extends React.Component {
                                 <td>{object.ownerId}</td>
                                 {/*TODO show owner list only for dealer*/}
                                 <td>{object.ownerList +String(", ")}</td>
-                                <td className="text-center">
-                                    <Button
-                                            color="primary"
-                                            data-dismiss="modal"
-                                            type="button"
-                                            size="sm"
-                                            value={JSON.stringify({chassisNumber : object.chassisNumber,ownerId: object.futureOwner})}
-                                            onClick={() => this.toggleModal("listModal")}
+                              </tr>
+                              <tr>                                
+                                <td className="text-center" colspan="5">
+                                {/* <p className="text-muted p-0 m-0">Service Records for {object.chassisNumber}</p> */}
+                                {Array.isArray(object.serviceRecord) && object.serviceRecord.map(object => (                                
+                                  <>
+                                  <Badge
+                                          className="badge-default mx-1"
+                                          href="#"                                          
+                                          onClick={e => e.preventDefault()}
                                         >
-                                            List Records
-                                        </Button>
+                                          {object}
+                                        </Badge>
+                                </>
+                                ))}
                                 </td>
                               </tr>
                             </>
