@@ -16,11 +16,12 @@ import {
   Table,
   Container,
   Row,
+  Spinner
 } from "reactstrap";
 import Header from "components/Headers/Header.js";
-
 import {nodeURL} from "components/variables";
 import axios from "axios";
+var CryptoJS = require("crypto-js")
 class ListVehicles extends React.Component {
   constructor(){
     super();
@@ -28,9 +29,50 @@ class ListVehicles extends React.Component {
       apiData : {},
       successModal: false,
       listModal : false,
+      chassisNumber: '',
+      customerId: '',
+      hashValue:'',
       vehicleIdDetails: '',
-      fetchId: ''
+      originalServiceRecord: '',
+      fetchId: '',
+      loading : false
     }
+  }
+  handeList = () => {
+    console.log("inside list "+this.state.chassisNumber+" "+this.state.customerId+" "+this.state.hashValue)
+    axios.get('https://ipfs.io/ipfs/'+this.state.hashValue)
+          .then(res => {
+            // const vehicleIdDetails = res.data;
+            // this.setState({ vehicleIdDetails: res.data });
+            console.log("IPFS: "+res.data)
+            const ipfsData = res.data;
+            this.setState({
+              loading: true
+            })
+            axios.post(nodeURL+`/getVehicleKey`,
+            { chassisNumber : this.state.chassisNumber,
+              customerId : this.state.customerId},
+            { headers: {
+                      "Content-Type": "application/json",
+                      "Access-Control-Allow-Origin": "*",
+                      'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',}})
+            .then(response => {
+              // console.log(response);
+              // console.log(response.data);
+              var bytes  = CryptoJS.AES.decrypt(ipfsData, response.data.aesKey);
+              var originalText = bytes.toString(CryptoJS.enc.Utf8);
+              originalText = {originalText}
+              // console.log(originalText)
+              // console.log(JSON.stringify(originalText)); 
+              this.setState({
+                originalServiceRecord : JSON.stringify(originalText.originalText), loading: false
+              })
+              this.toggleModal("listModal")
+            })
+            .catch(function (error) {
+              console.log("error from catch"+error);
+            })
+      })        
   }
   toggleModal(id){
       if(id=="successModal"){
@@ -48,15 +90,6 @@ class ListVehicles extends React.Component {
         });
     }
     else{
-      // if(this.state.listModal==false){
-      //   console.log("List Modal")
-        // axios.get(nodeURL+'/vehichleInfo?chassisNumber='+this.state.fetchId)
-        // .then(res => {
-        //   // const vehicleIdDetails = res.data;
-        //   this.setState({ vehicleIdDetails: res.data });
-        //   console.log("by id: "+this.state.vehicleIdDetails)
-        // })
-      // }
       this.setState({
         listModal: !this.state.listModal
       });
@@ -175,7 +208,8 @@ class ListVehicles extends React.Component {
             </button>
           </div>
           <div className="modal-body">
-             <h5>Service Records</h5>
+              <h5>Service Record for Vehicle with Chassis Number <span className="text-primary">{this.state.chassisNumber}</span> and customer Id 
+              <span className="text-primary"> {this.state.customerId}</span> is: <span className="text-primary">{this.state.originalServiceRecord}</span></h5>
           </div>
           <div className="modal-footer">
             <Button
@@ -248,6 +282,7 @@ class ListVehicles extends React.Component {
                 <CardHeader className="border-0">
                   <h3 className="mb-0">List All Vehicles</h3>
                 </CardHeader>
+                { this.state.loading ? <Spinner color="dark"/> :
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                     <tr>
@@ -272,16 +307,18 @@ class ListVehicles extends React.Component {
                                 <td>{object.ownerList +String(", ")}</td>
                               </tr>
                               <tr>                                
-                                <td className="text-center" colspan="5">
-                                {/* <p className="text-muted p-0 m-0">Service Records for {object.chassisNumber}</p> */}
-                                {Array.isArray(object.serviceRecord) && object.serviceRecord.map(object => (                                
+                                <td className="text-center" colspan="5" style={{cursor:"pointer"}}>                                
+                                {Array.isArray(object.serviceRecord) && object.serviceRecord.map(innerObj => (                                
                                   <>
                                   <Badge
                                           className="badge-default mx-1"
-                                          href="#"                                          
-                                          onClick={e => e.preventDefault()}
+                                          value={String(object.chassisNumber)+','+String(object.ownerId)}                                                                                 
+                                          onClick={() => {this.setState({
+                                                chassisNumber : String(object.chassisNumber), customerId: String(object.ownerId), 
+                                                hashValue : innerObj
+                                          }, ()=> {console.log("callback");this.handeList()})}}
                                         >
-                                          {object}
+                                          {innerObj}
                                         </Badge>
                                 </>
                                 ))}
@@ -291,6 +328,7 @@ class ListVehicles extends React.Component {
                     ))}
                   </tbody>
                 </Table>
+                }
               </Card>
             </div>
             </Col>
