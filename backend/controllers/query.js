@@ -15,7 +15,7 @@ module.exports = {
 
         var customerAsset = "resource%3Aorg.example.mynetwork.Customer%23" + userId;
         console.log('customer');
-        var requestUrl = constants.blockchainBaseURL + "queries/ListUserVehichles?id=" + customerAsset;
+        var requestUrl = constants.blockchainBaseURL + "queries/ListUserVehichles?id=" + userId;
 
         // else if(userId.charAt(0) == "3"){
         //

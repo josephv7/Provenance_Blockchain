@@ -5,6 +5,7 @@ const constants = require("../constants");
 const openssl = require('openssl-nodejs')
 const CryptoJS = require("crypto-js");
 const IPFS = require('ipfs');
+const crypto = require("crypto");
 
 module.exports = {
     createVehicle: (req, res) => {
@@ -36,6 +37,7 @@ module.exports = {
                         "manufactureLocation": req.query.manufacturerLocation,
                         "manufacturerName": req.query.manufacturerName,
                         "ownerList": [],
+                        "serviceRecord" : [],
                         "ownerId": "_",
                         "manufacturerId": req.query.manufacturerId,
                         "dealerName": "_",
@@ -162,6 +164,32 @@ module.exports = {
                 try {
                     await node.stop()
                     console.log('Node stopped!')
+
+
+                    var asset = 'org.example.mynetwork.Vehicle#' + req.body.chassisNumber;
+
+                    Request.post({
+                        "headers": {"content-type": "application/json"},
+                        "url": constants.blockchainBaseURL + "RecordService",
+                        "body": JSON.stringify({
+                            "asset": asset,
+                            "newServiceRecord" : [fileHash]
+                        })
+                    }, (error, response, body) => {
+                        if (error) {
+                            res.end(JSON.stringify({status: "error"}));
+                            return console.dir(error);
+                        } else {
+                            if(JSON.parse(body).hasOwnProperty('error')){
+                                res.end(JSON.stringify({status: "error"}));
+                            }else {
+                                console.dir(JSON.parse(body));
+                                res.end(JSON.stringify({status: "ok"}));
+                            }
+                        }
+                    });
+
+
                     // Request.post({
                     //     "headers": { "content-type": "application/json" },
                     //     "url": "http://localhost:3000/api/MedicalRecord",
@@ -197,6 +225,64 @@ module.exports = {
 
             })
 
+        }
+
+    },
+    getVehicleKey : (req,res) => {
+        console.log(req.body.chassisNumber)
+        console.log(req.body.customerId)
+
+        //TODO check if starting with 2, else send error response
+        axios.get(constants.blockchainBaseURL + 'Customer/' + req.body.customerId)
+            .then(function (response) {
+                console.log(response.data);
+                publicKey = response.data['publicKey']
+
+            }).then(function (response) {
+            getAesKey()
+        }).catch(function (error) {
+            console.log(error);
+            res.end(JSON.stringify({status: "error"}));
+
+        });
+
+        //TODO check if not present error in response from blockchain and send corresponding reponse to frontend
+        function getAesKey() {
+            // console.log('.....')
+            // console.log(publicKey)
+
+
+            // res.send(jsonResponse);
+
+            var requestUrl = constants.blockchainBaseURL + "Vehicle/" + req.body.chassisNumber;
+
+            axios.get(requestUrl).then(function (response) {
+                console.log(response.data);
+                // jsonResponse = response.data;
+                aesKey = response.data['contentKey']
+
+            }).then(function (response) {
+                encryptKey()
+            }).catch(function (error) {
+                res.end(JSON.stringify({status: "error"}));
+                console.log(error);
+            });
+
+            function encryptKey() {
+                console.log('.....')
+                console.log(publicKey)
+                console.log(aesKey);
+
+
+                var encrypted = crypto.publicEncrypt(publicKey.substring(0, publicKey.length - 1),Buffer.from(aesKey));
+
+                console.log(encrypted.toString("base64") + 'bbbbbbbbb');
+
+                res.end(JSON.stringify({ encryptedKey: encrypted.toString("base64"), aesKey: aesKey}));
+
+
+
+            }
 
 
         }
