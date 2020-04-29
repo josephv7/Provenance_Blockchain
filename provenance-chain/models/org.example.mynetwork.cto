@@ -24,6 +24,7 @@ asset Vehicle identified by chassisNumber {
   o String dealerName
   o String dealerId
   o String[] ownerList
+  o String[] serviceRecord
   o String ownerId
   o String futureOwner
   o String verified
@@ -75,6 +76,18 @@ event AssetTransferEvent {
   o String[] oldOwnerList
   o String[] newOwnerList
 }
+
+transaction RecordService {
+  --> Vehicle asset
+  o String[] newServiceRecord
+}
+
+event RecordServiceEvent {
+  --> Vehicle asset
+  o String[] newServiceRecord
+  o String[] oldServiceRecord
+}
+
 
 transaction AssetTransferRequest {
   --> Vehicle asset
