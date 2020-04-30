@@ -190,34 +190,6 @@ module.exports = {
                     });
 
 
-                    // Request.post({
-                    //     "headers": { "content-type": "application/json" },
-                    //     "url": "http://localhost:3000/api/MedicalRecord",
-                    //     "body": JSON.stringify({
-                    //         "recordId": calculatedId,
-                    //         "owner" : ownerName,
-                    //         "value" : [fileHash],
-                    //         "doctorId" : [doctorname],
-                    //         "verified" : 'false'
-                    //     })
-                    // }, (error, response, body) => {
-                    //     if(error) {
-                    //         return console.dir(error);
-                    //     }
-                    //
-                    //
-                    //     client.messages.create({
-                    //         body: 'Record Created for patient' + username,
-                    //         from: 'whatsapp:+14155238886',
-                    //         to: 'whatsapp:+918289940688'
-                    //     })
-                    //         .then(message => console.log(message.sid))
-                    //         .done();
-                    //
-                    //
-                    //     console.dir(JSON.parse(body));
-                    //     res.end(JSON.stringify([{ status: "ok" }]));
-                    // });
                 } catch (error) {
                     console.error('Node failed to stop cleanly!', error)
                 }
